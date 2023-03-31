@@ -67,7 +67,7 @@ const AddArea = () => {
                   <input
                     style={{
                       borderRadius: "15px",
-                      border: "2px solid #007BFF",
+                      border: "2px solid #E5194B",
                     }}
                     type="text"
                     ref={register({ required: true })}

@@ -2,7 +2,7 @@ import React, { createContext, useEffect, useState } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
 import AddArea from "./components/Admin/AddArea/AddArea";
-import AddGarage from "./components/Admin/AddGarage/AddGarage";
+import AddRestaurant from "./components/Admin/AddRestaurant/AddRestaurant";
 import AddItem from "./components/Admin/AddItem/AddItem";
 import AreaList from "./components/Admin/AreaList/AreaList";
 import Customer from "./components/Admin/Customer/Customer";
@@ -96,13 +96,13 @@ function App() {
           <Route path="/admin/addArea">
             <AddArea></AddArea>
           </Route>
-          <PrivateRoute path="/admin/addGarage">
-            <AddGarage></AddGarage>
+          <PrivateRoute path="/admin/addRestaurant">
+            <AddRestaurant></AddRestaurant>
           </PrivateRoute>
           <PrivateRoute path="/admin/updateGarage/:id">
             <UpdateGarage></UpdateGarage>
           </PrivateRoute>
-          <PrivateRoute path="/admin/garageList">
+          <PrivateRoute path="/admin/restaurantList">
             <GarageListAdmin></GarageListAdmin>
           </PrivateRoute>
           <PrivateRoute path="/admin/customer">

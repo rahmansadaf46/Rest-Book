@@ -28,7 +28,7 @@ client.connect(err => {
     const garageCollection = client.db("trustNRide").collection("allGarage");
     const serviceCollection = client.db("trustNRide").collection("allService");
     //garage
-    app.post('/addGarage', (req, res) => {
+    app.post('/addRestaurant', (req, res) => {
         const file = req.files.file;
         const image = req.files.file.name;
         const title = req.body.title;

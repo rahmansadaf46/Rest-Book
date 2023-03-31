@@ -4,13 +4,13 @@ import AdminHeader from "../AdminHeader/AdminHeader";
 import AdminSidebar from "../AdminSidebar/AdminSidebar";
 import Select from "react-select";
 // import Iframe from 'react-iframe';
-const AddGarage = () => {
+const AddRestaurant = () => {
   const { register, handleSubmit, errors } = useForm();
   // const [loading, setLoading] = useState(false);
   // const [dept, setDept] = useState([]);
   // document.title = "Enroll A Student";
   const email = sessionStorage.getItem("email");
-  // const [garageLocation, setGarageLocation] = useState('');
+  // const [RestaurantLocation, setRestaurantLocation] = useState('');
   const [areaList, setAreaList] = useState([]);
   const [area, setArea] = useState([]);
   const handleArea = (e) => {
@@ -60,11 +60,11 @@ const AddGarage = () => {
         });
         setUserList(user);
       });
-    // fetch('http://localhost:4200/garages')
+    // fetch('http://localhost:4200/Restaurants')
     //     .then(res => res.json())
     //     .then(data => {
     //         console.log(data);
-    //         setGarageLocation(data[0].googleMap)
+    //         setRestaurantLocation(data[0].googleMap)
     //         // const user = data.map(person => {
     //         //     return {
     //         //         value: `${person.person.email}`, label: `${person.person.email}`
@@ -93,13 +93,13 @@ const AddGarage = () => {
     formData.append("coords", coords);
     formData.append("status", "Active");
 
-    fetch("http://localhost:4200/addGarage", {
+    fetch("http://localhost:4200/addRestaurant", {
       method: "POST",
       body: formData,
     })
       .then((response) => response.json())
       .then((data) => {
-        window.alert("Garage added successfully");
+        window.alert("Restaurant added successfully");
         window.location.reload();
       })
 
@@ -114,7 +114,7 @@ const AddGarage = () => {
   const customStyles = {
     control: (provided, state) => ({
       ...provided,
-      border: "2px solid #007BFF",
+      border: "2px solid #E5194B",
       borderRadius: "20px",
       boxShadow: state.isFocused ? null : null,
     }),
@@ -131,9 +131,9 @@ const AddGarage = () => {
           style={{ backgroundColor: "#FFB6C1", minHeight: "150vh" }}
           className="col-md-10 pt-4"
         >
-          <div className="text-center  text-danger">
-            <h2>
-              <u>Add a Garage</u>
+          <div className="text-center">
+            <h2 className="text-danger">
+              <u>Add a <span className="text-dark">Restaurant</span> </u>
             </h2>
           </div>
           <div className="col-md-12">
@@ -142,90 +142,90 @@ const AddGarage = () => {
                 className="p-3 container col-6"
                 onSubmit={handleSubmit(onSubmit)}
               >
-                <div className="form-group text-danger text-center">
+                <div className="form-group  text-center">
                   <label for="">
-                    <b>Enter Garage Name</b>
+                    <b>Enter Restaurant Name</b>
                   </label>
                   <input
                     style={{
                       borderRadius: "15px",
-                      border: "2px solid #007BFF",
+                      border: "2px solid #E5194B",
                     }}
                     type="text"
                     ref={register({ required: true })}
                     name="title"
-                    placeholder="Enter Garage Name"
+                    placeholder="Enter Restaurant Name"
                     className="form-control"
                   />
                   {errors.name && (
-                    <span className="text-danger">This field is required</span>
+                    <span className="">This field is required</span>
                   )}
                 </div>
-                <div className="form-group text-danger text-center">
+                <div className="form-group  text-center">
                   <label for="">
-                    <b>Enter Garage Address</b>
+                    <b>Enter Restaurant Address</b>
                   </label>
                   <input
                     style={{
                       borderRadius: "15px",
-                      border: "2px solid #007BFF",
+                      border: "2px solid #E5194B",
                     }}
                     type="text"
                     ref={register({ required: true })}
                     name="address"
-                    placeholder="Enter Garage Address"
+                    placeholder="Enter Restaurant Address"
                     className="form-control"
                   />
                   {errors.name && (
-                    <span className="text-danger">This field is required</span>
+                    <span className="">This field is required</span>
                   )}
                 </div>
-                <div className="form-group text-danger text-center">
+                <div className="form-group  text-center">
                   <label for="">
-                    <b>Enter Garage Contact no.</b>
+                    <b>Enter Restaurant Contact no.</b>
                   </label>
                   <input
                     style={{
                       borderRadius: "15px",
-                      border: "2px solid #007BFF",
+                      border: "2px solid #E5194B",
                     }}
                     type="text"
                     ref={register({ required: true })}
                     name="mobile"
-                    placeholder="Enter Garage Contact No."
+                    placeholder="Enter Restaurant Contact No."
                     className="form-control"
                   />
                   {errors.name && (
-                    <span className="text-danger">This field is required</span>
+                    <span className="">This field is required</span>
                   )}
                 </div>
-                <div className="form-group text-danger text-center">
+                <div className="form-group  text-center">
                   <label for="">
-                    <b>Enter Garage Description</b>
+                    <b>Enter Restaurant Description</b>
                   </label>
                   <input
                     style={{
                       borderRadius: "15px",
-                      border: "2px solid #007BFF",
+                      border: "2px solid #E5194B",
                     }}
                     type="text"
                     ref={register({ required: true })}
                     name="description"
-                    placeholder="Enter Garage Description"
+                    placeholder="Enter Restaurant Description"
                     className="form-control"
                   />
                   {errors.name && (
-                    <span className="text-danger">This field is required</span>
+                    <span className="">This field is required</span>
                   )}
                 </div>
-                <div className="form-group text-danger text-center">
+                <div className="form-group  text-center">
                   <label for="">
                     <b>Enter Facebook Code</b>
                   </label>
                   <input
                     style={{
                       borderRadius: "15px",
-                      border: "2px solid #007BFF",
+                      border: "2px solid #E5194B",
                     }}
                     type="number"
                     ref={register({ required: true })}
@@ -234,17 +234,17 @@ const AddGarage = () => {
                     className="form-control"
                   />
                   {errors.name && (
-                    <span className="text-danger">This field is required</span>
+                    <span className="">This field is required</span>
                   )}
                 </div>
-                <div className="form-group text-danger text-center">
+                <div className="form-group  text-center">
                   <label for="">
                     <b>Enter Latitude</b>
                   </label>
                   <input
                     style={{
                       borderRadius: "15px",
-                      border: "2px solid #007BFF",
+                      border: "2px solid #E5194B",
                     }}
                     type="text"
                     ref={register({ required: true })}
@@ -253,17 +253,17 @@ const AddGarage = () => {
                     className="form-control"
                   />
                   {errors.name && (
-                    <span className="text-danger">This field is required</span>
+                    <span className="">This field is required</span>
                   )}
                 </div>
-                <div className="form-group text-danger text-center">
+                <div className="form-group  text-center">
                   <label for="">
                     <b>Enter Longitude</b>
                   </label>
                   <input
                     style={{
                       borderRadius: "15px",
-                      border: "2px solid #007BFF",
+                      border: "2px solid #E5194B",
                     }}
                     type="text"
                     ref={register({ required: true })}
@@ -272,11 +272,11 @@ const AddGarage = () => {
                     className="form-control"
                   />
                   {errors.name && (
-                    <span className="text-danger">This field is required</span>
+                    <span className="">This field is required</span>
                   )}
                 </div>
                 <div className="form-group row mb-1 d-flex justify-content-center">
-                  <div className="form-group col-6 text-danger text-center">
+                  <div className="form-group col-6  text-center">
                     <label for="">
                       <b>Enter Areas</b>
                     </label>
@@ -294,7 +294,7 @@ const AddGarage = () => {
                   </div>
                 </div>
                 <div className="form-group row mb-1 d-flex justify-content-center">
-                  <div className="form-group col-6 text-danger text-center">
+                  <div className="form-group col-6  text-center">
                     <label for="">
                       <b>Select User</b>
                     </label>
@@ -312,7 +312,7 @@ const AddGarage = () => {
                   </div>
                 </div>
                 <div className="form-group row mb-1 d-flex justify-content-center">
-                  <div className="form-group col-6 text-danger text-center">
+                  <div className="form-group col-6  text-center">
                     <label for="">
                       <b>Upload Image</b>
                     </label>
@@ -324,7 +324,7 @@ const AddGarage = () => {
                       type="file"
                     />
                     {errors.file && (
-                      <span className="text-danger">
+                      <span className="">
                         This field is required
                       </span>
                     )}
@@ -345,7 +345,7 @@ const AddGarage = () => {
               </form>
             </div>
           </div>
-          {/* <Iframe url={garageLocation}
+          {/* <Iframe url={RestaurantLocation}
                         width="450px"
                         height="450px"
                         id="myId"
@@ -358,4 +358,4 @@ const AddGarage = () => {
   );
 };
 
-export default AddGarage;
+export default AddRestaurant;

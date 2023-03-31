@@ -62,17 +62,17 @@ const UpdateGarageService = () => {
                         <div><form className="p-3 container col-6" onSubmit={handleSubmit(onSubmit)}>
                             <div className="form-group text-danger text-center">
                                 <label for=""><b>Enter Service Name</b></label>
-                                <input defaultValue={garageData.title} style={{ borderRadius: '15px', border: '2px solid #007BFF' }} type="text" ref={register({ required: true })} name="title" placeholder="Service Name" className="form-control" />
+                                <input defaultValue={garageData.title} style={{ borderRadius: '15px', border: '2px solid #E5194B' }} type="text" ref={register({ required: true })} name="title" placeholder="Service Name" className="form-control" />
                                 {errors.name && <span className="text-danger">This field is required</span>}
                             </div>
                             <div className="form-group text-danger text-center">
                                 <label for=""><b>Enter Service Description</b></label>
-                                <textarea defaultValue={garageData.description} style={{ borderRadius: '15px', border: '2px solid #007BFF' }} type="text" ref={register({ required: true })} name="description" placeholder="Service Description" className="form-control" />
+                                <textarea defaultValue={garageData.description} style={{ borderRadius: '15px', border: '2px solid #E5194B' }} type="text" ref={register({ required: true })} name="description" placeholder="Service Description" className="form-control" />
                                 {errors.name && <span className="text-danger">This field is required</span>}
                             </div>
                             <div className="form-group text-danger text-center">
                                 <label for=""><b>Enter Service Rate</b></label>
-                                <input defaultValue={garageData.rate} style={{ borderRadius: '15px', border: '2px solid #007BFF' }} type="text" ref={register({ required: true })} name="rate" placeholder="Service Rate" className="form-control" />
+                                <input defaultValue={garageData.rate} style={{ borderRadius: '15px', border: '2px solid #E5194B' }} type="text" ref={register({ required: true })} name="rate" placeholder="Service Rate" className="form-control" />
                                 {errors.name && <span className="text-danger">This field is required</span>}
                             </div>
                             <div className="form-group row">

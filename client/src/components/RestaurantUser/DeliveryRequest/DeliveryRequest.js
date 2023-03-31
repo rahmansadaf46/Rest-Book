@@ -69,7 +69,7 @@ const DeliveryRequest = () => {
                                     </p>
                                 }
                                 <br />
-                                <div style={{ border: '2px solid #007BFF', padding: '15px' }}>
+                                <div style={{ border: '2px solid #E5194B', padding: '15px' }}>
                                     <p className="font-weight-bold ">Address: <span className="text-danger"> {fd.finalData.address.area}</span></p>
                                     <p className="font-weight-bold">Contact: <span className="text-danger">{fd.finalData.address.contactNo}</span></p>
                                     <p className="font-weight-bold text-dark">Email: <span className="text-danger">{fd.finalData.email}</span></p>

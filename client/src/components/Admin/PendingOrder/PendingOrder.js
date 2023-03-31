@@ -156,7 +156,7 @@ const PendingOrder = () => {
                         <br />
                         <div
                           style={{
-                            border: "2px solid #007BFF",
+                            border: "2px solid #E5194B",
                             padding: "15px",
                           }}
                         >

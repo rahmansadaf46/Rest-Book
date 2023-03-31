@@ -136,7 +136,7 @@ const UpdateGarage = () => {
   const customStyles = {
     control: (provided, state) => ({
       ...provided,
-      border: "2px solid #007BFF",
+      border: "2px solid #E5194B",
       borderRadius: "20px",
       boxShadow: state.isFocused ? null : null,
     }),
@@ -171,7 +171,7 @@ const UpdateGarage = () => {
                   <input
                     style={{
                       borderRadius: "15px",
-                      border: "2px solid #007BFF",
+                      border: "2px solid #E5194B",
                     }}
                     type="text"
                     ref={register({ required: true })}
@@ -191,7 +191,7 @@ const UpdateGarage = () => {
                   <input
                     style={{
                       borderRadius: "15px",
-                      border: "2px solid #007BFF",
+                      border: "2px solid #E5194B",
                     }}
                     type="text"
                     ref={register({ required: true })}
@@ -211,7 +211,7 @@ const UpdateGarage = () => {
                   <input
                     style={{
                       borderRadius: "15px",
-                      border: "2px solid #007BFF",
+                      border: "2px solid #E5194B",
                     }}
                     type="text"
                     ref={register({ required: true })}
@@ -231,7 +231,7 @@ const UpdateGarage = () => {
                   <input
                     style={{
                       borderRadius: "15px",
-                      border: "2px solid #007BFF",
+                      border: "2px solid #E5194B",
                     }}
                     defaultValue={garage?.description}
                     type="text"
@@ -251,7 +251,7 @@ const UpdateGarage = () => {
                   <input
                     style={{
                       borderRadius: "15px",
-                      border: "2px solid #007BFF",
+                      border: "2px solid #E5194B",
                     }}
                     defaultValue={garage?.facebook}
                     type="number"
@@ -271,7 +271,7 @@ const UpdateGarage = () => {
                   <input
                     style={{
                       borderRadius: "15px",
-                      border: "2px solid #007BFF",
+                      border: "2px solid #E5194B",
                     }}
                     defaultValue={garage?.coords.split(',')[0]}
                     type="text"
@@ -291,7 +291,7 @@ const UpdateGarage = () => {
                   <input
                     style={{
                       borderRadius: "15px",
-                      border: "2px solid #007BFF",
+                      border: "2px solid #E5194B",
                     }}
                     defaultValue={garage?.coords.split(',')[1]}
                     type="text"

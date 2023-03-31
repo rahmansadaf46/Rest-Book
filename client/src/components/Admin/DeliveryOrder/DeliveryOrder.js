@@ -86,7 +86,7 @@ const DeliveryOrder = () => {
                       style={{
                         width: "550px",
                         height: "100%",
-                        border: "4px solid #007BFF",
+                        border: "4px solid #E5194B",
                         borderRadius: "30px",
                         backgroundColor: "#F0FFEF",
                         marginBottom: "25px",
@@ -109,7 +109,7 @@ const DeliveryOrder = () => {
                       style={{
                         width: "550px",
                         height: "100%",
-                        border: "4px solid #007BFF",
+                        border: "4px solid #E5194B",
                         borderRadius: "30px",
                         backgroundColor: "#F0FFEF",
                         marginBottom: "25px",
@@ -178,7 +178,7 @@ const DeliveryOrder = () => {
                     }
                     <br />
                     <div
-                      style={{ border: "2px solid #007BFF", padding: "15px" }}
+                      style={{ border: "2px solid #E5194B", padding: "15px" }}
                     >
                       <p className="font-weight-bold ">
                         Address:{" "}

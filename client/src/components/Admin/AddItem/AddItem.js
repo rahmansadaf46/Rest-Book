@@ -83,7 +83,7 @@ const AddItem = () => {
                   <input
                     style={{
                       borderRadius: "15px",
-                      border: "2px solid #007BFF",
+                      border: "2px solid #E5194B",
                     }}
                     type="text"
                     ref={register({ required: true })}
@@ -104,7 +104,7 @@ const AddItem = () => {
                       step="any"
                       style={{
                         borderRadius: "15px",
-                        border: "2px solid #007BFF",
+                        border: "2px solid #E5194B",
                       }}
                       type="number"
                       ref={register({ required: true })}
@@ -128,7 +128,7 @@ const AddItem = () => {
                       style={{
                         height: "90px",
                         borderRadius: "20px",
-                        border: "2px solid #007BFF",
+                        border: "2px solid #E5194B",
                       }}
                       type="text"
                       ref={register({ required: true })}
@@ -152,7 +152,7 @@ const AddItem = () => {
                       style={{
                         height: "70px",
                         borderRadius: "20px",
-                        border: "2px solid #007BFF",
+                        border: "2px solid #E5194B",
                       }}
                       type="number"
                       ref={register({ required: true })}
@@ -196,7 +196,7 @@ const AddItem = () => {
                     <select
                       style={{
                         borderRadius: "15px",
-                        border: "2px solid #007BFF",
+                        border: "2px solid #E5194B",
                       }}
                       onChange={(event) => changeCategory(event.target.value)}
                       className="form-control"

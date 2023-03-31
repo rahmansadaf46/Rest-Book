@@ -110,7 +110,7 @@ const UpdateItem = () => {
                   <input
                     style={{
                       borderRadius: "15px",
-                      border: "2px solid #007BFF",
+                      border: "2px solid #E5194B",
                     }}
                     defaultValue={item?.title}
                     type="text"
@@ -132,7 +132,7 @@ const UpdateItem = () => {
                       step="any"
                       style={{
                         borderRadius: "15px",
-                        border: "2px solid #007BFF",
+                        border: "2px solid #E5194B",
                       }}
                       defaultValue={item?.price}
                       type="number"
@@ -157,7 +157,7 @@ const UpdateItem = () => {
                       style={{
                         height: "90px",
                         borderRadius: "20px",
-                        border: "2px solid #007BFF",
+                        border: "2px solid #E5194B",
                       }}
                       defaultValue={item?.description}
                       type="text"
@@ -183,7 +183,7 @@ const UpdateItem = () => {
                       style={{
                         height: "70px",
                         borderRadius: "20px",
-                        border: "2px solid #007BFF",
+                        border: "2px solid #E5194B",
                       }}
                       defaultValue={item?.shortDescription}
                       type="number"
@@ -212,7 +212,7 @@ const UpdateItem = () => {
                     <select
                       style={{
                         borderRadius: "15px",
-                        border: "2px solid #007BFF",
+                        border: "2px solid #E5194B",
                       }}
                       value={category}
                       onChange={(event) => changeCategory(event.target.value)}

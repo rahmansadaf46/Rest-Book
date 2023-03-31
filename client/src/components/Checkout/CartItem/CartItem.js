@@ -29,7 +29,7 @@ const CartItem = (props) => {
                 </div>
                 <div className="col-md-3">
                     <p style={{ fontSize: '13px' }}><b>{item.title}</b></p>
-                    <p style={{ marginTop: '-15px', color: '#007BFF', marginBottom: '-1px' }}><b>${item.price}</b></p>
+                    <p style={{ marginTop: '-15px', color: '#E5194B', marginBottom: '-1px' }}><b>${item.price}</b></p>
                     <small style={{ marginTop: '-88px', fontSize: '10px', lineHeight: '80%' }}>Delivery Free</small>
                 </div>
                 {

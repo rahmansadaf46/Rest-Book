@@ -82,7 +82,7 @@ const Header = ({ cart }) => {
             sessionStorage.getItem("email") === "trustnride46@gmail.com" ? (
               <div className="mr-2">
                 {" "}
-                <Link to="/admin/pending" className="cart ">
+                <Link to="/admin/restaurantList" className="cart ">
                   <SupervisorAccountIcon />
                 </Link>
               </div>
