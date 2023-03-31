@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Form, Nav, Navbar } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
-import SupervisorAccountIcon from "@material-ui/icons/SupervisorAccount";
+// import SupervisorAccountIcon from "@material-ui/icons/SupervisorAccount";
 import "./Header.css";
 import logo from "../../../fakeData/images/logo2.png";
 import Button from "@mui/material/Button";
@@ -82,8 +82,15 @@ const Header = ({ cart }) => {
             sessionStorage.getItem("email") === "trustnride46@gmail.com" ? (
               <div className="mr-2">
                 {" "}
-                <Link to="/admin/restaurantList" className="cart ">
+                {/* <Link to="/admin/restaurantList" className="cart ">
                   <SupervisorAccountIcon />
+                </Link> */}
+                <Link
+                  to="/admin/restaurantList"
+                  className="btn btn-danger login mr-3"
+                  style={{ borderRadius: "30px"}}
+                >
+                  <b>Admin Panel</b>
                 </Link>
               </div>
             ) : (

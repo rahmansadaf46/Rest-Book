@@ -13,8 +13,8 @@ const Footer = () => {
                         <ul>
                             <li className="mb-2"><Link className="text-white ">About Online item</Link></li>
                             <li className="mb-2"><Link className="text-white">Read our blog</Link></li>
-                            <li className="mb-2"><Link className="text-white">Sign up for Garage</Link></li>
-                            <li className="mb-2"><Link className="text-white">Add your Garage</Link></li>
+                            <li className="mb-2"><Link className="text-white">Sign up for Restaurant</Link></li>
+                            <li className="mb-2"><Link className="text-white">Add your Restaurant</Link></li>
                         </ul>
                     </div>
                     <div className="col-md-3 ">
@@ -22,7 +22,7 @@ const Footer = () => {
                             <li className="mb-2"><Link className="text-white">Get help</Link></li>
                             <li className="mb-2"><Link className="text-white">Read FAQs</Link></li>
                             <li className="mb-2"><Link className="text-white">View all cities</Link></li>
-                            <li className="mb-2"><Link className="text-white">Garage near me</Link></li>
+                            <li className="mb-2"><Link className="text-white">Restaurant near me</Link></li>
                         </ul>
                     </div>
                 </div>

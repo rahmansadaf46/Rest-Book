@@ -3,7 +3,7 @@ import Header from '../../Shared/Header/Header';
 import Footer from '../../Shared/Footer/Footer';
 
 import About from '../About/About';
-import Menu from '../Menu/Menu';
+// import Menu from '../Menu/Menu';
 import Search from '../Search/Search';
 import { getDatabaseCart } from '../../../utilities/databaseManager';
 import GarageList from '../GarageList/GarageList';
@@ -72,7 +72,7 @@ const Home = () => {
             
             
 
-            <Menu></Menu>
+            {/* <Menu></Menu> */}
             <About></About>
             <Footer></Footer>
             <Location modalIsOpen={modalIsOpen} submitLocation={submitLocation}  closeModal={closeModal}></Location>
