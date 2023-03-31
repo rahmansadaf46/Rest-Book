@@ -1,0 +1,38 @@
+.cart {
+    color: black;
+    margin-right: 20px;
+    text-decoration: none !important;
+}
+
+.cart :hover {
+    color: #E5194B;
+
+}
+
+.login:hover {
+    background-color: #E5194B;
+    color: white !important;
+    border-radius: 30px;
+}
+
+.numberCircle {
+    position: relative;
+    top: -12px;
+    left: 38px;
+    border-radius: 200px;
+    width: 20px;
+    height: 20px;
+    padding: 1px;
+    background: #E5194B;
+    border: 2px solid #E5194B;
+    color: white;
+    text-align: center;
+    /* text-decoration: none; */
+    font: 12px Arial, sans-serif;
+}
+
+.numberCircle:hover {
+    background-color: #E5194B;
+    color: white !important;
+    border-radius: 30px;
+}
