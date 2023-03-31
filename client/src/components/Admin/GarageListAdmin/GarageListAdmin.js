@@ -123,7 +123,7 @@ const GarageListAdmin = () => {
                           />
                         </div>
                         <p className="text-left font-weight-bold  mt-3">
-                          <span style={{ color: "#F58E82" }}>Garage Name:</span>
+                          <span style={{ color: "#F58E82" }}>Restaurant Name:</span>
                           <span className="text-info font-weight-bold">
                             {" "}
                             {item?.title}
