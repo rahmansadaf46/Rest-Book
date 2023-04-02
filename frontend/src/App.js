@@ -7,7 +7,7 @@ import AddItem from "./components/Admin/AddItem/AddItem";
 import AreaList from "./components/Admin/AreaList/AreaList";
 import Customer from "./components/Admin/Customer/Customer";
 import DeliveryOrder from "./components/Admin/DeliveryOrder/DeliveryOrder";
-import GarageListAdmin from "./components/Admin/GarageListAdmin/GarageListAdmin";
+import RestaurantListAdmin from "./components/Admin/RestaurantListAdmin/RestaurantListAdmin";
 import ItemList from "./components/Admin/ItemList/ItemList";
 import PendingOrder from "./components/Admin/PendingOrder/PendingOrder";
 import UpdateGarage from "./components/Admin/UpdateGarage/UpdateGarage";
@@ -41,13 +41,14 @@ function App() {
     navigator.geolocation.getCurrentPosition(showPosition);
   }, []);
   function showPosition(position) {
-    setMyLocation(position.coords);
+    console.log(position.coords.latitude, position.coords.longitude)
+    setMyLocation({longitude: position.coords.longitude, latitude: position.coords.latitude});
     // console.log(position.coords, "juhancords");
   }
 
   // return <MapComponent></MapComponent>;
   return (
-    <UserContext.Provider value={[loggedInUser, setLoggedInUser]}>
+    <UserContext.Provider value={[loggedInUser, setLoggedInUser, myLocation]}>
       <Router>
         <Switch>
           <Route path="/home">
@@ -103,7 +104,7 @@ function App() {
             <UpdateGarage></UpdateGarage>
           </PrivateRoute>
           <PrivateRoute path="/admin/restaurantList">
-            <GarageListAdmin></GarageListAdmin>
+            <RestaurantListAdmin></RestaurantListAdmin>
           </PrivateRoute>
           <PrivateRoute path="/admin/customer">
             <Customer></Customer>

@@ -6,7 +6,7 @@ import About from '../About/About';
 // import Menu from '../Menu/Menu';
 import Search from '../Search/Search';
 import { getDatabaseCart } from '../../../utilities/databaseManager';
-import GarageList from '../GarageList/GarageList';
+import GarageList from '../RestaurantList/RestaurantList';
 import Location from '../Location/Location';
 // import fakeData from '../../../fakeData';
 

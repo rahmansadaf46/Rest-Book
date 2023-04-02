@@ -104,12 +104,12 @@ const Restaurant = () => {
   return (
     <div>
       <Header cart={cart.length}></Header>
-      <div style={{ backgroundColor: "#E2F3F9" }}>
+      <div style={{ backgroundColor: "#FCF4E0" }}>
         <div className="container mt-5 py-5">
           <div className="row">
             <div className="col-md-6 text-center mt-3 pt-5">
               <p
-                style={{ fontSize: "80px", color: "#676E9C" }}
+                style={{ fontSize: "80px", color: "#E5194B" }}
                 className="mt-2 "
               >
                 {garage.title}
@@ -144,7 +144,7 @@ const Restaurant = () => {
             </div>
           </div>
           <div>
-            <h1 style={{ color: "#676E9C" }} className="text-center mt-5">
+            <h1 style={{ color: "#E5194B" }} className="text-center mt-5">
               <u>Available Services</u>
             </h1>
             <div className="row d-flex justify-content-center">
@@ -189,7 +189,7 @@ const Restaurant = () => {
                         <span style={{ color: "#F58E82" }}>
                           Service Charge:
                         </span>{" "}
-                        <span className="text-info font-weight-bold">
+                        <span className="text-danger font-weight-bold">
                           {service.rate}/-
                         </span>
                       </h4>
@@ -200,7 +200,7 @@ const Restaurant = () => {
             </div>
           </div>
           <hr />
-          <h2 className="text-center text-info mt-5">Garage Location</h2>
+          <h2 className="text-center text-danger mt-5">Restaurant Location</h2>
           <div className="d-flex justify-content-center ">
             {console.log(
               `https://maps.google.com/maps?q=${lat},${long}=es&z=14&amp;output=embed`
@@ -217,8 +217,6 @@ const Restaurant = () => {
             <MapComponent
               toLat={lat}
               toLong={long}
-              fromLat={lat}
-              fromLong={long}
             />
           </div>
         </div>

@@ -67,7 +67,7 @@ const ItemList = () => {
         </div>
         <div
           style={{
-            backgroundColor: "#FFB6C1",
+            backgroundColor: "#FEC5E4",
             height: "100%",
             minHeight: "800px",
           }}
@@ -148,7 +148,7 @@ const ItemList = () => {
                       <hr />
                       <h4 className="text-center mt-3">
                         <span style={{ color: "#F58E82" }}>Price:</span>{" "}
-                        <span className="text-info font-weight-bold">
+                        <span className="text-danger font-weight-bold">
                           {item.price}/-
                         </span>
                       </h4>

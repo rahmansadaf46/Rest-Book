@@ -150,7 +150,7 @@ const UpdateGarage = () => {
           <AdminSidebar />
         </div>
         <div
-          style={{ backgroundColor: "#FFB6C1", height: "150vh" }}
+          style={{ backgroundColor: "#FEC5E4", height: "150vh" }}
           className="col-md-10 pt-4"
         >
           <div className="text-center  text-danger">

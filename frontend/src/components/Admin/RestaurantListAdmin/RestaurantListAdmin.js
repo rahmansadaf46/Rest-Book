@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import AdminHeader from "../AdminHeader/AdminHeader";
 import AdminSidebar from "../AdminSidebar/AdminSidebar";
 
-const GarageListAdmin = () => {
+const RestaurantListAdmin = () => {
   const [items, setItems] = useState([]);
   // const [amount, setAmount] = useState([]);
   // const [todayAmount, setTodayAmount] = useState([]);
@@ -68,7 +68,7 @@ const GarageListAdmin = () => {
         </div>
         <div
           style={{
-            backgroundColor: "#FFB6C1",
+            backgroundColor: "#FEC5E4",
             height: "100%",
             minHeight: "800px",
           }}
@@ -124,37 +124,37 @@ const GarageListAdmin = () => {
                         </div>
                         <p className="text-left font-weight-bold  mt-3">
                           <span style={{ color: "#F58E82" }}>Restaurant Name:</span>
-                          <span className="text-info font-weight-bold">
+                          <span className="text-danger font-weight-bold">
                             {" "}
                             {item?.title}
                           </span>
                         </p>
                         <p className="text-left   font-weight-bold   mt-3">
                           <span style={{ color: "#F58E82" }}>Address:</span>
-                          <span className="text-info font-weight-bold">
+                          <span className="text-danger font-weight-bold">
                             {" "}
                             {item?.address}
                           </span>
                         </p>
                         <p className="text-left  font-weight-bold    mt-3">
                           <span style={{ color: "#F58E82" }}>Description:</span>
-                          <span className="text-info font-weight-bold">
+                          <span className="text-danger font-weight-bold">
                             {" "}
                             {item?.description}
                           </span>
                         </p>
                         <p className="text-left   font-weight-bold   mt-3">
                           <span style={{ color: "#F58E82" }}>Contact:</span>
-                          <span className="text-info font-weight-bold">
+                          <span className="text-danger font-weight-bold">
                             {" "}
                             {item?.mobile}
                           </span>
                         </p>
                         <p className="text-left  font-weight-bold   mt-3">
                           <span style={{ color: "#F58E82" }}>
-                            Garage User Email:
+                          Restaurant User Email:
                           </span>
-                          <span className="text-info font-weight-bold">
+                          <span className="text-danger font-weight-bold">
                             {" "}
                             {item?.user}
                           </span>
@@ -163,7 +163,7 @@ const GarageListAdmin = () => {
                           <span style={{ color: "#F58E82" }}>
                             Facebook Code:
                           </span>
-                          <span className="text-info font-weight-bold">
+                          <span className="text-danger font-weight-bold">
                             {" "}
                             {item?.facebook}
                           </span>
@@ -172,7 +172,7 @@ const GarageListAdmin = () => {
                           <span style={{ color: "#F58E82" }}>
                             Google Map Code:
                           </span>
-                          <span className="text-info font-weight-bold">
+                          <span className="text-danger font-weight-bold">
                             {" "}
                             {item?.googleMap.split("&", 1)}...
                           </span>
@@ -182,7 +182,7 @@ const GarageListAdmin = () => {
                           <span style={{ color: "orange", fontSize: "18px" }}>
                             <b>Areas</b>
                           </span>
-                          <ul className="text-info font-weight-bold text-center">
+                          <ul style={{listStyle:'none'}} className="text-danger  font-weight-bold text-center">
                             {" "}
                             {item?.area.map((data) => (
                               <li className="mr-5 my-2 text-uppercase">
@@ -198,7 +198,7 @@ const GarageListAdmin = () => {
                               to={`/admin/updateGarage/${item._id}`}
                               class="btn btn-warning font-weight-bold"
                             >
-                              Update Garage
+                              Update Restaurant
                             </Link>
                           </div>
                           <div className="col-6">
@@ -206,7 +206,7 @@ const GarageListAdmin = () => {
                               onClick={() => handleDelete(item._id)}
                               class="btn btn-danger font-weight-bold"
                             >
-                              Delete Garage
+                              Delete Restaurant
                             </button>
                           </div>
                         </div>
@@ -251,4 +251,4 @@ const GarageListAdmin = () => {
   );
 };
 
-export default GarageListAdmin;
+export default RestaurantListAdmin;

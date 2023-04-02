@@ -128,7 +128,7 @@ const AddRestaurant = () => {
           <AdminSidebar />
         </div>
         <div
-          style={{ backgroundColor: "#FFB6C1", minHeight: "150vh" }}
+          style={{ backgroundColor: "#FEC5E4", minHeight: "150vh" }}
           className="col-md-10 pt-4"
         >
           <div className="text-center">

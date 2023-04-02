@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import GarageProfile from '../GarageProfile/GarageProfile';
+import RestaurantProfile from '../RestaurantProfile/RestaurantProfile';
 // import { Link } from 'react-router-dom';
 // import fakeData from '../../../fakeData';
 // import { getDatabaseCart } from '../../../utilities/databaseManager';
 // import MenuItem from '../MenuItem/MenuItem';
 // import './Menu.css';
 
-const GarageList = ({handleLocation,area}) => {
+const RestaurantList = ({handleLocation,area}) => {
     const [garage, setGarage] = useState([]);
     // const [allItem, setAllItem] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -68,7 +68,7 @@ const GarageList = ({handleLocation,area}) => {
 
 
     return (
-        <div style={{ borderBottom: '3px solid skyBlue', backgroundColor: '#E2F3F9', marginTop: '0px',minHeight:'690px' }} className="">
+        <div style={{ borderBottom: '3px solid skyBlue', backgroundColor: '#FEC5E4', marginTop: '0px',minHeight:'690px' }} className="">
             {/* <div className="text-center cat">
                 <nav>
                     <ul>
@@ -85,12 +85,12 @@ const GarageList = ({handleLocation,area}) => {
                 <div className='text-center'>
                 <button onClick={()=> handleLocation()} class="btn btn-primary mb-3 font-weight-bold" type="submit">Update Location</button>
                 </div>
-                <h2 style={{ color: '#EC6F54' }} className="text-center mb-4  "><u><b>Available Garage</b></u></h2>
+                <h2 style={{ color: '#EC6F54' }} className="text-center mb-4  "><u><b>Available Restaurant</b></u></h2>
                 {loading && <h2 className='text-center'>Loading...</h2>}
                 {noData && <h2 className='text-center text-danger mt-5'>No Garage Found</h2>}
                 <div className="row">
                     {
-                        garage.map(data => <div className="col-md-4"><GarageProfile garage={data}></GarageProfile></div>)
+                        garage.map(data => <div className="col-md-4"><RestaurantProfile garage={data}></RestaurantProfile></div>)
                     }
                 </div>
             </div>
@@ -100,4 +100,4 @@ const GarageList = ({handleLocation,area}) => {
     );
 };
 
-export default GarageList;
+export default RestaurantList;

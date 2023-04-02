@@ -35,7 +35,7 @@ console.log(garage)
                 </div>
 
 
-                <div style={{ backgroundColor: '#FFB6C1', height: '100%', minHeight: '800px' }} className="col-md-10 pt-4 d-flex justify-content-center">
+                <div style={{ backgroundColor: '#FEC5E4', height: '100%', minHeight: '800px' }} className="col-md-10 pt-4 d-flex justify-content-center">
                     <div className="">
                         {/* <div className="text-center ml-5 pb-3 text-danger">
                             <h2><u>Garage Profile</u></h2>
@@ -51,36 +51,36 @@ console.log(garage)
                                     </div>
                                     <h4 className="text-left mt-3">
                                         <span style={{ color: '#F58E82' }}>Garage Name:</span> 
-                                    <span className="text-info font-weight-bold"> {garage[0]?.title}</span>
+                                    <span className="text-danger font-weight-bold"> {garage[0]?.title}</span>
                                     </h4>
                                     <h4 className="text-left     mt-3">
                                         <span style={{ color: '#F58E82' }}>Garage Address:</span> 
-                                    <span className="text-info font-weight-bold"> {garage[0]?.address}</span>
+                                    <span className="text-danger font-weight-bold"> {garage[0]?.address}</span>
                                     </h4>
                                     <h4 className="text-left     mt-3">
                                         <span style={{ color: '#F58E82' }}>Garage Description:</span> 
-                                    <span className="text-info font-weight-bold"> {garage[0]?.description}</span>
+                                    <span className="text-danger font-weight-bold"> {garage[0]?.description}</span>
                                     </h4>
                                     <h4 className="text-left     mt-3">
                                         <span style={{ color: '#F58E82' }}>Garage Contact:</span> 
-                                    <span className="text-info font-weight-bold"> {garage[0]?.mobile}</span>
+                                    <span className="text-danger font-weight-bold"> {garage[0]?.mobile}</span>
                                     </h4>
                                     <h4 className="text-left     mt-3">
                                         <span style={{ color: '#F58E82' }}>Garage User Email:</span> 
-                                    <span className="text-info font-weight-bold"> {garage[0]?.user}</span>
+                                    <span className="text-danger font-weight-bold"> {garage[0]?.user}</span>
                                     </h4>
                                     <hr/>
                                     <h4 className="text-center     mt-3">
                                         <span  style={{ color: 'orange' }}>Areas</span> 
-                                    <ul className="text-info font-weight-bold text-center"> {garage[0]?.area.map(data=> <li className="mr-5 my-2 text-uppercase"># {data}</li>)}</ul>
+                                    <ul className="text-danger font-weight-bold text-center"> {garage[0]?.area.map(data=> <li className="mr-5 my-2 text-uppercase"># {data}</li>)}</ul>
                                     </h4>
                                     {/* <h4 className="text-left     mt-3">
                                         <span style={{ color: '#F58E82' }}>Garage Facebook Code:</span> 
-                                    <span className="text-info font-weight-bold"> {garage[0].facebook}</span>
+                                    <span className="text-danger font-weight-bold"> {garage[0].facebook}</span>
                                     </h4>    */}
                                     {/* <h4 className="text-left     mt-3">
                                         <span style={{ color: '#F58E82' }}>Garage Facebook Code:</span> 
-                                    <span className="text-info font-weight-bold"> {garage[0].facebook}</span>
+                                    <span className="text-danger font-weight-bold"> {garage[0].facebook}</span>
                                     </h4> */}
                                     <div className='row text-center mt-3 p-3'>
                                         <div className='col-6'>

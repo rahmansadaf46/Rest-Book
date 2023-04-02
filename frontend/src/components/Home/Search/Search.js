@@ -21,7 +21,7 @@ const Search = ({handleLocation}) => {
                         cursorComponent={<div style={{ color: "#393650" }}> 24/7!!</div>}
                         blinkTimeAfterFinish={-1}> We are open </BlinkingCursorTextBuilder> */}
 
-                    {/* <p style={{ color: "#676E9C" }}><FloatingLettersTextBuilder
+                    {/* <p style={{ color: "#E5194B" }}><FloatingLettersTextBuilder
                         floatingSpeed={500}
                         lettersAppearanceDelay={50}
                         animationMaxMargin={"200px"}

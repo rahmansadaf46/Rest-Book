@@ -51,7 +51,7 @@ const AddGarageService = () => {
         </div>
 
         <div
-          style={{ backgroundColor: "#FFB6C1", height: "100vh" }}
+          style={{ backgroundColor: "#FEC5E4", height: "100vh" }}
           className="col-md-10 pt-4"
         >
           <div className="text-center  text-danger">

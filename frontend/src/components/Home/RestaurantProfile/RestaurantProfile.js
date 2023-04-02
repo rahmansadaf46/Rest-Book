@@ -2,7 +2,7 @@ import React from "react";
 import { Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-const GarageProfile = ({ garage }) => {
+const RestaurantProfile = ({ garage }) => {
   return (
     <div className=" d-flex justify-content-center garage mb-3">
       <Link to={`/garage/${garage._id}`} className="card-item">
@@ -11,7 +11,7 @@ const GarageProfile = ({ garage }) => {
           style={{
             borderRadius: "35px",
             border: "none",
-            background: "#E2F3F9",
+            background: "#FCF4E0",
           }}
         >
           <div className="px-5 py-3">
@@ -41,4 +41,4 @@ const GarageProfile = ({ garage }) => {
   );
 };
 
-export default GarageProfile;
+export default RestaurantProfile;
