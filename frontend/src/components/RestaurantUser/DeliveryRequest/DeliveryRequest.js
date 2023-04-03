@@ -8,7 +8,7 @@ const DeliveryRequest = () => {
 
 
     useEffect(() => {
-        fetch('http://localhost:4200/garageOrder', {
+        fetch('http://localhost:4200/restaurantOrder', {
             method: 'POST',
             headers: { 'content-type': 'application/json' },
             body: JSON.stringify({ email: sessionStorage.getItem('email') })

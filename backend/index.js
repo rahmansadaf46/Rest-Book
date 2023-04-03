@@ -6,6 +6,7 @@ const ObjectId = require('mongodb').ObjectId;
 const fileUpload = require('express-fileupload');
 require('dotenv').config()
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.c9qgdog.mongodb.net/?retryWrites=true&w=majority`;
+// const uri = 'mongodb://localhost:27017'
 const app = express()
 
 app.use(bodyParser.json());
@@ -25,7 +26,7 @@ client.connect(err => {
     const itemCollection = client.db("trustNRide").collection("allItem");
     const userCollection = client.db("trustNRide").collection("allUser");
     const areaCollection = client.db("trustNRide").collection("allArea");
-    const garageCollection = client.db("trustNRide").collection("allGarage");
+    const restaurantCollection = client.db("trustNRide").collection("allGarage");
     const serviceCollection = client.db("trustNRide").collection("allService");
     //garage
     app.post('/addRestaurant', (req, res) => {
@@ -42,20 +43,20 @@ client.connect(err => {
         const coords = req.body.coords;
 
         const area = location.split(',')
-        file.mv(`${__dirname}/image/garage/${file.name}`, err => {
+        file.mv(`${__dirname}/image/restaurant/${file.name}`, err => {
             if (err) {
                 return res.status(500).send({ msg: 'Failed to upload Image' });
             }
         })
 
-        garageCollection.insertOne({
+        restaurantCollection.insertOne({
             title, status, user, area, image, address, mobile, description, facebook, coords
         })
             .then(result => {
                 res.send(result.insertedCount > 0);
             })
     })
-    app.patch('/updateGarage/:id', (req, res) => {
+    app.patch('/updateRestaurant/:id', (req, res) => {
         const title = req.body.data.title;
         const area = req.body.data.area;
         const user = req.body.data.user;
@@ -64,7 +65,7 @@ client.connect(err => {
         const description = req.body.data.description;
         const facebook = req.body.data.facebook;
         const coords = req.body.data.coords;
-        garageCollection.updateOne({ _id: ObjectId(req.params.id) },
+        restaurantCollection.updateOne({ _id: ObjectId(req.params.id) },
             {
                 $set: {
                     title: title, area: area, user: user, address: address, mobile: mobile,
@@ -75,30 +76,30 @@ client.connect(err => {
                 res.send(result.matchedCount > 0);
             })
     })
-    app.get('/garages', (req, res) => {
-        garageCollection.find({})
+    app.get('/restaurants', (req, res) => {
+        restaurantCollection.find({})
             .toArray((err, documents) => {
                 res.send(documents);
             })
     })
-    app.get('/garageProfile/:id', (req, res) => {
+    app.get('/restaurantProfile/:id', (req, res) => {
         // console.log(req.params.user)
-        garageCollection.find({ _id: ObjectId(req.params.id) })
+        restaurantCollection.find({ _id: ObjectId(req.params.id) })
             .toArray((err, documents) => {
                 // console.log(documents[0])
                 res.send(documents[0]);
             })
     })
-    app.post('/garageUser', (req, res) => {
+    app.post('/restaurantUser', (req, res) => {
         const user = req.body;
         // console.log(req.body)
-        garageCollection.find({ user: user.user })
+        restaurantCollection.find({ user: user.user })
             .toArray((err, documents) => {
                 res.send(documents);
             })
     })
-    app.delete('/deleteGarage/:id', (req, res) => {
-        garageCollection.deleteOne({ _id: ObjectId(req.params.id) })
+    app.delete('/deleteRestaurant/:id', (req, res) => {
+        restaurantCollection.deleteOne({ _id: ObjectId(req.params.id) })
             .then((result) => {
                 res.send(result.deletedCount > 0);
                 // console.log(res);
@@ -254,7 +255,7 @@ client.connect(err => {
     //         })
     // })
 
-    app.post('/garageOrder', (req, res) => {
+    app.post('/restaurantOrder', (req, res) => {
         const email = req.body.email;
         orderCollection.find({})
             .toArray((err, documents) => {

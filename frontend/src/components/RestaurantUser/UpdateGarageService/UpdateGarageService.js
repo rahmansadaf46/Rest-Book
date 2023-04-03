@@ -34,7 +34,7 @@ const UpdateGarageService = () => {
             .then(response => response.json())
             .then(data => {
                 window.alert('Service Updated successfully');
-                window.location.href="/garage/serviceList"
+                window.location.href="/restaurant/serviceList"
                 // window.location.reload();
             })
 

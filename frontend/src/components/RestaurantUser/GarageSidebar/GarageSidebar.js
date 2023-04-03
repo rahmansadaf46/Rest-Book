@@ -9,31 +9,31 @@ const GarageSidebar = () => {
 
             <ul className="list-unstyled py-3">
             <li>
-                    <Link to="/garage/profile" className="">
+                    <Link to="/restaurant/profile" className="">
                         <span style={{  fontWeight: 'bold' }}><FontAwesomeIcon icon={faBacon} /> Garage Profile</span>
                     </Link>
                 </li>
                 <br />
                 <li>
-                    <Link to="/garage/pending" className="">
+                    <Link to="/restaurant/pending" className="">
                         <span style={{  fontWeight: 'bold' }}><FontAwesomeIcon icon={faCookieBite} /> Pending Request</span>
                     </Link>
                 </li>
                 <br />
                 <li>
-                    <Link to="/garage/delivery" className="">
+                    <Link to="/restaurant/delivery" className="">
                         <span style={{  fontWeight: 'bold' }}><FontAwesomeIcon icon={faCheckCircle} /> Delivery Request</span>
                     </Link>
                 </li>
                 <br />
                 <li>
-                    <Link to="/garage/addService" className="">
+                    <Link to="/restaurant/addService" className="">
                         <span style={{  fontWeight: 'bold' }}><FontAwesomeIcon icon={faPlus} /> Add Service</span>
                     </Link>
                 </li>
                 <br />
                 <li>
-                    <Link to="/garage/serviceList" className="">
+                    <Link to="/restaurant/serviceList" className="">
                         <span style={{  fontWeight: 'bold' }}><FontAwesomeIcon icon={faBars} /> Service List</span>
                     </Link>
                 </li>

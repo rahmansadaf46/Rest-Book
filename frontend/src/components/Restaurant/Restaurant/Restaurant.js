@@ -19,7 +19,7 @@ const Restaurant = () => {
   const itemData = localStorage.getItem("item");
   useEffect(() => {
     // setAllitem(JSON.parse(itemData))
-    fetch("http://localhost:4200/garageProfile/" + id)
+    fetch("http://localhost:4200/restaurantProfile/" + id)
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
@@ -138,7 +138,7 @@ const Restaurant = () => {
             <div className="col-md-6 text-left">
               <img
                 style={{ width: "450px", borderRadius: "50%" }}
-                src={`http://localhost:4200/garage/${garage.image}`}
+                src={`http://localhost:4200/restaurant/${garage.image}`}
                 alt=""
               />
             </div>

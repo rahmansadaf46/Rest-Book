@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const RestaurantProfile = ({ garage }) => {
   return (
     <div className=" d-flex justify-content-center garage mb-3">
-      <Link to={`/garage/${garage._id}`} className="card-item">
+      <Link to={`/restaurant/${garage._id}`} className="card-item">
         <Card
           className="garage-item"
           style={{
@@ -17,7 +17,7 @@ const RestaurantProfile = ({ garage }) => {
           <div className="px-5 py-3">
             <Card.Img
               variant="top"
-              src={`http://localhost:4200/garage/${garage.image}`}
+              src={`http://localhost:4200/restaurant/${garage.image}`}
             />
           </div>
           <Card.Body>

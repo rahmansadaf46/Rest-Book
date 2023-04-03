@@ -16,7 +16,7 @@ const RestaurantList = ({handleLocation,area}) => {
         setLoading(true)
         setGarage([])
         setNoData(false)
-        fetch('http://localhost:4200/garages')
+        fetch('http://localhost:4200/restaurants')
             .then(res => res.json())
             .then(data => {
                 console.log(data);
@@ -87,7 +87,7 @@ const RestaurantList = ({handleLocation,area}) => {
                 </div>
                 <h2 style={{ color: '#EC6F54' }} className="text-center mb-4  "><u><b>Available Restaurant</b></u></h2>
                 {loading && <h2 className='text-center'>Loading...</h2>}
-                {noData && <h2 className='text-center text-danger mt-5'>No Garage Found</h2>}
+                {noData && <h2 className='text-center text-danger mt-5'>No Restaurant Found</h2>}
                 <div className="row">
                     {
                         garage.map(data => <div className="col-md-4"><RestaurantProfile garage={data}></RestaurantProfile></div>)

@@ -11,7 +11,7 @@ const AddGarageService = () => {
   console.log(user, "user");
   useEffect(() => {
     if (user) {
-      fetch("http://localhost:4200/garageUser", {
+      fetch("http://localhost:4200/restaurantUser", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ user: user }),

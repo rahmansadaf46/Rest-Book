@@ -10,7 +10,7 @@ import DeliveryOrder from "./components/Admin/DeliveryOrder/DeliveryOrder";
 import RestaurantListAdmin from "./components/Admin/RestaurantListAdmin/RestaurantListAdmin";
 import ItemList from "./components/Admin/ItemList/ItemList";
 import PendingOrder from "./components/Admin/PendingOrder/PendingOrder";
-import UpdateGarage from "./components/Admin/UpdateGarage/UpdateGarage";
+import UpdateRestaurant from "./components/Admin/UpdateRestaurant/UpdateRestaurant";
 import UpdateItem from "./components/Admin/UpdateItem/UpdateItem";
 import Checkout from "./components/Checkout/Checkout/Checkout";
 import ServiceCheckout from "./components/Checkout/ServiceCheckout/ServiceCheckout";
@@ -100,8 +100,8 @@ function App() {
           <PrivateRoute path="/admin/addRestaurant">
             <AddRestaurant></AddRestaurant>
           </PrivateRoute>
-          <PrivateRoute path="/admin/updateGarage/:id">
-            <UpdateGarage></UpdateGarage>
+          <PrivateRoute path="/admin/updateRestaurant/:id">
+            <UpdateRestaurant></UpdateRestaurant>
           </PrivateRoute>
           <PrivateRoute path="/admin/restaurantList">
             <RestaurantListAdmin></RestaurantListAdmin>
@@ -109,25 +109,25 @@ function App() {
           <PrivateRoute path="/admin/customer">
             <Customer></Customer>
           </PrivateRoute>
-          <PrivateRoute path="/garage/profile">
+          <PrivateRoute path="/restaurant/profile">
             <GarageProfileUser></GarageProfileUser>
           </PrivateRoute>
-          <PrivateRoute path="/garage/pending">
+          <PrivateRoute path="/restaurant/pending">
             <PendingRequest></PendingRequest>
           </PrivateRoute>
-          <PrivateRoute path="/garage/delivery">
+          <PrivateRoute path="/restaurant/delivery">
             <DeliveryRequest></DeliveryRequest>
           </PrivateRoute>
-          <PrivateRoute path="/garage/addService">
+          <PrivateRoute path="/restaurant/addService">
             <AddGarageService></AddGarageService>
           </PrivateRoute>
-          <PrivateRoute path="/garage/updateService/:id">
+          <PrivateRoute path="/restaurant/updateService/:id">
             <UpdateGarageService></UpdateGarageService>
           </PrivateRoute>
-          <PrivateRoute path="/garage/serviceList">
+          <PrivateRoute path="/restaurant/serviceList">
             <ServiceList></ServiceList>
           </PrivateRoute>
-          <PrivateRoute path="/garage/:id">
+          <PrivateRoute path="/restaurant/:id">
             <Restaurant></Restaurant>
           </PrivateRoute>
 

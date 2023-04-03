@@ -61,7 +61,7 @@ const ServiceList = () => {
                                         <h4 className="text-center mt-3"><span style={{ color: '#F58E82' }}>Service Charge:</span> <span className="text-danger font-weight-bold">{service.rate}/-</span></h4>
                                         <div className='row text-center mt-3 p-3'>
                                             <div className='col-6'>
-                                                <Link to={`/garage/updateService/${service._id}`} class="btn btn-warning font-weight-bold" >Update Service</Link>
+                                                <Link to={`/restaurant/updateService/${service._id}`} class="btn btn-warning font-weight-bold" >Update Service</Link>
 
                                             </div>
                                             <div className='col-6'>

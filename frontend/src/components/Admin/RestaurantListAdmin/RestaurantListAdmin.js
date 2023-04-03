@@ -20,7 +20,7 @@ const RestaurantListAdmin = () => {
     }
   }, [email]);
   useEffect(() => {
-    fetch("http://localhost:4200/garages")
+    fetch("http://localhost:4200/restaurants")
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
@@ -35,7 +35,7 @@ const RestaurantListAdmin = () => {
     console.log(data);
     let text = "Are you sure?";
     if (window.confirm(text) === true) {
-      fetch(`http://localhost:4200/deleteGarage/${data}`, {
+      fetch(`http://localhost:4200/deleteRestaurant/${data}`, {
         method: "DELETE",
       })
         .then((res) => res.json())
@@ -118,7 +118,7 @@ const RestaurantListAdmin = () => {
                         <div className="d-flex justify-content-center">
                           <img
                             style={{ width: "200px", borderRadius: "50%" }}
-                            src={`http://localhost:4200/garage/${item?.image}`}
+                            src={`http://localhost:4200/restaurant/${item?.image}`}
                             alt=""
                           />
                         </div>
@@ -195,7 +195,7 @@ const RestaurantListAdmin = () => {
                         <div className="row text-center p-3">
                           <div className="col-6">
                             <Link
-                              to={`/admin/updateGarage/${item._id}`}
+                              to={`/admin/updateRestaurant/${item._id}`}
                               class="btn btn-warning font-weight-bold"
                             >
                               Update Restaurant

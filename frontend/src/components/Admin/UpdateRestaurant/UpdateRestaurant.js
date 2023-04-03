@@ -5,15 +5,15 @@ import AdminSidebar from "../AdminSidebar/AdminSidebar";
 import Select from "react-select";
 import { useParams } from 'react-router-dom';
 // import Iframe from 'react-iframe';
-const UpdateGarage = () => {
+const UpdateRestaurant = () => {
   const { register, handleSubmit, errors } = useForm();
   const { id } = useParams();
   // const [loading, setLoading] = useState(false);
   // const [dept, setDept] = useState([]);
   // document.title = "Enroll A Student";
   const email = sessionStorage.getItem("email");
-  const [garage, setGarage] = useState();
-  // const [garageLocation, setGarageLocation] = useState('');
+  const [restaurant, setRestaurant] = useState();
+  // const [restaurantLocation, setRestaurantLocation] = useState('');
   const [areaList, setAreaList] = useState([]);
   const [area, setArea] = useState([]);
   const handleArea = (e) => {
@@ -65,11 +65,11 @@ const UpdateGarage = () => {
         });
         setUserList(user);
       });
-      fetch('http://localhost:4200/garageProfile/' + id)
+      fetch('http://localhost:4200/restaurantProfile/' + id)
             .then(res => res.json())
             .then(data => {
                 console.log(data);
-                setGarage(data)
+                setRestaurant(data)
                 const area = data?.area.map(item=> {return{
                   value: `${item}`,
                   label: `${item?.toUpperCase()}`,
@@ -81,19 +81,19 @@ const UpdateGarage = () => {
                   label: `${data.user}`,
                 })
                 // data.area = area;
-                setGarage(data)
+                setRestaurant(data)
                 console.log(area)
                 // setServices(data)
-                // setGarage(data);
+                // setRestaurant(data);
                 // setAllItem(data);
                 // localStorage.setItem('item', JSON.stringify(data));
 
             })
-    // fetch('http://localhost:4200/garages')
+    // fetch('http://localhost:4200/restaurants')
     //     .then(res => res.json())
     //     .then(data => {
     //         console.log(data);
-    //         setGarageLocation(data[0].googleMap)
+    //         setRestaurantLocation(data[0].googleMap)
     //         // const user = data.map(person => {
     //         //     return {
     //         //         value: `${person.person.email}`, label: `${person.person.email}`
@@ -113,15 +113,15 @@ const UpdateGarage = () => {
     data.area = tempArray;
     data.user = user;
 
-    fetch('http://localhost:4200/updateGarage/'+ id, {
+    fetch('http://localhost:4200/UpdateRestaurant/'+ id, {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ data })
         })
             .then(response => response.json())
             .then(data => {
-                window.alert('Garage Updated successfully');
-                window.location.href="/admin/garageList"
+                window.alert('Restaurant Updated successfully');
+                window.location.href="/admin/restaurantList"
                 // window.location.reload();
             })
 
@@ -155,7 +155,7 @@ const UpdateGarage = () => {
         >
           <div className="text-center  text-danger">
             <h2>
-              <u>Update Garage</u>
+              <u>Update Restaurant</u>
             </h2>
           </div>
           <div className="col-md-12">
@@ -166,7 +166,7 @@ const UpdateGarage = () => {
               >
                 <div className="form-group text-danger text-center">
                   <label for="">
-                    <b>Enter Garage Name</b>
+                    <b>Enter Restaurant Name</b>
                   </label>
                   <input
                     style={{
@@ -176,8 +176,8 @@ const UpdateGarage = () => {
                     type="text"
                     ref={register({ required: true })}
                     name="title"
-                    defaultValue={garage?.title}
-                    placeholder="Enter Garage Name"
+                    defaultValue={restaurant?.title}
+                    placeholder="Enter Restaurant Name"
                     className="form-control"
                   />
                   {errors.name && (
@@ -186,7 +186,7 @@ const UpdateGarage = () => {
                 </div>
                 <div className="form-group text-danger text-center">
                   <label for="">
-                    <b>Enter Garage Address</b>
+                    <b>Enter Restaurant Address</b>
                   </label>
                   <input
                     style={{
@@ -196,8 +196,8 @@ const UpdateGarage = () => {
                     type="text"
                     ref={register({ required: true })}
                     name="address"
-                    defaultValue={garage?.address}
-                    placeholder="Enter Garage Address"
+                    defaultValue={restaurant?.address}
+                    placeholder="Enter Restaurant Address"
                     className="form-control"
                   />
                   {errors.name && (
@@ -206,7 +206,7 @@ const UpdateGarage = () => {
                 </div>
                 <div className="form-group text-danger text-center">
                   <label for="">
-                    <b>Enter Garage Contact no.</b>
+                    <b>Enter Restaurant Contact no.</b>
                   </label>
                   <input
                     style={{
@@ -216,8 +216,8 @@ const UpdateGarage = () => {
                     type="text"
                     ref={register({ required: true })}
                     name="mobile"
-                    defaultValue={garage?.mobile}
-                    placeholder="Enter Garage Contact No."
+                    defaultValue={restaurant?.mobile}
+                    placeholder="Enter Restaurant Contact No."
                     className="form-control"
                   />
                   {errors.name && (
@@ -226,18 +226,18 @@ const UpdateGarage = () => {
                 </div>
                 <div className="form-group text-danger text-center">
                   <label for="">
-                    <b>Enter Garage Description</b>
+                    <b>Enter Restaurant Description</b>
                   </label>
                   <input
                     style={{
                       borderRadius: "15px",
                       border: "2px solid #E5194B",
                     }}
-                    defaultValue={garage?.description}
+                    defaultValue={restaurant?.description}
                     type="text"
                     ref={register({ required: true })}
                     name="description"
-                    placeholder="Enter Garage Description"
+                    placeholder="Enter Restaurant Description"
                     className="form-control"
                   />
                   {errors.name && (
@@ -253,7 +253,7 @@ const UpdateGarage = () => {
                       borderRadius: "15px",
                       border: "2px solid #E5194B",
                     }}
-                    defaultValue={garage?.facebook}
+                    defaultValue={restaurant?.facebook}
                     type="number"
                     ref={register({ required: true })}
                     name="facebook"
@@ -273,7 +273,7 @@ const UpdateGarage = () => {
                       borderRadius: "15px",
                       border: "2px solid #E5194B",
                     }}
-                    defaultValue={garage?.coords.split(',')[0]}
+                    defaultValue={restaurant?.coords.split(',')[0]}
                     type="text"
                     ref={register({ required: true })}
                     name="lat"
@@ -293,7 +293,7 @@ const UpdateGarage = () => {
                       borderRadius: "15px",
                       border: "2px solid #E5194B",
                     }}
-                    defaultValue={garage?.coords.split(',')[1]}
+                    defaultValue={restaurant?.coords.split(',')[1]}
                     type="text"
                     ref={register({ required: true })}
                     name="long"
@@ -357,7 +357,7 @@ const UpdateGarage = () => {
               </form>
             </div>
           </div>
-          {/* <Iframe url={garageLocation}
+          {/* <Iframe url={restaurantLocation}
                         width="450px"
                         height="450px"
                         id="myId"
@@ -370,4 +370,4 @@ const UpdateGarage = () => {
   );
 };
 
-export default UpdateGarage;
+export default UpdateRestaurant;

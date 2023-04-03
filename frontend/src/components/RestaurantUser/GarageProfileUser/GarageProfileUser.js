@@ -47,7 +47,7 @@ console.log(garage)
                                     {/* <p style={{ lineHeight: '0.3', color: 'gray', fontWeight: 'bold', marginBottom: '30px' }}>{service.description.split('\n').map(str => <p>{str}</p>)}</p> */}
                                     {/* <hr /> */}
                                     <div className='d-flex justify-content-center'>
-                                    <img style={{ width: '200px', borderRadius: '50%' }} src={`http://localhost:4200/garage/${garage[0]?.image}`} alt="" />
+                                    <img style={{ width: '200px', borderRadius: '50%' }} src={`http://localhost:4200/restaurant/${garage[0]?.image}`} alt="" />
                                     </div>
                                     <h4 className="text-left mt-3">
                                         <span style={{ color: '#F58E82' }}>Garage Name:</span> 
@@ -84,7 +84,7 @@ console.log(garage)
                                     </h4> */}
                                     <div className='row text-center mt-3 p-3'>
                                         <div className='col-6'>
-                                            {/* <Link to={`/garage/updateService/${service._id}`} class="btn btn-warning font-weight-bold" >Update Service</Link> */}
+                                            {/* <Link to={`/restaurant/updateService/${service._id}`} class="btn btn-warning font-weight-bold" >Update Service</Link> */}
                                             
                                         </div>
                                         <div className='col-6'>

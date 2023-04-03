@@ -34,7 +34,7 @@ const Header = ({ cart }) => {
         setItem(items.reverse());
       });
     if (user) {
-      fetch("http://localhost:4200/garageUser", {
+      fetch("http://localhost:4200/restaurantUser", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ user: user }),
@@ -98,7 +98,7 @@ const Header = ({ cart }) => {
             )}
             {garageUser.length > 0 && (
               <Link
-                to="/garage/profile"
+                to="/restaurant/profile"
                 style={{ borderRadius: "30px" }}
                 className="btn mr-3 login"
               >
