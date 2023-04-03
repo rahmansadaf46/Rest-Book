@@ -11,7 +11,7 @@ const Search = ({handleLocation}) => {
                     <h1>Best food waiting for your belly</h1>
                     {/* <h2>Ride</h2> */}
                     </div>
-                    <button onClick={()=> handleLocation()} style={{fontSize:'25px', borderRadius: '50px', margin:'50px 0px 0px 0px',color:'#7E86B4', border:'4px solid #F58E82'}} class="btn btn-light " type="submit"><b>Enter Your Location</b></button>
+                    <button onClick={()=> handleLocation()} style={{fontSize:'25px', borderRadius: '50px', margin:'50px 0px 0px 0px',color:'#E5194B', border:'4px solid #E5194B'}} class="btn btn-light " type="submit"><b>Search Restaurant</b></button>
                     
                     {/* <BlinkingCursorTextBuilder
                         floatingSpeed={500}

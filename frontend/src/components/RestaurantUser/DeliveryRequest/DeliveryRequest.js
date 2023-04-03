@@ -37,7 +37,7 @@ const DeliveryRequest = () => {
                 </div>
 
 
-                <div style={{ backgroundColor: '#FEC5E4', height: '100%', minHeight: '800px' }} className="col-md-10 pt-4 d-flex justify-content-center">
+                <div style={{ backgroundColor: '#FCF4E0', height: '100%', minHeight: '800px' }} className="col-md-10 pt-4 d-flex justify-content-center">
                     <div className="">
                         <div className="text-center pb-3 text-danger">
                             <h2><u>Delivery Request</u></h2>

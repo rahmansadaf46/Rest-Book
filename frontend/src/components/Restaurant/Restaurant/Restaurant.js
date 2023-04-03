@@ -186,7 +186,7 @@ const Restaurant = () => {
                       </p>
                       <hr />
                       <h4 className="text-center mt-3">
-                        <span style={{ color: "#F58E82" }}>
+                        <span style={{ color: "#E5194B" }}>
                           Service Charge:
                         </span>{" "}
                         <span className="text-danger font-weight-bold">

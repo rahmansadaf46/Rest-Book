@@ -54,7 +54,7 @@ const UpdateGarageService = () => {
                     <GarageSidebar />
                 </div>
 
-                <div style={{ backgroundColor: '#FEC5E4', height: '100vh' }} className="col-md-10 pt-4">
+                <div style={{ backgroundColor: '#FCF4E0', height: '100vh' }} className="col-md-10 pt-4">
                     <div className="text-center  text-danger">
                         <h2><u>Update Service</u></h2>
                     </div>
@@ -77,7 +77,7 @@ const UpdateGarageService = () => {
                             </div>
                             <div className="form-group row">
                                 <div className="form-group col-md-12 mt-4 pt-1 d-flex justify-content-center">
-                                    <button type="submit" style={{ padding: '10px 90px', borderRadius: '40px' }} className="btn btn-primary text-white  font-weight-bold">Submit</button>
+                                    <button type="submit" style={{ padding: '10px 90px', borderRadius: '40px' }} className="btn btn-danger text-white  font-weight-bold">Submit</button>
                                 </div>
                             </div>
 

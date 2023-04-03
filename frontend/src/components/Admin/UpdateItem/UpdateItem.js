@@ -89,7 +89,7 @@ const UpdateItem = () => {
           <AdminSidebar />
         </div>
         <div
-          style={{ backgroundColor: "#FEC5E4", height: "100vh" }}
+          style={{ backgroundColor: "#FCF4E0", height: "100vh" }}
           className="col-md-10 pt-4"
         >
           <div className="text-center  text-danger">
@@ -242,7 +242,7 @@ const UpdateItem = () => {
                     <button
                       type="submit"
                       style={{ padding: "10px 90px", borderRadius: "40px" }}
-                      className="btn text-white btn-primary font-weight-bold"
+                      className="btn text-white btn-danger font-weight-bold"
                     >
                       Update
                     </button>

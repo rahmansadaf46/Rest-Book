@@ -128,7 +128,7 @@ const AddRestaurant = () => {
           <AdminSidebar />
         </div>
         <div
-          style={{ backgroundColor: "#FEC5E4", minHeight: "150vh" }}
+          style={{ backgroundColor: "#FCF4E0", minHeight: "150vh" }}
           className="col-md-10 pt-4"
         >
           <div className="text-center">
@@ -336,7 +336,7 @@ const AddRestaurant = () => {
                     <button
                       type="submit"
                       style={{ padding: "10px 90px", borderRadius: "40px" }}
-                      className="btn text-white btn-primary font-weight-bold"
+                      className="btn text-white btn-danger font-weight-bold"
                     >
                       Submit
                     </button>

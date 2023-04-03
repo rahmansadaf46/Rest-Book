@@ -72,7 +72,7 @@ const Location = ({ modalIsOpen, closeModal, submitLocation }) => {
 
 
             <div className="px-5">
-                <h4 className="text-center text-danger"><u>Enter Your Location</u> </h4>
+                <h4 className="text-center text-danger"><u>Search <span className="text-dark">Restaurant</span></u> </h4>
 
 
                 <br />
@@ -98,7 +98,7 @@ const Location = ({ modalIsOpen, closeModal, submitLocation }) => {
 
 
                     <div className="form-group text-center">
-                        <button type="submit" className="btn btn-primary mt-4 "><b>Submit</b></button>
+                        <button type="submit" className="btn btn-danger mt-4 "><b>Search</b></button>
                     </div>
                 </form>
             </div>

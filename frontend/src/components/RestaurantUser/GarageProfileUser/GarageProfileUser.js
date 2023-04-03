@@ -35,7 +35,7 @@ console.log(garage)
                 </div>
 
 
-                <div style={{ backgroundColor: '#FEC5E4', height: '100%', minHeight: '800px' }} className="col-md-10 pt-4 d-flex justify-content-center">
+                <div style={{ backgroundColor: '#FCF4E0', height: '100%', minHeight: '800px' }} className="col-md-10 pt-4 d-flex justify-content-center">
                     <div className="">
                         {/* <div className="text-center ml-5 pb-3 text-danger">
                             <h2><u>Garage Profile</u></h2>
@@ -50,23 +50,23 @@ console.log(garage)
                                     <img style={{ width: '200px', borderRadius: '50%' }} src={`http://localhost:4200/restaurant/${garage[0]?.image}`} alt="" />
                                     </div>
                                     <h4 className="text-left mt-3">
-                                        <span style={{ color: '#F58E82' }}>Garage Name:</span> 
+                                        <span style={{ color: '#E5194B' }}>Garage Name:</span> 
                                     <span className="text-danger font-weight-bold"> {garage[0]?.title}</span>
                                     </h4>
                                     <h4 className="text-left     mt-3">
-                                        <span style={{ color: '#F58E82' }}>Garage Address:</span> 
+                                        <span style={{ color: '#E5194B' }}>Garage Address:</span> 
                                     <span className="text-danger font-weight-bold"> {garage[0]?.address}</span>
                                     </h4>
                                     <h4 className="text-left     mt-3">
-                                        <span style={{ color: '#F58E82' }}>Garage Description:</span> 
+                                        <span style={{ color: '#E5194B' }}>Garage Description:</span> 
                                     <span className="text-danger font-weight-bold"> {garage[0]?.description}</span>
                                     </h4>
                                     <h4 className="text-left     mt-3">
-                                        <span style={{ color: '#F58E82' }}>Garage Contact:</span> 
+                                        <span style={{ color: '#E5194B' }}>Garage Contact:</span> 
                                     <span className="text-danger font-weight-bold"> {garage[0]?.mobile}</span>
                                     </h4>
                                     <h4 className="text-left     mt-3">
-                                        <span style={{ color: '#F58E82' }}>Garage User Email:</span> 
+                                        <span style={{ color: '#E5194B' }}>Garage User Email:</span> 
                                     <span className="text-danger font-weight-bold"> {garage[0]?.user}</span>
                                     </h4>
                                     <hr/>
@@ -75,11 +75,11 @@ console.log(garage)
                                     <ul className="text-danger font-weight-bold text-center"> {garage[0]?.area.map(data=> <li className="mr-5 my-2 text-uppercase"># {data}</li>)}</ul>
                                     </h4>
                                     {/* <h4 className="text-left     mt-3">
-                                        <span style={{ color: '#F58E82' }}>Garage Facebook Code:</span> 
+                                        <span style={{ color: '#E5194B' }}>Garage Facebook Code:</span> 
                                     <span className="text-danger font-weight-bold"> {garage[0].facebook}</span>
                                     </h4>    */}
                                     {/* <h4 className="text-left     mt-3">
-                                        <span style={{ color: '#F58E82' }}>Garage Facebook Code:</span> 
+                                        <span style={{ color: '#E5194B' }}>Garage Facebook Code:</span> 
                                     <span className="text-danger font-weight-bold"> {garage[0].facebook}</span>
                                     </h4> */}
                                     <div className='row text-center mt-3 p-3'>

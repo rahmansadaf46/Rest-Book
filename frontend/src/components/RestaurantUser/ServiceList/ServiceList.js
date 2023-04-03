@@ -42,7 +42,7 @@ const ServiceList = () => {
                 </div>
 
 
-                <div style={{ backgroundColor: '#FEC5E4', height: '100%', minHeight: '800px' }} className="col-md-10 pt-4 d-flex justify-content-center">
+                <div style={{ backgroundColor: '#FCF4E0', height: '100%', minHeight: '800px' }} className="col-md-10 pt-4 d-flex justify-content-center">
                     <div className="">
                         <div className="text-center pb-3  text-danger">
                             <h2><u>Service List</u></h2>
@@ -58,7 +58,7 @@ const ServiceList = () => {
                                     <div > <div ><h3 className="text-center text-warning my-3">{service.title}</h3>
                                         <p style={{ lineHeight: '1', color: 'gray', fontWeight: 'bold', marginBottom: '30px' }}>{service.description.split('\n').map(str => <p>{str}</p>)}</p>
                                         <hr />
-                                        <h4 className="text-center mt-3"><span style={{ color: '#F58E82' }}>Service Charge:</span> <span className="text-danger font-weight-bold">{service.rate}/-</span></h4>
+                                        <h4 className="text-center mt-3"><span style={{ color: '#E5194B' }}>Service Charge:</span> <span className="text-danger font-weight-bold">{service.rate}/-</span></h4>
                                         <div className='row text-center mt-3 p-3'>
                                             <div className='col-6'>
                                                 <Link to={`/restaurant/updateService/${service._id}`} class="btn btn-warning font-weight-bold" >Update Service</Link>

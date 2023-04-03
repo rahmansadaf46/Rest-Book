@@ -10,7 +10,7 @@ const Customer = () => {
                 <div className="col-md-2">
                     <AdminSidebar />
                 </div>
-                <div style={{ backgroundColor: '#FEC5E4', height: '100vh' }} className="col-md-10 pt-4">
+                <div style={{ backgroundColor: '#FCF4E0', height: '100vh' }} className="col-md-10 pt-4">
                     <div className="col-md-12">
                         <div>Customer</div>
                     </div>

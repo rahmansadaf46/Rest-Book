@@ -51,7 +51,7 @@ const AddGarageService = () => {
         </div>
 
         <div
-          style={{ backgroundColor: "#FEC5E4", height: "100vh" }}
+          style={{ backgroundColor: "#FCF4E0", height: "100vh" }}
           className="col-md-10 pt-4"
         >
           <div className="text-center  text-danger">
@@ -127,7 +127,7 @@ const AddGarageService = () => {
                     <button
                       type="submit"
                       style={{ padding: "10px 90px", borderRadius: "40px" }}
-                      className="btn btn-primary text-white  font-weight-bold"
+                      className="btn btn-danger text-white  font-weight-bold"
                     >
                       Submit
                     </button>

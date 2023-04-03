@@ -150,12 +150,12 @@ const UpdateRestaurant = () => {
           <AdminSidebar />
         </div>
         <div
-          style={{ backgroundColor: "#FEC5E4", height: "150vh" }}
+          style={{ backgroundColor: "#FCF4E0", height: "150vh" }}
           className="col-md-10 pt-4"
         >
-          <div className="text-center  text-danger">
+          <div className="text-center text-danger">
             <h2>
-              <u>Update Restaurant</u>
+              <u>Update <span className="text-dark">Restaurant</span></u>
             </h2>
           </div>
           <div className="col-md-12">
@@ -164,7 +164,7 @@ const UpdateRestaurant = () => {
                 className="p-3 container col-6"
                 onSubmit={handleSubmit(onSubmit)}
               >
-                <div className="form-group text-danger text-center">
+                <div className="form-group  text-center">
                   <label for="">
                     <b>Enter Restaurant Name</b>
                   </label>
@@ -181,10 +181,10 @@ const UpdateRestaurant = () => {
                     className="form-control"
                   />
                   {errors.name && (
-                    <span className="text-danger">This field is required</span>
+                    <span className="">This field is required</span>
                   )}
                 </div>
-                <div className="form-group text-danger text-center">
+                <div className="form-group  text-center">
                   <label for="">
                     <b>Enter Restaurant Address</b>
                   </label>
@@ -201,10 +201,10 @@ const UpdateRestaurant = () => {
                     className="form-control"
                   />
                   {errors.name && (
-                    <span className="text-danger">This field is required</span>
+                    <span className="">This field is required</span>
                   )}
                 </div>
-                <div className="form-group text-danger text-center">
+                <div className="form-group  text-center">
                   <label for="">
                     <b>Enter Restaurant Contact no.</b>
                   </label>
@@ -221,10 +221,10 @@ const UpdateRestaurant = () => {
                     className="form-control"
                   />
                   {errors.name && (
-                    <span className="text-danger">This field is required</span>
+                    <span className="">This field is required</span>
                   )}
                 </div>
-                <div className="form-group text-danger text-center">
+                <div className="form-group  text-center">
                   <label for="">
                     <b>Enter Restaurant Description</b>
                   </label>
@@ -241,10 +241,10 @@ const UpdateRestaurant = () => {
                     className="form-control"
                   />
                   {errors.name && (
-                    <span className="text-danger">This field is required</span>
+                    <span className="">This field is required</span>
                   )}
                 </div>
-                <div className="form-group text-danger text-center">
+                <div className="form-group  text-center">
                   <label for="">
                     <b>Enter Facebook Code</b>
                   </label>
@@ -261,10 +261,10 @@ const UpdateRestaurant = () => {
                     className="form-control"
                   />
                   {errors.name && (
-                    <span className="text-danger">This field is required</span>
+                    <span className="">This field is required</span>
                   )}
                 </div>
-                <div className="form-group text-danger text-center">
+                <div className="form-group  text-center">
                   <label for="">
                     <b>Enter Latitude</b>
                   </label>
@@ -281,10 +281,10 @@ const UpdateRestaurant = () => {
                     className="form-control"
                   />
                   {errors.name && (
-                    <span className="text-danger">This field is required</span>
+                    <span className="">This field is required</span>
                   )}
                 </div>
-                <div className="form-group text-danger text-center">
+                <div className="form-group  text-center">
                   <label for="">
                     <b>Enter Longitude</b>
                   </label>
@@ -301,11 +301,11 @@ const UpdateRestaurant = () => {
                     className="form-control"
                   />
                   {errors.name && (
-                    <span className="text-danger">This field is required</span>
+                    <span className="">This field is required</span>
                   )}
                 </div>
                 <div className="form-group row mb-1 d-flex justify-content-center">
-                  <div className="form-group col-6 text-danger text-center">
+                  <div className="form-group col-6  text-center">
                     <label for="">
                       <b>Enter Areas</b>
                     </label>
@@ -324,7 +324,7 @@ const UpdateRestaurant = () => {
                   </div>
                 </div>
                 <div className="form-group row mb-1 d-flex justify-content-center">
-                  <div className="form-group col-6 text-danger text-center">
+                  <div className="form-group col-6  text-center">
                     <label for="">
                       <b>Select User</b>
                     </label>
@@ -348,7 +348,7 @@ const UpdateRestaurant = () => {
                     <button
                       type="submit"
                       style={{ padding: "10px 90px", borderRadius: "40px" }}
-                      className="btn text-white btn-primary font-weight-bold"
+                      className="btn text-white btn-danger font-weight-bold"
                     >
                       Update
                     </button>

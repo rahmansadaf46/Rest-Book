@@ -46,12 +46,12 @@ const AddArea = () => {
           <AdminSidebar />
         </div>
         <div
-          style={{ backgroundColor: "#FEC5E4", height: "100vh" }}
+          style={{ backgroundColor: "#FCF4E0", height: "100vh" }}
           className="col-md-10 pt-4"
         >
           <div className="text-center  text-danger">
             <h2>
-              <u>Add an Area</u>
+              <u>Add an <span className="text-dark">Area</span></u>
             </h2>
           </div>
           <div className="col-md-12">
@@ -60,7 +60,7 @@ const AddArea = () => {
                 className="p-3 container col-6"
                 onSubmit={handleSubmit(onSubmit)}
               >
-                <div className="form-group text-danger text-center">
+                <div className="form-group text-center">
                   <label for="">
                     <b>Enter Area Name</b>
                   </label>
@@ -85,7 +85,7 @@ const AddArea = () => {
                     <button
                       type="submit"
                       style={{ padding: "10px 90px", borderRadius: "40px" }}
-                      className="btn btn-primary text-white  font-weight-bold"
+                      className="btn btn-danger text-white  font-weight-bold"
                     >
                       Submit
                     </button>

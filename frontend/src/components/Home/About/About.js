@@ -7,7 +7,7 @@ const About = () => {
     return (
         <div className="container">
             <div className="row">
-                <div className=" mt-5 col-6">
+                <div className=" mt-5 col-12">
                     <p style={{ fontSize: '40px' }}>Why you choose us</p>
                     <p style={{ fontWeight: '600', fontSize: '15px' }} className="mt-4">Barton waited twenty always repair in within we do. An delighted offending
                     curosity my is dashwoods ar. Boy prosperous increasing surrounded.

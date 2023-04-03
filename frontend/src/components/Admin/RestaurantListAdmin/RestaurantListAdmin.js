@@ -68,7 +68,7 @@ const RestaurantListAdmin = () => {
         </div>
         <div
           style={{
-            backgroundColor: "#FEC5E4",
+            backgroundColor: "#FCF4E0",
             height: "100%",
             minHeight: "800px",
           }}
@@ -78,12 +78,12 @@ const RestaurantListAdmin = () => {
             <div>
               <div className="text-center pb-3 text-danger">
                 <h2>
-                  <u>Restaurant List</u>
+                  <u><span className="text-dark">Restaurant</span> List</u>
                 </h2>
               </div>
               <div className="container  form-inline  d-flex justify-content-center mt-3">
                 <label
-                  style={{ color: "#F58E82" }}
+                  style={{ color: "#E5194B" }}
                   className="font-weight-bold ml-1"
                   htmlFor="filter"
                 >
@@ -123,56 +123,56 @@ const RestaurantListAdmin = () => {
                           />
                         </div>
                         <p className="text-left font-weight-bold  mt-3">
-                          <span style={{ color: "#F58E82" }}>Restaurant Name:</span>
-                          <span className="text-danger font-weight-bold">
+                          <span style={{ color: "#E5194B" }}>Restaurant Name:</span>
+                          <span className=" font-weight-bold">
                             {" "}
                             {item?.title}
                           </span>
                         </p>
                         <p className="text-left   font-weight-bold   mt-3">
-                          <span style={{ color: "#F58E82" }}>Address:</span>
-                          <span className="text-danger font-weight-bold">
+                          <span style={{ color: "#E5194B" }}>Address:</span>
+                          <span className=" font-weight-bold">
                             {" "}
                             {item?.address}
                           </span>
                         </p>
                         <p className="text-left  font-weight-bold    mt-3">
-                          <span style={{ color: "#F58E82" }}>Description:</span>
-                          <span className="text-danger font-weight-bold">
+                          <span style={{ color: "#E5194B" }}>Description:</span>
+                          <span className=" font-weight-bold">
                             {" "}
                             {item?.description}
                           </span>
                         </p>
                         <p className="text-left   font-weight-bold   mt-3">
-                          <span style={{ color: "#F58E82" }}>Contact:</span>
-                          <span className="text-danger font-weight-bold">
+                          <span style={{ color: "#E5194B" }}>Contact:</span>
+                          <span className=" font-weight-bold">
                             {" "}
                             {item?.mobile}
                           </span>
                         </p>
                         <p className="text-left  font-weight-bold   mt-3">
-                          <span style={{ color: "#F58E82" }}>
+                          <span style={{ color: "#E5194B" }}>
                           Restaurant User Email:
                           </span>
-                          <span className="text-danger font-weight-bold">
+                          <span className=" font-weight-bold">
                             {" "}
                             {item?.user}
                           </span>
                         </p>
                         <p className="text-left  font-weight-bold   mt-3">
-                          <span style={{ color: "#F58E82" }}>
+                          <span style={{ color: "#E5194B" }}>
                             Facebook Code:
                           </span>
-                          <span className="text-danger font-weight-bold">
+                          <span className=" font-weight-bold">
                             {" "}
                             {item?.facebook}
                           </span>
                         </p>
                         {/* <p className="text-left  font-weight-bold   mt-3">
-                          <span style={{ color: "#F58E82" }}>
+                          <span style={{ color: "#E5194B" }}>
                             Google Map Code:
                           </span>
-                          <span className="text-danger font-weight-bold">
+                          <span className=" font-weight-bold">
                             {" "}
                             {item?.googleMap.split("&", 1)}...
                           </span>
@@ -182,7 +182,7 @@ const RestaurantListAdmin = () => {
                           <span style={{ color: "orange", fontSize: "18px" }}>
                             <b>Areas</b>
                           </span>
-                          <ul style={{listStyle:'none'}} className="text-danger  font-weight-bold text-center">
+                          <ul style={{listStyle:'none'}} className="  font-weight-bold text-center">
                             {" "}
                             {item?.area.map((data) => (
                               <li className="mr-5 my-2 text-uppercase">
@@ -221,13 +221,13 @@ const RestaurantListAdmin = () => {
                                         <div style={{ width: '700px', height: '100%', border: '1px solid lightYellow', borderRadius: '30px', backgroundColor: 'lightYellow', marginBottom: '25px', padding: '30px' }}>
                                             <div className="font-weight-bold">Order No: <span style={{ color: 'purple' }}>{fd._id.split("").slice(15, 50)}</span></div>
                                             <br />
-                                            {fd.finalData.cart.map(item => <p style={{ fontSize: '18px' }}><span className="font-weight-bold text-danger">{item.title}</span> <span className="font-weight-bold text-dark">: {item.quantity}pcs</span></p>)} <br />
-                                            <p style={{ fontSize: '18px' }}><span className="font-weight-bold text-danger">Payment ID: </span><span className="font-weight-bold text-dark">{fd.finalData.paymentData}</span> </p>
+                                            {fd.finalData.cart.map(item => <p style={{ fontSize: '18px' }}><span className="font-weight-bold ">{item.title}</span> <span className="font-weight-bold text-dark">: {item.quantity}pcs</span></p>)} <br />
+                                            <p style={{ fontSize: '18px' }}><span className="font-weight-bold ">Payment ID: </span><span className="font-weight-bold text-dark">{fd.finalData.paymentData}</span> </p>
                                             <br />
                                             <div style={{ border: '2px solid #E5194B', padding: '15px' }}>
-                                                <p className="font-weight-bold ">Address: <span className="text-danger">Flat No {fd.finalData.address.flatNo}, House No {fd.finalData.address.houseNo}, {fd.finalData.address.area}</span></p>
-                                                <p className="font-weight-bold">Contact: <span className="text-danger">{fd.finalData.address.contactNo}</span></p>
-                                                <p className="font-weight-bold text-dark">Email: <span className="text-danger">{fd.finalData.email}</span></p>
+                                                <p className="font-weight-bold ">Address: <span className="">Flat No {fd.finalData.address.flatNo}, House No {fd.finalData.address.houseNo}, {fd.finalData.address.area}</span></p>
+                                                <p className="font-weight-bold">Contact: <span className="">{fd.finalData.address.contactNo}</span></p>
+                                                <p className="font-weight-bold text-dark">Email: <span className="">{fd.finalData.email}</span></p>
                                             </div>
                                             <br />
                                             <div className="row">
@@ -237,7 +237,7 @@ const RestaurantListAdmin = () => {
 
                                                 </div>
                                                 <div className="col-md-4 d-flex justify-content-end">
-                                                    <p className="mt-2 font-weight-bold">Amount: <span className="text-danger">{fd.finalData.amount}/-</span></p>&nbsp;&nbsp;
+                                                    <p className="mt-2 font-weight-bold">Amount: <span className="">{fd.finalData.amount}/-</span></p>&nbsp;&nbsp;
                                                 </div>
                                             </div>
                                         </div>

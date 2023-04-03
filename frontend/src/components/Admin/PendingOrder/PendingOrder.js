@@ -88,7 +88,7 @@ const PendingOrder = () => {
 
         <div
           style={{
-            backgroundColor: "#FEC5E4",
+            backgroundColor: "#FCF4E0",
             height: "100%",
             minHeight: "800px",
           }}

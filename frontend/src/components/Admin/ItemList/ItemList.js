@@ -67,7 +67,7 @@ const ItemList = () => {
         </div>
         <div
           style={{
-            backgroundColor: "#FEC5E4",
+            backgroundColor: "#FCF4E0",
             height: "100%",
             minHeight: "800px",
           }}
@@ -82,7 +82,7 @@ const ItemList = () => {
               </div>
               <div className="container  form-inline  d-flex justify-content-center mt-3">
                 <label
-                  style={{ color: "#F58E82" }}
+                  style={{ color: "#E5194B" }}
                   className="font-weight-bold ml-1"
                   htmlFor="filter"
                 >
@@ -147,7 +147,7 @@ const ItemList = () => {
                       </p>
                       <hr />
                       <h4 className="text-center mt-3">
-                        <span style={{ color: "#F58E82" }}>Price:</span>{" "}
+                        <span style={{ color: "#E5194B" }}>Price:</span>{" "}
                         <span className="text-danger font-weight-bold">
                           {item.price}/-
                         </span>

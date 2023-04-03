@@ -79,7 +79,7 @@ const AreaList = () => {
         </div>
         <div
           style={{
-            backgroundColor: "#FEC5E4",
+            backgroundColor: "#FCF4E0",
             height: "100%",
             minHeight: "800px",
           }}
@@ -89,7 +89,7 @@ const AreaList = () => {
             <div>
               <div className="text-center pb-3 text-danger">
                 <h2>
-                  <u>Area List</u>
+                  <u><span className="text-dark">Area</span> List</u>
                 </h2>
               </div>
 
