@@ -137,7 +137,7 @@ const Restaurant = () => {
             </div>
             <div className="col-md-6 text-left">
               <img
-                style={{ width: "450px", borderRadius: "50%" }}
+                style={{ width: "450px", borderRadius: "50%", border: "5px solid #E5194B"}}
                 src={`http://localhost:4200/restaurant/${garage.image}`}
                 alt=""
               />
