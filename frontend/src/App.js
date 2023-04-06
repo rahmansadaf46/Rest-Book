@@ -33,6 +33,8 @@ import Shipment from "./components/Shipment/Shipment/Shipment";
 import AddFood from "./components/RestaurantUser/AddFood/AddFood";
 import UpdateFood from "./components/RestaurantUser/UpdateFood/UpdateFood";
 import FoodList from "./components/RestaurantUser/FoodList/FoodList";
+import AddLayout from "./components/RestaurantUser/AddLayout/AddLayout";
+import LayoutList from "./components/RestaurantUser/LayoutList/LayoutList";
 
 export const UserContext = createContext();
 
@@ -138,6 +140,12 @@ function App() {
           </PrivateRoute>
           <PrivateRoute path="/restaurant/foodList">
             <FoodList> </FoodList>
+          </PrivateRoute>
+          <PrivateRoute path="/restaurant/addLayout">
+            <AddLayout></AddLayout>
+          </PrivateRoute>
+          <PrivateRoute path="/restaurant/layoutList">
+            <LayoutList> </LayoutList>
           </PrivateRoute>
           <PrivateRoute path="/restaurant/:id">
             <Restaurant></Restaurant>

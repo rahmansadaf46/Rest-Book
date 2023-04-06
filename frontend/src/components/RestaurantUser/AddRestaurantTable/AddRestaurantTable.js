@@ -2,13 +2,45 @@ import React, { useEffect, useState } from "react";
 import RestaurantHeader from "../RestaurantHeader/RestaurantHeader";
 import RestaurantSidebar from "../RestaurantSidebar/RestaurantSidebar";
 import { useForm } from "react-hook-form";
+import Select from "react-select";
 // import { useParams } from "react-router-dom";
 // import './BookingRequest.css'
 const AddRestaurantTable = () => {
   const [restaurantData, setRestaurantData] = useState([]);
   const { register, handleSubmit, errors } = useForm();
   const user = sessionStorage.getItem("email");
+  const [file, setFile] = useState(null);
+  const [selectedLayout, setSelectedLayout] = useState('');
+  const handleLayout = (e) => {
+    if (e === null) {
+      setSelectedLayout("");
+    } else {
+      setSelectedLayout(e.value);
+    }
+  };
+  const handleFileChange = (e) => {
+    const newFile = e.target.files[0];
+    setFile(newFile);
+  };
   console.log(user, "user");
+  const [layouts, setLayouts] = useState([]);
+
+
+
+  useEffect(() => {
+    window.scroll(0, 0)
+    fetch(`http://localhost:4200/layouts/${JSON.parse(sessionStorage.getItem('restaurantUser'))[0]._id}`)
+      .then(res => res.json())
+      .then(data => {
+        const layouts = data.map((layout) => {
+          return {
+            value: `${layout.layout}`,
+            label: `${layout.layout}`,
+          };
+        });
+        setLayouts(layouts);
+      })
+  }, [])
   useEffect(() => {
     if (user) {
       fetch("http://localhost:4200/restaurantUser", {
@@ -22,10 +54,12 @@ const AddRestaurantTable = () => {
           setRestaurantData(data[0]);
         });
     }
+
   }, [user]);
 
   const onSubmit = (data) => {
-    data.garageId = restaurantData._id;
+    data.restaurantId = restaurantData._id;
+    data.layout = selectedLayout;
     fetch("http://localhost:4200/addService", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -41,7 +75,14 @@ const AddRestaurantTable = () => {
         console.error(error);
       });
   };
-
+  const customStyles = {
+    control: (provided, state) => ({
+      ...provided,
+      border: "2px solid #E5194B",
+      borderRadius: "20px",
+      boxShadow: state.isFocused ? null : null,
+    }),
+  };
   return (
     <div>
       <RestaurantHeader />
@@ -56,7 +97,7 @@ const AddRestaurantTable = () => {
         >
           <div className="text-center  text-danger">
             <h2>
-              <u>Add Table</u>
+              <u>Add <span className="text-dark">Table</span></u>
             </h2>
           </div>
           <div className="col-md-12">
@@ -67,7 +108,7 @@ const AddRestaurantTable = () => {
               >
                 <div className="form-group text-danger text-center">
                   <label for="">
-                    <b>Enter Service Name</b>
+                    <b>Enter Table Name</b>
                   </label>
                   <input
                     style={{
@@ -86,7 +127,7 @@ const AddRestaurantTable = () => {
                 </div>
                 <div className="form-group text-danger text-center">
                   <label for="">
-                    <b>Enter Service Description</b>
+                    <b>Enter Table Description</b>
                   </label>
                   <textarea
                     style={{
@@ -105,7 +146,7 @@ const AddRestaurantTable = () => {
                 </div>
                 <div className="form-group text-danger text-center">
                   <label for="">
-                    <b>Enter Service Rate</b>
+                    <b>Enter Table Booking Price</b>
                   </label>
                   <input
                     style={{
@@ -121,6 +162,44 @@ const AddRestaurantTable = () => {
                   {errors.name && (
                     <span className="text-danger">This field is required</span>
                   )}
+                </div>
+                <div className="form-group text-danger text-center mx-5 px-5">
+                  <label for="">
+                    <b>Enter Layout</b>
+                  </label>
+                  <Select
+                    
+                    styles={customStyles}
+                    required
+                    options={layouts}
+                    onChange={(e) => {
+                      handleLayout(e);
+                    }}
+                    isSearchable={true}
+                    isClearable={true}
+                  />
+                  {errors.name && (
+                    <span className="text-danger">This field is required</span>
+                  )}
+                </div>
+                <div className="form-group row mb-1 d-flex justify-content-center">
+                  <div className="form-group col-6  text-center">
+                    <label for="">
+                      <b>Upload Image</b>
+                    </label>
+                    <input
+                      ref={register({ required: true })}
+                      onChange={handleFileChange}
+                      className="form"
+                      name="image"
+                      type="file"
+                    />
+                    {errors.file && (
+                      <span className="">
+                        This field is required
+                      </span>
+                    )}
+                  </div>
                 </div>
                 <div className="form-group row">
                   <div className="form-group col-md-12 mt-4 pt-1 d-flex justify-content-center">

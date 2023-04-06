@@ -40,7 +40,7 @@ const BookingDone = () => {
                 <div style={{ backgroundColor: '#FCF4E0', height: '100%', minHeight: '800px' }} className="col-md-10 pt-4 d-flex justify-content-center">
                     <div className="">
                         <div className="text-center pb-3 text-danger">
-                            <h2><u>Booking Done</u></h2>
+                            <h2><u>Booking <span className="text-dark">Done</span></u></h2>
                         </div>
                         <div>{
                             product.map(fd => <>{fd?.finalData.category === "Service" && <><div style={{ width: '700px', height: '100%', border: '1px solid lightYellow', borderRadius: '30px', backgroundColor: 'lightYellow', marginBottom: '25px', padding: '30px' }}>

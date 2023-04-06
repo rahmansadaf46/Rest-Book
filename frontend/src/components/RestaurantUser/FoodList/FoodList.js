@@ -79,7 +79,7 @@ const FoodList = () => {
             <div>
               <div className="text-center pb-3 text-danger">
                 <h2>
-                  <u>Food List</u>
+                  <u><span className="text-dark">Food</span> List</u>
                 </h2>
               </div>
               <div className="container  form-inline  d-flex justify-content-center mt-3">

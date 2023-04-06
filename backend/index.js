@@ -28,6 +28,7 @@ client.connect(err => {
     const areaCollection = client.db("restBook").collection("allArea");
     const restaurantCollection = client.db("restBook").collection("allRestaurant");
     const tableCollection = client.db("restBook").collection("allTable");
+    const layoutCollection = client.db("restBook").collection("allLayout");
     //restaurant 
     app.post('/addRestaurant', (req, res) => {
         const file = req.files.file;
@@ -175,6 +176,31 @@ client.connect(err => {
                 res.send(documents[0]);
             })
     })
+
+    // layout
+    app.post('/addLayout', (req, res) => {
+        const layout = req.body.data.layout;
+        const restaurantId = req.body.data.restaurantId;
+        // console.log(req.body)
+        layoutCollection.insertOne({ layout, restaurantId })
+            .then(result => {
+                res.send(result.insertedCount > 0);
+            })
+    })
+    app.get('/layouts/:id', (req, res) => {
+        layoutCollection.find({ restaurantId: req.params.id })
+            .toArray((err, documents) => {
+                res.send(documents);
+            })
+    })
+    app.delete('/deleteLayout/:id', (req, res) => {
+        layoutCollection.deleteOne({ _id: ObjectId(req.params.id) })
+            .then((result) => {
+                res.send(result.deletedCount > 0);
+                // console.log(res);
+            })
+    })
+
     //area
     app.post('/addArea', (req, res) => {
         const area = req.body;
@@ -201,15 +227,15 @@ client.connect(err => {
         const title = req.body.data.title;
         const description = req.body.data.description;
         const rate = req.body.data.rate;
-        const garageId = req.body.data.garageId;
+        const restaurantId = req.body.data.restaurantId;
         // console.log(req.body)
-        tableCollection.insertOne({ title, description, rate, garageId })
+        tableCollection.insertOne({ title, description, rate, restaurantId })
             .then(result => {
                 res.send(result.insertedCount > 0);
             })
     })
     app.get('/service/:id', (req, res) => {
-        tableCollection.find({ garageId: req.params.id })
+        tableCollection.find({ restaurantId: req.params.id })
             .toArray((err, documents) => {
                 res.send(documents);
             })

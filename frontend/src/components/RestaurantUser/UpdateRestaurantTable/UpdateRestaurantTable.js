@@ -24,7 +24,7 @@ const UpdateRestaurantTable = () => {
     }, [id])
     const onSubmit = data => {
        
-        data.garageId = garageData.garageId;
+        data.restaurantId = garageData.restaurantId;
         console.log(data)
         fetch('http://localhost:4200/updateService/'+ id, {
             method: 'PATCH',
@@ -33,8 +33,8 @@ const UpdateRestaurantTable = () => {
         })
             .then(response => response.json())
             .then(data => {
-                window.alert('Service Updated successfully');
-                window.location.href="/restaurant/serviceList"
+                window.alert('Table Updated successfully');
+                window.location.href="/restaurant/restaurantTableList"
                 // window.location.reload();
             })
 

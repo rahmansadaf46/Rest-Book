@@ -69,7 +69,7 @@ const AddFood = () => {
         >
           <div className="text-center  text-danger">
             <h2>
-              <u>Add a Food</u>
+              <u>Add a <span className="text-dark">Food</span></u>
             </h2>
           </div>
           <div className="col-md-12">

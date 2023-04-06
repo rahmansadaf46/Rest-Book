@@ -45,7 +45,7 @@ const RestaurantTableList = () => {
                 <div style={{ backgroundColor: '#FCF4E0', height: '100%', minHeight: '800px' }} className="col-md-10 pt-4 d-flex justify-content-center">
                     <div className="">
                         <div className="text-center pb-3  text-danger">
-                            <h2><u>Table List</u></h2>
+                            <h2><u><span className="text-dark">Table</span> List</u></h2>
                         </div>
                         <div>
                             {services?.map(service =>
