@@ -14,6 +14,8 @@ const UpdateRestaurant = () => {
   const email = sessionStorage.getItem("email");
   const [restaurant, setRestaurant] = useState();
   // const [restaurantLocation, setRestaurantLocation] = useState('');
+  const [afterCheckIn, setAfterCheckIn] = useState(true);
+  const [beforeCheckIn, setBeforeCheckIn] = useState(false);
   const [areaList, setAreaList] = useState([]);
   const [area, setArea] = useState([]);
   const handleArea = (e) => {
@@ -82,6 +84,8 @@ const UpdateRestaurant = () => {
                 })
                 // data.area = area;
                 setRestaurant(data)
+                setAfterCheckIn(data.afterCheckIn)
+                setBeforeCheckIn(data.beforeCheckIn)
                 console.log(area)
                 // setServices(data)
                 // setRestaurant(data);
@@ -112,22 +116,26 @@ const UpdateRestaurant = () => {
     data.coords = `${data?.lat}, ${data?.long}`;
     data.area = tempArray;
     data.user = user;
-
-    fetch('http://localhost:4200/UpdateRestaurant/'+ id, {
-            method: 'PATCH',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ data })
+    if(data.openingTime> data.closingTime){
+      window.alert("Opening time must be less than closing time")
+    }else{
+      fetch('http://localhost:4200/UpdateRestaurant/'+ id, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ data })
+    })
+        .then(response => response.json())
+        .then(data => {
+            window.alert('Restaurant Updated successfully');
+            window.location.href="/admin/restaurantList"
+            // window.location.reload();
         })
-            .then(response => response.json())
-            .then(data => {
-                window.alert('Restaurant Updated successfully');
-                window.location.href="/admin/restaurantList"
-                // window.location.reload();
-            })
 
-            .catch(error => {
-                console.error(error)
-            })
+        .catch(error => {
+            console.error(error)
+        })
+    }
+
   };
 
   // useEffect(() => {
@@ -150,7 +158,7 @@ const UpdateRestaurant = () => {
           <AdminSidebar />
         </div>
         <div
-          style={{ backgroundColor: "#FCF4E0", height: "150vh" }}
+          style={{ backgroundColor: "#FCF4E0", height: "210vh" }}
           className="col-md-10 pt-4"
         >
           <div className="text-center text-danger">
@@ -321,6 +329,111 @@ const UpdateRestaurant = () => {
                       isSearchable={true}
                       isClearable={true}
                     />
+                  </div>
+                </div>
+                <div className="form-group row mb-1 d-flex justify-content-center">
+                  <div className="form-group col-6  text-center">
+                    <label for="">
+                      <b>Enter Opening Time</b>
+                    </label>
+                    <input
+                      style={{
+                        borderRadius: "15px",
+                        border: "2px solid #E5194B",
+                      }}
+                      type="time"
+                      defaultValue={restaurant?.openingTime}
+                      ref={register({ required: true })}
+                      name="openingTime"
+                      placeholder="Enter Longitude Code"
+                      className="form-control"
+                    />
+                  </div>
+                </div>
+                <div className="form-group row mb-1 d-flex justify-content-center">
+                  <div className="form-group col-6  text-center">
+                    <label for="">
+                      <b>Enter Closing Time</b>
+                    </label>
+                    <input
+                      style={{
+                        borderRadius: "15px",
+                        border: "2px solid #E5194B",
+                      }}
+                      type="time"
+                      ref={register({ required: true })}
+                      defaultValue={restaurant?.closingTime}
+                      name="closingTime"
+                      placeholder="Enter Longitude Code"
+                      className="form-control"
+                    />
+                  </div>
+                </div>
+                <div className="form-group row mb-1 d-flex justify-content-center">
+                  <div className="form-group col-6  text-center">
+                    <label for="">
+                      <b>Payment Method</b>
+                    </label>
+                    <br/>
+                    <input
+                      style={{
+                        borderRadius: "15px",
+                        border: "2px solid #E5194B",
+                      }}
+                      type="checkbox"
+                      ref={register({ required: false })}
+                      onClick={()=>{beforeCheckIn && setAfterCheckIn(!afterCheckIn)}}
+                      checked={afterCheckIn}
+                      name="afterCheckIn"
+                    />
+                    <label>&nbsp;After Check In</label>
+                    <br/>
+                    <input
+                      style={{
+                        borderRadius: "15px",
+                        border: "2px solid #E5194B",
+                      }}
+                      type="checkbox"
+                      ref={register({ required: false })}
+                      onClick={()=>{afterCheckIn &&setBeforeCheckIn(!beforeCheckIn)}}
+                      checked={beforeCheckIn}
+                      name="beforeCheckIn"
+                    />
+                    <label>&nbsp;Before Check In</label>
+                  </div>
+                </div>
+               {beforeCheckIn &&  <div className="form-group row mb-1 d-flex justify-content-center">
+                  <div className="form-group col-6  text-center">
+                    <label for="">
+                      <b>Minimum Payment Amount</b>
+                    </label>
+                    <input
+                      style={{
+                        borderRadius: "15px",
+                        border: "2px solid #E5194B",
+                      }}
+                      type="number"
+                      ref={register({ required: true })}
+                      name="paymentAmount"
+                      defaultValue={restaurant?.paymentAmount}
+                      min="0"
+                    />
+                  </div>
+                </div>}
+                <div className="form-group row mb-1 d-flex justify-content-center">
+                  <div className="form-group col-6  text-center">
+                    <label for="">
+                      <b>Active Status</b>
+                    </label>
+                    <select
+                     ref={register({ required: true })}
+                    style={{
+                        borderRadius: "15px",
+                        border: "2px solid #E5194B",
+                      }} name="status" className="ml-2">
+                      <option value="Active">Active</option>
+                      <option value="Inactive">Inactive</option>
+                    </select>
                   </div>
                 </div>
                 <div className="form-group row mb-1 d-flex justify-content-center">

@@ -17,6 +17,8 @@ const AddRestaurant = () => {
     setArea(e);
   };
   const [userList, setUserList] = useState([]);
+  const [afterCheckIn, setAfterCheckIn] = useState(true);
+  const [beforeCheckIn, setBeforeCheckIn] = useState(false);
   const [user, setUser] = useState([]);
   const handleUser = (e) => {
     if (e === null) {
@@ -45,13 +47,13 @@ const AddRestaurant = () => {
             label: `${item?.title?.toUpperCase()}`,
           };
         });
-        console.log(area);
+        // console.log(area);
         setAreaList(area);
       });
     fetch("http://localhost:4200/users")
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         const user = data.map((person) => {
           return {
             value: `${person.person.email}`,
@@ -76,6 +78,7 @@ const AddRestaurant = () => {
 
   const onSubmit = (data) => {
     // return console.log(data);
+    // console.log(data)
     let tempArray = [];
     area.forEach((data) => {
       tempArray.push(data.value);
@@ -91,21 +94,31 @@ const AddRestaurant = () => {
     formData.append("description", data.description);
     formData.append("facebook", data.facebook);
     formData.append("coords", coords);
-    formData.append("status", "Active");
-
-    fetch("http://localhost:4200/addRestaurant", {
-      method: "POST",
-      body: formData,
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        window.alert("Restaurant added successfully");
-        window.location.reload();
+    formData.append("status", data.status);
+    formData.append("openingTime", data.openingTime);
+    formData.append("closingTime", data.closingTime);
+    formData.append("afterCheckIn", data.afterCheckIn);
+    formData.append("beforeCheckIn", data.beforeCheckIn);
+    formData.append("paymentAmount", data.paymentAmount ? parseInt(data.paymentAmount) : parseInt(0));
+    if(data.openingTime> data.closingTime){
+      window.alert("Opening time must be less than closing time")
+    }
+    else{
+      fetch("http://localhost:4200/addRestaurant", {
+        method: "POST",
+        body: formData,
       })
-
-      .catch((error) => {
-        console.error(error);
-      });
+        .then((response) => response.json())
+        .then((data) => {
+          window.alert("Restaurant added successfully");
+          window.location.reload();
+        })
+  
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+ 
   };
 
   // useEffect(() => {
@@ -119,7 +132,7 @@ const AddRestaurant = () => {
       boxShadow: state.isFocused ? null : null,
     }),
   };
-  console.log(area);
+  // console.log(area);
   return (
     <div>
       <AdminHeader />
@@ -291,6 +304,109 @@ const AddRestaurant = () => {
                       isSearchable={true}
                       isClearable={true}
                     />
+                  </div>
+                </div>
+                <div className="form-group row mb-1 d-flex justify-content-center">
+                  <div className="form-group col-6  text-center">
+                    <label for="">
+                      <b>Enter Opening Time</b>
+                    </label>
+                    <input
+                      style={{
+                        borderRadius: "15px",
+                        border: "2px solid #E5194B",
+                      }}
+                      type="time"
+                      ref={register({ required: true })}
+                      name="openingTime"
+                      placeholder="Enter Longitude Code"
+                      className="form-control"
+                    />
+                  </div>
+                </div>
+                <div className="form-group row mb-1 d-flex justify-content-center">
+                  <div className="form-group col-6  text-center">
+                    <label for="">
+                      <b>Enter Closing Time</b>
+                    </label>
+                    <input
+                      style={{
+                        borderRadius: "15px",
+                        border: "2px solid #E5194B",
+                      }}
+                      type="time"
+                      ref={register({ required: true })}
+                      name="closingTime"
+                      placeholder="Enter Longitude Code"
+                      className="form-control"
+                    />
+                  </div>
+                </div>
+                <div className="form-group row mb-1 d-flex justify-content-center">
+                  <div className="form-group col-6  text-center">
+                    <label for="">
+                      <b>Payment Method</b>
+                    </label>
+                    <br/>
+                    <input
+                      style={{
+                        borderRadius: "15px",
+                        border: "2px solid #E5194B",
+                      }}
+                      type="checkbox"
+                      ref={register({ required: false })}
+                      onClick={()=>{beforeCheckIn && setAfterCheckIn(!afterCheckIn)}}
+                      checked={afterCheckIn}
+                      name="afterCheckIn"
+                    />
+                    <label>&nbsp;After Check In</label>
+                    <br/>
+                    <input
+                      style={{
+                        borderRadius: "15px",
+                        border: "2px solid #E5194B",
+                      }}
+                      type="checkbox"
+                      ref={register({ required: false })}
+                      onClick={()=>{afterCheckIn &&setBeforeCheckIn(!beforeCheckIn)}}
+                      checked={beforeCheckIn}
+                      name="beforeCheckIn"
+                    />
+                    <label>&nbsp;Before Check In</label>
+                  </div>
+                </div>
+               {beforeCheckIn &&  <div className="form-group row mb-1 d-flex justify-content-center">
+                  <div className="form-group col-6  text-center">
+                    <label for="">
+                      <b>Minimum Payment Amount</b>
+                    </label>
+                    <input
+                      style={{
+                        borderRadius: "15px",
+                        border: "2px solid #E5194B",
+                      }}
+                      type="number"
+                      ref={register({ required: true })}
+                      name="paymentAmount"
+                      defaultValue="0"
+                      min="0"
+                    />
+                  </div>
+                </div>}
+                <div className="form-group row mb-1 d-flex justify-content-center">
+                  <div className="form-group col-6  text-center">
+                    <label for="">
+                      <b>Active Status</b>
+                    </label>
+                    <select
+                     ref={register({ required: true })}
+                    style={{
+                        borderRadius: "15px",
+                        border: "2px solid #E5194B",
+                      }} name="status" className="ml-2">
+                      <option value="Active">Active</option>
+                      <option value="Inactive">Inactive</option>
+                    </select>
                   </div>
                 </div>
                 <div className="form-group row mb-1 d-flex justify-content-center">

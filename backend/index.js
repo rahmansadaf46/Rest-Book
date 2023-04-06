@@ -5,8 +5,8 @@ const MongoClient = require('mongodb').MongoClient;
 const ObjectId = require('mongodb').ObjectId;
 const fileUpload = require('express-fileupload');
 require('dotenv').config()
-const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.c9qgdog.mongodb.net/?retryWrites=true&w=majority`;
-// const uri = 'mongodb://localhost:27017'
+// const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.c9qgdog.mongodb.net/?retryWrites=true&w=majority`;
+const uri = 'mongodb://localhost:27017'
 const app = express()
 
 app.use(bodyParser.json());
@@ -22,26 +22,30 @@ app.get('/', (req, res) => {
 
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 client.connect(err => {
-    const orderCollection = client.db("trustNRide").collection("allOrder");
-    const itemCollection = client.db("trustNRide").collection("allItem");
-    const userCollection = client.db("trustNRide").collection("allUser");
-    const areaCollection = client.db("trustNRide").collection("allArea");
-    const restaurantCollection = client.db("trustNRide").collection("allGarage");
-    const serviceCollection = client.db("trustNRide").collection("allService");
-    //garage
+    const orderCollection = client.db("restBook").collection("allOrder");
+    const itemCollection = client.db("restBook").collection("allItem");
+    const userCollection = client.db("restBook").collection("allUser");
+    const areaCollection = client.db("restBook").collection("allArea");
+    const restaurantCollection = client.db("restBook").collection("allRestaurant");
+    const tableCollection = client.db("restBook").collection("allTable");
+    //restaurant 
     app.post('/addRestaurant', (req, res) => {
         const file = req.files.file;
         const image = req.files.file.name;
         const title = req.body.title;
         const location = req.body.area;
         const status = req.body.status;
+        const openingTime = req.body.openingTime;
+        const closingTime = req.body.closingTime;
         const user = req.body.user;
         const address = req.body.address;
         const mobile = req.body.mobile;
         const description = req.body.description;
         const facebook = req.body.facebook;
         const coords = req.body.coords;
-
+        const afterCheckIn = req.body.afterCheckIn;
+        const beforeCheckIn = req.body.beforeCheckIn;
+        const paymentAmount = req.body.paymentAmount;
         const area = location.split(',')
         file.mv(`${__dirname}/image/restaurant/${file.name}`, err => {
             if (err) {
@@ -50,7 +54,8 @@ client.connect(err => {
         })
 
         restaurantCollection.insertOne({
-            title, status, user, area, image, address, mobile, description, facebook, coords
+            title, status, user, area, image, address, mobile, description, facebook, coords, openingTime, closingTime,
+            afterCheckIn, beforeCheckIn, paymentAmount
         })
             .then(result => {
                 res.send(result.insertedCount > 0);
@@ -65,12 +70,18 @@ client.connect(err => {
         const description = req.body.data.description;
         const facebook = req.body.data.facebook;
         const coords = req.body.data.coords;
+        const afterCheckIn = req.body.data.afterCheckIn;
+        const beforeCheckIn = req.body.data.beforeCheckIn;
+        const paymentAmount = req.body.data.paymentAmount;
+        const status = req.body.data.status;
+        const openingTime = req.body.data.openingTime;
+        const closingTime = req.body.data.closingTime;
         restaurantCollection.updateOne({ _id: ObjectId(req.params.id) },
             {
                 $set: {
                     title: title, area: area, user: user, address: address, mobile: mobile,
-                    description: description, facebook: facebook, coords: coords
-                }
+                    description: description, facebook: facebook, coords: coords, afterCheckIn: afterCheckIn,beforeCheckIn: beforeCheckIn,paymentAmount: paymentAmount, status: status, openingTime: openingTime, closingTime: closingTime
+                }   
             })
             .then(result => {
                 res.send(result.matchedCount > 0);
@@ -192,26 +203,26 @@ client.connect(err => {
         const rate = req.body.data.rate;
         const garageId = req.body.data.garageId;
         // console.log(req.body)
-        serviceCollection.insertOne({ title, description, rate, garageId })
+        tableCollection.insertOne({ title, description, rate, garageId })
             .then(result => {
                 res.send(result.insertedCount > 0);
             })
     })
     app.get('/service/:id', (req, res) => {
-        serviceCollection.find({ garageId: req.params.id })
+        tableCollection.find({ garageId: req.params.id })
             .toArray((err, documents) => {
                 res.send(documents);
             })
     })
 
     app.get('/serviceDetails/:id', (req, res) => {
-        serviceCollection.find({ _id: ObjectId(req.params.id) })
+        tableCollection.find({ _id: ObjectId(req.params.id) })
             .toArray((err, documents) => {
                 res.send(documents[0]);
             })
     })
     app.patch('/updateService/:id', (req, res) => {
-        serviceCollection.updateOne({ _id: ObjectId(req.params.id) },
+        tableCollection.updateOne({ _id: ObjectId(req.params.id) },
             {
                 $set: req.body.data,
             })
@@ -220,7 +231,7 @@ client.connect(err => {
             })
     })
     app.delete('/deleteService/:id', (req, res) => {
-        serviceCollection.deleteOne({ _id: ObjectId(req.params.id) })
+        tableCollection.deleteOne({ _id: ObjectId(req.params.id) })
             .then((result) => {
                 res.send(result.deletedCount > 0);
                 // console.log(res);
