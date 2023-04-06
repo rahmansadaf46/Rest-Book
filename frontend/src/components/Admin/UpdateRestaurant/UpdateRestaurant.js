@@ -16,6 +16,7 @@ const UpdateRestaurant = () => {
   // const [restaurantLocation, setRestaurantLocation] = useState('');
   const [afterCheckIn, setAfterCheckIn] = useState(true);
   const [beforeCheckIn, setBeforeCheckIn] = useState(false);
+  const [activeStatus, setActiveStatus] = useState('Active');
   const [areaList, setAreaList] = useState([]);
   const [area, setArea] = useState([]);
   const handleArea = (e) => {
@@ -67,32 +68,35 @@ const UpdateRestaurant = () => {
         });
         setUserList(user);
       });
-      fetch('http://localhost:4200/restaurantProfile/' + id)
-            .then(res => res.json())
-            .then(data => {
-                console.log(data);
-                setRestaurant(data)
-                const area = data?.area.map(item=> {return{
-                  value: `${item}`,
-                  label: `${item?.toUpperCase()}`,
-                }})
-                setArea(area)
-                setUser(data.user)
-                setSelectedUser({
-                  value: `${data.user}`,
-                  label: `${data.user}`,
-                })
-                // data.area = area;
-                setRestaurant(data)
-                setAfterCheckIn(data.afterCheckIn)
-                setBeforeCheckIn(data.beforeCheckIn)
-                console.log(area)
-                // setServices(data)
-                // setRestaurant(data);
-                // setAllItem(data);
-                // localStorage.setItem('item', JSON.stringify(data));
+    fetch('http://localhost:4200/restaurantProfile/' + id)
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+        setRestaurant(data)
+        const area = data?.area.map(item => {
+          return {
+            value: `${item}`,
+            label: `${item?.toUpperCase()}`,
+          }
+        })
+        setArea(area)
+        setUser(data.user)
+        setSelectedUser({
+          value: `${data.user}`,
+          label: `${data.user}`,
+        })
+        // data.area = area;
+        setRestaurant(data)
+        setAfterCheckIn(data.afterCheckIn)
+        setBeforeCheckIn(data.beforeCheckIn)
+        setActiveStatus(data.status)
+        console.log(area)
+        // setServices(data)
+        // setRestaurant(data);
+        // setAllItem(data);
+        // localStorage.setItem('item', JSON.stringify(data));
 
-            })
+      })
     // fetch('http://localhost:4200/restaurants')
     //     .then(res => res.json())
     //     .then(data => {
@@ -116,23 +120,23 @@ const UpdateRestaurant = () => {
     data.coords = `${data?.lat}, ${data?.long}`;
     data.area = tempArray;
     data.user = user;
-    if(data.openingTime> data.closingTime){
+    if (data.openingTime > data.closingTime) {
       window.alert("Opening time must be less than closing time")
-    }else{
-      fetch('http://localhost:4200/UpdateRestaurant/'+ id, {
+    } else {
+      fetch('http://localhost:4200/UpdateRestaurant/' + id, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ data })
-    })
+      })
         .then(response => response.json())
         .then(data => {
-            window.alert('Restaurant Updated successfully');
-            window.location.href="/admin/restaurantList"
-            // window.location.reload();
+          window.alert('Restaurant Updated successfully');
+          window.location.href = "/admin/restaurantList"
+          // window.location.reload();
         })
 
         .catch(error => {
-            console.error(error)
+          console.error(error)
         })
     }
 
@@ -374,7 +378,7 @@ const UpdateRestaurant = () => {
                     <label for="">
                       <b>Payment Method</b>
                     </label>
-                    <br/>
+                    <br />
                     <input
                       style={{
                         borderRadius: "15px",
@@ -382,12 +386,12 @@ const UpdateRestaurant = () => {
                       }}
                       type="checkbox"
                       ref={register({ required: false })}
-                      onClick={()=>{beforeCheckIn && setAfterCheckIn(!afterCheckIn)}}
+                      onClick={() => { beforeCheckIn && setAfterCheckIn(!afterCheckIn) }}
                       checked={afterCheckIn}
                       name="afterCheckIn"
                     />
                     <label>&nbsp;After Check In</label>
-                    <br/>
+                    <br />
                     <input
                       style={{
                         borderRadius: "15px",
@@ -395,14 +399,14 @@ const UpdateRestaurant = () => {
                       }}
                       type="checkbox"
                       ref={register({ required: false })}
-                      onClick={()=>{afterCheckIn &&setBeforeCheckIn(!beforeCheckIn)}}
+                      onClick={() => { afterCheckIn && setBeforeCheckIn(!beforeCheckIn) }}
                       checked={beforeCheckIn}
                       name="beforeCheckIn"
                     />
                     <label>&nbsp;Before Check In</label>
                   </div>
                 </div>
-               {beforeCheckIn &&  <div className="form-group row mb-1 d-flex justify-content-center">
+                {beforeCheckIn && <div className="form-group row mb-1 d-flex justify-content-center">
                   <div className="form-group col-6  text-center">
                     <label for="">
                       <b>Minimum Payment Amount</b>
@@ -426,8 +430,14 @@ const UpdateRestaurant = () => {
                       <b>Active Status</b>
                     </label>
                     <select
-                     ref={register({ required: true })}
-                    style={{
+                      value={activeStatus}
+                      onChange={()=>{ if(activeStatus === 'Active'){
+                        setActiveStatus('Inactive');
+                      }else{
+                        setActiveStatus('Active');
+                      }}}
+                      ref={register({ required: true })}
+                      style={{
                         borderRadius: "15px",
                         border: "2px solid #E5194B",
                       }} name="status" className="ml-2">

@@ -168,6 +168,15 @@ const RestaurantListAdmin = () => {
                             {item?.facebook}
                           </span>
                         </p>
+                        <p className="text-left  font-weight-bold   mt-3">
+                          <span style={{ color: "#E5194B" }}>
+                            Active Status:
+                          </span>
+                          <span className=" font-weight-bold">
+                            {" "}
+                            {item?.status === 'Active' ? <span className="text-success">{item.status}</span> : <span>{item.status}</span>}
+                          </span>
+                        </p>
                         {/* <p className="text-left  font-weight-bold   mt-3">
                           <span style={{ color: "#E5194B" }}>
                             Google Map Code:
