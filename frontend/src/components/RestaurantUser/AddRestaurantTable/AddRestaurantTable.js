@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import GarageHeader from "../GarageHeader/GarageHeader";
-import GarageSidebar from "../GarageSidebar/GarageSidebar";
+import RestaurantHeader from "../RestaurantHeader/RestaurantHeader";
+import RestaurantSidebar from "../RestaurantSidebar/RestaurantSidebar";
 import { useForm } from "react-hook-form";
 // import { useParams } from "react-router-dom";
-// import './PendingRequest.css'
-const AddGarageService = () => {
-  const [garageData, setGarageData] = useState([]);
+// import './BookingRequest.css'
+const AddRestaurantTable = () => {
+  const [restaurantData, setRestaurantData] = useState([]);
   const { register, handleSubmit, errors } = useForm();
   const user = sessionStorage.getItem("email");
   console.log(user, "user");
@@ -19,13 +19,13 @@ const AddGarageService = () => {
         .then((res) => res.json())
         .then((data) => {
           console.log(data[0]);
-          setGarageData(data[0]);
+          setRestaurantData(data[0]);
         });
     }
   }, [user]);
 
   const onSubmit = (data) => {
-    data.garageId = garageData._id;
+    data.garageId = restaurantData._id;
     fetch("http://localhost:4200/addService", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -44,10 +44,10 @@ const AddGarageService = () => {
 
   return (
     <div>
-      <GarageHeader />
+      <RestaurantHeader />
       <div className="row">
         <div className="col-md-2">
-          <GarageSidebar />
+          <RestaurantSidebar />
         </div>
 
         <div
@@ -56,7 +56,7 @@ const AddGarageService = () => {
         >
           <div className="text-center  text-danger">
             <h2>
-              <u>Add Service</u>
+              <u>Add Table</u>
             </h2>
           </div>
           <div className="col-md-12">
@@ -142,4 +142,4 @@ const AddGarageService = () => {
   );
 };
 
-export default AddGarageService;
+export default AddRestaurantTable;

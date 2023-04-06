@@ -12,7 +12,7 @@ import { UserContext } from "../../../App";
 
 const Header = ({ cart }) => {
   const user = sessionStorage.getItem("email");
-  const [garageUser, setGarageUser] = useState([]);
+  const [restaurantUser, setRestaurantUser] = useState([]);
   const [item, setItem] = useState([]);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -42,8 +42,8 @@ const Header = ({ cart }) => {
         .then((res) => res.json())
         .then((data) => {
           console.log(data);
-          setGarageUser(data);
-          sessionStorage.setItem("garageUser", JSON.stringify(data));
+          setRestaurantUser(data);
+          sessionStorage.setItem("restaurantUser", JSON.stringify(data));
           // const email = sessionStorage.getItem('email')
           // const items = data.filter(item => item.finalData.email === email)
           // setItem(items.reverse());
@@ -96,7 +96,7 @@ const Header = ({ cart }) => {
             ) : (
               <></>
             )}
-            {garageUser.length > 0 && (
+            {restaurantUser.length > 0 && (
               <Link
                 to="/restaurant/profile"
                 style={{ borderRadius: "30px" }}

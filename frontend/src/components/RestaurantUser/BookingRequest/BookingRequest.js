@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import GarageHeader from '../GarageHeader/GarageHeader';
-import GarageSidebar from '../GarageSidebar/GarageSidebar';
-import './PendingRequest.css'
+import RestaurantHeader from '../RestaurantHeader/RestaurantHeader';
+import RestaurantSidebar from '../RestaurantSidebar/RestaurantSidebar';
+import './BookingRequest.css'
 import emailjs from '@emailjs/browser';
 import { useRef } from 'react';
-const PendingRequest = () => {
+const BookingRequest = () => {
     const [product, setProduct] = useState([]);
     const form = useRef();
 
@@ -65,17 +65,17 @@ const PendingRequest = () => {
 
     return (
         <div>
-            <GarageHeader />
+            <RestaurantHeader />
             <div className="row">
                 <div className="col-md-2">
-                    <GarageSidebar />
+                    <RestaurantSidebar />
                 </div>
 
 
                 <div style={{ backgroundColor: '#FCF4E0', height: '100%', minHeight: '800px' }} className="col-md-10 pt-4 d-flex justify-content-center">
                     <div className="">
                         <div className="text-center pb-3 text-danger">
-                            <h2><u>Pending Request</u></h2>
+                            <h2><u>Booking Request</u></h2>
                         </div>
                         <div>{
                             product.map(fd => <>{fd?.finalData.category === "Service" && <><div style={{ width: '700px', height: '100%', border: '1px solid lightYellow', borderRadius: '30px', backgroundColor: 'lightYellow', marginBottom: '25px', padding: '30px' }}>
@@ -149,4 +149,4 @@ const PendingRequest = () => {
     );
 };
 
-export default PendingRequest;
+export default BookingRequest;

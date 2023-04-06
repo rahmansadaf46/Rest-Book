@@ -15,12 +15,12 @@ import UpdateItem from "./components/Admin/UpdateItem/UpdateItem";
 import Checkout from "./components/Checkout/Checkout/Checkout";
 import ServiceCheckout from "./components/Checkout/ServiceCheckout/ServiceCheckout";
 import Restaurant from "./components/Restaurant/Restaurant/Restaurant";
-import AddGarageService from "./components/RestaurantUser/AddGarageService/AddGarageService";
-import DeliveryRequest from "./components/RestaurantUser/DeliveryRequest/DeliveryRequest";
-import GarageProfileUser from "./components/RestaurantUser/GarageProfileUser/GarageProfileUser";
-import PendingRequest from "./components/RestaurantUser/PendingRequest/PendingRequest";
-import ServiceList from "./components/RestaurantUser/ServiceList/ServiceList";
-import UpdateGarageService from "./components/RestaurantUser/UpdateGarageService/UpdateGarageService";
+import AddRestaurantTable from "./components/RestaurantUser/AddRestaurantTable/AddRestaurantTable";
+import BookingDone from "./components/RestaurantUser/BookingDone/BookingDone";
+import RestaurantProfileUser from "./components/RestaurantUser/RestaurantProfileUser/RestaurantProfileUser";
+import BookingRequest from "./components/RestaurantUser/BookingRequest/BookingRequest";
+import RestaurantTableList from "./components/RestaurantUser/RestaurantTableList/RestaurantTableList";
+import UpdateRestaurantTable from "./components/RestaurantUser/UpdateRestaurantTable/UpdateRestaurantTable";
 // import GarageList from "./components/Home/GarageList/GarageList";
 import Home from "./components/Home/Home/Home";
 import Item from "./components/Item/Item/Item";
@@ -30,6 +30,9 @@ import SignUp from "./components/Login/SignUp/SignUp";
 // import MapComponent from "./components/MapComponent/MapComponent.js";
 import ServiceShipment from "./components/ServiceShipment/ServiceShipment/ServiceShipment";
 import Shipment from "./components/Shipment/Shipment/Shipment";
+import AddFood from "./components/RestaurantUser/AddFood/AddFood";
+import UpdateFood from "./components/RestaurantUser/UpdateFood/UpdateFood";
+import FoodList from "./components/RestaurantUser/FoodList/FoodList";
 
 export const UserContext = createContext();
 
@@ -110,27 +113,36 @@ function App() {
             <Customer></Customer>
           </PrivateRoute>
           <PrivateRoute path="/restaurant/profile">
-            <GarageProfileUser></GarageProfileUser>
+            <RestaurantProfileUser></RestaurantProfileUser>
           </PrivateRoute>
           <PrivateRoute path="/restaurant/pending">
-            <PendingRequest></PendingRequest>
+            <BookingRequest></BookingRequest>
           </PrivateRoute>
           <PrivateRoute path="/restaurant/delivery">
-            <DeliveryRequest></DeliveryRequest>
+            <BookingDone></BookingDone>
           </PrivateRoute>
-          <PrivateRoute path="/restaurant/addService">
-            <AddGarageService></AddGarageService>
+          <PrivateRoute path="/restaurant/addTable">
+            <AddRestaurantTable></AddRestaurantTable>
           </PrivateRoute>
-          <PrivateRoute path="/restaurant/updateService/:id">
-            <UpdateGarageService></UpdateGarageService>
+          <PrivateRoute path="/restaurant/updateTable/:id">
+            <UpdateRestaurantTable></UpdateRestaurantTable>
           </PrivateRoute>
-          <PrivateRoute path="/restaurant/serviceList">
-            <ServiceList></ServiceList>
+          <PrivateRoute path="/restaurant/restaurantTableList">
+            <RestaurantTableList></RestaurantTableList>
+          </PrivateRoute>
+          <PrivateRoute path="/restaurant/addFood">
+            <AddFood></AddFood>
+          </PrivateRoute>
+          <PrivateRoute path="/restaurant/updateFood/:id">
+            <UpdateFood></UpdateFood>
+          </PrivateRoute>
+          <PrivateRoute path="/restaurant/foodList">
+            <FoodList> </FoodList>
           </PrivateRoute>
           <PrivateRoute path="/restaurant/:id">
             <Restaurant></Restaurant>
           </PrivateRoute>
-
+         
           <Route path="/">
             <Home></Home>
           </Route>

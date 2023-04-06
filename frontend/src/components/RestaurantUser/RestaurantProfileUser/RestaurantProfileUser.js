@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
 // import { Link } from 'react-router-dom';
-import GarageHeader from '../GarageHeader/GarageHeader';
-import GarageSidebar from '../GarageSidebar/GarageSidebar';
-// import './PendingRequest.css'
-const GarageProfileUser = () => {
-    const [garage, setGarage] = useState([]);
+import RestaurantHeader from '../RestaurantHeader/RestaurantHeader';
+import RestaurantSidebar from '../RestaurantSidebar/RestaurantSidebar';
+// import './BookingRequest.css'
+const RestaurantProfileUser = () => {
+    const [restaurant, setRestaurant] = useState([]);
 
 
 
     useEffect(() => {
-        setGarage(JSON.parse(sessionStorage.getItem('garageUser')))
-        // fetch(`http://localhost:4200/service/${JSON.parse(sessionStorage.getItem('garageUser'))[0]._id}`)
+        setRestaurant(JSON.parse(sessionStorage.getItem('restaurantUser')))
+        // fetch(`http://localhost:4200/service/${JSON.parse(sessionStorage.getItem('restaurantUser'))[0]._id}`)
         //     .then(res => res.json())
         //     .then(data => {
         //         // if (data) {
@@ -24,21 +24,21 @@ const GarageProfileUser = () => {
         //     })
     }, [])
 
-console.log(garage)
+console.log(restaurant)
 
     return (
         <div>
-            <GarageHeader />
+            <RestaurantHeader />
             <div className="row">
                 <div className="col-md-2">
-                    <GarageSidebar />
+                    <RestaurantSidebar />
                 </div>
 
 
                 <div style={{ backgroundColor: '#FCF4E0', height: '100%', minHeight: '800px' }} className="col-md-10 pt-4 d-flex justify-content-center">
                     <div className="">
-                        {/* <div className="text-center ml-5 pb-3 text-danger">
-                            <h2><u>Garage Profile</u></h2>
+                        {/* <div className="text-center ml-5 pb-3 ">
+                            <h2><u>restaurant Profile</u></h2>
                         </div> */}
                         <div>
                         <div style={{ backgroundColor: 'white', borderRadius: '20px'  }} className="col-12  mx-4 my-4 pb-3 p-3">
@@ -47,44 +47,44 @@ console.log(garage)
                                     {/* <p style={{ lineHeight: '0.3', color: 'gray', fontWeight: 'bold', marginBottom: '30px' }}>{service.description.split('\n').map(str => <p>{str}</p>)}</p> */}
                                     {/* <hr /> */}
                                     <div className='d-flex justify-content-center'>
-                                    <img style={{ width: '200px', borderRadius: '50%' }} src={`http://localhost:4200/restaurant/${garage[0]?.image}`} alt="" />
+                                    <img style={{ width: '200px', borderRadius: '50%' }} src={`http://localhost:4200/restaurant/${restaurant[0]?.image}`} alt="" />
                                     </div>
                                     <h4 className="text-left mt-3">
-                                        <span style={{ color: '#E5194B' }}>Garage Name:</span> 
-                                    <span className="text-danger font-weight-bold"> {garage[0]?.title}</span>
+                                        <span style={{ color: '#E5194B' }}>Restaurant Name:</span> 
+                                    <span className=" font-weight-bold"> {restaurant[0]?.title}</span>
                                     </h4>
                                     <h4 className="text-left     mt-3">
-                                        <span style={{ color: '#E5194B' }}>Garage Address:</span> 
-                                    <span className="text-danger font-weight-bold"> {garage[0]?.address}</span>
+                                        <span style={{ color: '#E5194B' }}>Restaurant Address:</span> 
+                                    <span className=" font-weight-bold"> {restaurant[0]?.address}</span>
                                     </h4>
                                     <h4 className="text-left     mt-3">
-                                        <span style={{ color: '#E5194B' }}>Garage Description:</span> 
-                                    <span className="text-danger font-weight-bold"> {garage[0]?.description}</span>
+                                        <span style={{ color: '#E5194B' }}>Restaurant Description:</span> 
+                                    <span className=" font-weight-bold"> {restaurant[0]?.description}</span>
                                     </h4>
                                     <h4 className="text-left     mt-3">
-                                        <span style={{ color: '#E5194B' }}>Garage Contact:</span> 
-                                    <span className="text-danger font-weight-bold"> {garage[0]?.mobile}</span>
+                                        <span style={{ color: '#E5194B' }}>Restaurant Contact:</span> 
+                                    <span className=" font-weight-bold"> {restaurant[0]?.mobile}</span>
                                     </h4>
                                     <h4 className="text-left     mt-3">
-                                        <span style={{ color: '#E5194B' }}>Garage User Email:</span> 
-                                    <span className="text-danger font-weight-bold"> {garage[0]?.user}</span>
+                                        <span style={{ color: '#E5194B' }}>Restaurant User Email:</span> 
+                                    <span className=" font-weight-bold"> {restaurant[0]?.user}</span>
                                     </h4>
                                     <hr/>
                                     <h4 className="text-center     mt-3">
                                         <span  style={{ color: 'orange' }}>Areas</span> 
-                                    <ul className="text-danger font-weight-bold text-center"> {garage[0]?.area.map(data=> <li className="mr-5 my-2 text-uppercase"># {data}</li>)}</ul>
+                                    <ul style={{listStyle:'none'}} className=" font-weight-bold text-center"> {restaurant[0]?.area.map(data=> <li className="mr-5 my-2 text-uppercase"># {data}</li>)}</ul>
                                     </h4>
                                     {/* <h4 className="text-left     mt-3">
-                                        <span style={{ color: '#E5194B' }}>Garage Facebook Code:</span> 
-                                    <span className="text-danger font-weight-bold"> {garage[0].facebook}</span>
+                                        <span style={{ color: '#E5194B' }}>restaurant Facebook Code:</span> 
+                                    <span className=" font-weight-bold"> {restaurant[0].facebook}</span>
                                     </h4>    */}
                                     {/* <h4 className="text-left     mt-3">
-                                        <span style={{ color: '#E5194B' }}>Garage Facebook Code:</span> 
-                                    <span className="text-danger font-weight-bold"> {garage[0].facebook}</span>
+                                        <span style={{ color: '#E5194B' }}>restaurant Facebook Code:</span> 
+                                    <span className=" font-weight-bold"> {restaurant[0].facebook}</span>
                                     </h4> */}
                                     <div className='row text-center mt-3 p-3'>
                                         <div className='col-6'>
-                                            {/* <Link to={`/restaurant/updateService/${service._id}`} class="btn btn-warning font-weight-bold" >Update Service</Link> */}
+                                            {/* <Link to={`/restaurant/updateTable/${service._id}`} class="btn btn-warning font-weight-bold" >Update Service</Link> */}
                                             
                                         </div>
                                         <div className='col-6'>
@@ -100,25 +100,25 @@ console.log(garage)
                                 <div className="font-weight-bold">Order No: <span style={{ color: 'purple' }}>{fd._id.split("").slice(15, 50)}</span></div>
                                 <br />
                                
-                                           <p style={{ fontSize: '18px' }}><span className="font-weight-bold text-danger">{fd?.finalData?.service?.title}</span> </p> <br />
-                                <p style={{ fontSize: '18px' }}><span className="font-weight-bold text-danger">Payment ID: </span><span className="font-weight-bold text-dark">{fd.finalData.paymentData}</span> </p>
+                                           <p style={{ fontSize: '18px' }}><span className="font-weight-bold ">{fd?.finalData?.service?.title}</span> </p> <br />
+                                <p style={{ fontSize: '18px' }}><span className="font-weight-bold ">Payment ID: </span><span className="font-weight-bold text-dark">{fd.finalData.paymentData}</span> </p>
                                 <br />
                                 <div style={{ border: '2px solid #E5194B', padding: '15px' }}>
-                                    <p className="font-weight-bold ">Address: <span className="text-danger">Flat No {fd.finalData.address.flatNo}, House No {fd.finalData.address.houseNo}, {fd.finalData.address.area}</span></p>
-                                    <p className="font-weight-bold">Contact: <span className="text-danger">{fd.finalData.address.contactNo}</span></p>
-                                    <p className="font-weight-bold text-dark">Email: <span className="text-danger">{fd.finalData.email}</span></p>
+                                    <p className="font-weight-bold ">Address: <span className="">Flat No {fd.finalData.address.flatNo}, House No {fd.finalData.address.houseNo}, {fd.finalData.address.area}</span></p>
+                                    <p className="font-weight-bold">Contact: <span className="">{fd.finalData.address.contactNo}</span></p>
+                                    <p className="font-weight-bold text-dark">Email: <span className="">{fd.finalData.email}</span></p>
                                 </div>
                                 <br />
                                 <div className="row">
                                     <div className="d-flex col-md-6">
                                         <div className="">
-                                            <p className="mt-2 font-weight-bold">Status: <span className="text-danger">{fd.finalData.status}</span> </p></div>
+                                            <p className="mt-2 font-weight-bold">Status: <span className="">{fd.finalData.status}</span> </p></div>
                                         <div style={{ position: 'relative', left: '10px', top: '7px' }} >
                                           
                                         </div>
                                     </div>
                                     <div className="col-md-6 d-flex justify-content-end">
-                                        <p className="mt-2 font-weight-bold">Amount: <span className="text-danger">{fd.finalData.amount}/-</span></p>&nbsp;&nbsp; 
+                                        <p className="mt-2 font-weight-bold">Amount: <span className="">{fd.finalData.amount}/-</span></p>&nbsp;&nbsp; 
                                     </div>
                                 </div>
 
@@ -133,4 +133,4 @@ console.log(garage)
     );
 };
 
-export default GarageProfileUser;
+export default RestaurantProfileUser;

@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import GarageHeader from '../GarageHeader/GarageHeader';
-import GarageSidebar from '../GarageSidebar/GarageSidebar';
-// import './PendingRequest.css'
-const ServiceList = () => {
+import RestaurantHeader from '../RestaurantHeader/RestaurantHeader';
+import RestaurantSidebar from '../RestaurantSidebar/RestaurantSidebar';
+// import './BookingRequest.css'
+const RestaurantTableList = () => {
     const [services, setServices] = useState([]);
 
 
 
     useEffect(() => {
         window.scroll(0,0)
-        fetch(`http://localhost:4200/service/${JSON.parse(sessionStorage.getItem('garageUser'))[0]._id}`)
+        fetch(`http://localhost:4200/service/${JSON.parse(sessionStorage.getItem('restaurantUser'))[0]._id}`)
             .then(res => res.json())
             .then(data => {                
                 setServices(data);
@@ -35,17 +35,17 @@ const ServiceList = () => {
 
     return (
         <div>
-            <GarageHeader />
+            <RestaurantHeader />
             <div className="row">
                 <div className="col-md-2">
-                    <GarageSidebar />
+                    <RestaurantSidebar />
                 </div>
 
 
                 <div style={{ backgroundColor: '#FCF4E0', height: '100%', minHeight: '800px' }} className="col-md-10 pt-4 d-flex justify-content-center">
                     <div className="">
                         <div className="text-center pb-3  text-danger">
-                            <h2><u>Service List</u></h2>
+                            <h2><u>Table List</u></h2>
                         </div>
                         <div>
                             {services?.map(service =>
@@ -61,7 +61,7 @@ const ServiceList = () => {
                                         <h4 className="text-center mt-3"><span style={{ color: '#E5194B' }}>Service Charge:</span> <span className="text-danger font-weight-bold">{service.rate}/-</span></h4>
                                         <div className='row text-center mt-3 p-3'>
                                             <div className='col-6'>
-                                                <Link to={`/restaurant/updateService/${service._id}`} class="btn btn-warning font-weight-bold" >Update Service</Link>
+                                                <Link to={`/restaurant/updateTable/${service._id}`} class="btn btn-warning font-weight-bold" >Update Service</Link>
 
                                             </div>
                                             <div className='col-6'>
@@ -111,4 +111,4 @@ const ServiceList = () => {
     );
 };
 
-export default ServiceList;
+export default RestaurantTableList;

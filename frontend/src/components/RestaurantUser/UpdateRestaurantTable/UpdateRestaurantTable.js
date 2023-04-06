@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import GarageHeader from '../GarageHeader/GarageHeader';
-import GarageSidebar from '../GarageSidebar/GarageSidebar';
+import RestaurantHeader from '../RestaurantHeader/RestaurantHeader';
+import RestaurantSidebar from '../RestaurantSidebar/RestaurantSidebar';
 import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
-// import './PendingRequest.css'
-const UpdateGarageService = () => {
+// import './BookingRequest.css'
+const UpdateRestaurantTable = () => {
     const [garageData, setGarageData] = useState([])
     const { register, handleSubmit, errors } = useForm();
     const { id } = useParams();
@@ -48,10 +48,10 @@ const UpdateGarageService = () => {
 
     return (
         <div>
-            <GarageHeader />
+            <RestaurantHeader />
             <div className="row">
                 <div className="col-md-2">
-                    <GarageSidebar />
+                    <RestaurantSidebar />
                 </div>
 
                 <div style={{ backgroundColor: '#FCF4E0', height: '100vh' }} className="col-md-10 pt-4">
@@ -91,4 +91,4 @@ const UpdateGarageService = () => {
     );
 };
 
-export default UpdateGarageService;
+export default UpdateRestaurantTable;
