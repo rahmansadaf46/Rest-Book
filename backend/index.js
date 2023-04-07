@@ -225,41 +225,57 @@ client.connect(err => {
                 // console.log(res);
             })
     })
-    //service
-    app.post('/addService', (req, res) => {
-        const title = req.body.data.title;
-        const description = req.body.data.description;
-        const rate = req.body.data.rate;
-        const restaurantId = req.body.data.restaurantId;
-        // console.log(req.body)
-        tableCollection.insertOne({ title, description, rate, restaurantId })
+    //table
+    app.post('/addTable', (req, res) => {
+        const file = req.files.file;
+        const image = req.files.file.name;
+        const title = req.body.title;
+        const price = req.body.price;
+        const layout = req.body.layout;
+        const description = req.body.description;
+        const restaurantId = req.body.restaurantId;
+
+        file.mv(`${__dirname}/image/table/${file.name}`, err => {
+            if (err) {
+                return res.status(500).send({ msg: 'Failed to upload Image' });
+            }
+        })
+
+        tableCollection.insertOne({ title, price, layout, description, restaurantId, image })
             .then(result => {
                 res.send(result.insertedCount > 0);
             })
     })
-    app.get('/service/:id', (req, res) => {
+    app.patch('/updateTable/:id', (req, res) => {
+        const title = req.body.data.title;
+        const price = req.body.data.price;
+        const layout = req.body.data.layout;
+        const description = req.body.data.description;
+        tableCollection.updateOne({ _id: ObjectId(req.params.id) },
+            {
+                $set: {
+                    title: title, price: price, layout: layout, description: description
+                }
+            })
+            .then(result => {
+                res.send(result.matchedCount > 0);
+            })
+    })
+    app.get('/tables/:id', (req, res) => {
         tableCollection.find({ restaurantId: req.params.id })
             .toArray((err, documents) => {
                 res.send(documents);
             })
     })
 
-    app.get('/serviceDetails/:id', (req, res) => {
+    app.get('/tableDetails/:id', (req, res) => {
         tableCollection.find({ _id: ObjectId(req.params.id) })
             .toArray((err, documents) => {
                 res.send(documents[0]);
             })
     })
-    app.patch('/updateService/:id', (req, res) => {
-        tableCollection.updateOne({ _id: ObjectId(req.params.id) },
-            {
-                $set: req.body.data,
-            })
-            .then(result => {
-                res.send(result.matchedCount > 0);
-            })
-    })
-    app.delete('/deleteService/:id', (req, res) => {
+   
+    app.delete('/deleteTable/:id', (req, res) => {
         tableCollection.deleteOne({ _id: ObjectId(req.params.id) })
             .then((result) => {
                 res.send(result.deletedCount > 0);

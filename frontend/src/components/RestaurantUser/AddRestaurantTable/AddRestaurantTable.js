@@ -50,7 +50,7 @@ const AddRestaurantTable = () => {
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log(data[0]);
+          // console.log(data[0]);
           setRestaurantData(data[0]);
         });
     }
@@ -62,20 +62,26 @@ const AddRestaurantTable = () => {
     data.layout = selectedLayout;
     data.file = file;
     console.log(data);
-    // fetch("http://localhost:4200/addService", {
-    //   method: "POST",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify({ data }),
-    // })
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     window.alert("Service added successfully");
-    //     window.location.reload();
-    //   })
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("title", data.title);
+    formData.append("description", data.description);
+    formData.append("layout", selectedLayout);
+    formData.append("restaurantId", restaurantData._id);
+    formData.append("price", data.price);
+    fetch("http://localhost:4200/addTable", {
+      method: "POST",
+      body: formData,
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        window.alert("Table added successfully");
+        window.location.reload();
+      })
 
-    //   .catch((error) => {
-    //     console.error(error);
-    //   });
+      .catch((error) => {
+        console.error(error);
+      });
   };
   const customStyles = {
     control: (provided, state) => ({
@@ -120,7 +126,7 @@ const AddRestaurantTable = () => {
                     type="text"
                     ref={register({ required: true })}
                     name="title"
-                    placeholder="Service Name"
+                    placeholder="Table Name"
                     className="form-control"
                   />
                   {errors.name && (
@@ -139,7 +145,7 @@ const AddRestaurantTable = () => {
                     type="text"
                     ref={register({ required: true })}
                     name="description"
-                    placeholder="Service Description"
+                    placeholder="Table Description"
                     className="form-control"
                   />
                   {errors.name && (
@@ -157,8 +163,8 @@ const AddRestaurantTable = () => {
                     }}
                     type="text"
                     ref={register({ required: true })}
-                    name="rate"
-                    placeholder="Service Rate"
+                    name="price"
+                    placeholder="Table Booking Price"
                     className="form-control"
                   />
                   {errors.name && (
@@ -170,7 +176,7 @@ const AddRestaurantTable = () => {
                     <b>Enter Layout</b>
                   </label>
                   <Select
-                    
+
                     styles={customStyles}
                     required
                     options={layouts}
