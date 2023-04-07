@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+// import { a } from 'react-router-dom';
 import logo2 from '../../../fakeData/images/logo.png'
 import './Footer.css'
 
@@ -11,18 +11,18 @@ const Footer = () => {
                     <div className="col-md-6"> <img style={{ width: '200px' }} src={logo2} alt="" /></div>
                     <div className=" col-md-3">
                         <ul>
-                            <li className="mb-2"><Link className="text-white ">About Online item</Link></li>
-                            <li className="mb-2"><Link className="text-white">Read our blog</Link></li>
-                            <li className="mb-2"><Link className="text-white">Sign up for Restaurant</Link></li>
-                            <li className="mb-2"><Link className="text-white">Add your Restaurant</Link></li>
+                            <li className="mb-2"><a href="/"className="text-white ">About Online item</a></li>
+                            <li className="mb-2"><a href="/"className="text-white">Read our blog</a></li>
+                            <li className="mb-2"><a href="/"className="text-white">Sign up for Restaurant</a></li>
+                            <li className="mb-2"><a href="/"className="text-white">Add your Restaurant</a></li>
                         </ul>
                     </div>
                     <div className="col-md-3 ">
                         <ul >
-                            <li className="mb-2"><Link className="text-white">Get help</Link></li>
-                            <li className="mb-2"><Link className="text-white">Read FAQs</Link></li>
-                            <li className="mb-2"><Link className="text-white">View all cities</Link></li>
-                            <li className="mb-2"><Link className="text-white">Restaurant near me</Link></li>
+                            <li className="mb-2"><a href="/"className="text-white">Get help</a></li>
+                            <li className="mb-2"><a href="/"className="text-white">Read FAQs</a></li>
+                            <li className="mb-2"><a href="/"className="text-white">View all cities</a></li>
+                            <li className="mb-2"><a href="/"className="text-white">Restaurant near me</a></li>
                         </ul>
                     </div>
                 </div>
@@ -31,13 +31,13 @@ const Footer = () => {
                         <small style={{ color: 'lightGray' }}>Copyright @2023 || Nur Nahar Bithi</small>
                     </div>
                     <div className="col-md-2 text-right">
-                        <Link className="text-white">Privacy Policy.</Link>
+                        <a href="/"className="text-white">Privacy Policy.</a>
                     </div>
                     <div className="col-md-2 pl-5">
-                        <Link className="text-white">Terms of Use</Link>
+                        <a href="/"className="text-white">Terms of Use</a>
                     </div>
                     <div className="col-md-2 pl-5">
-                        <Link className="text-white">Pricing</Link>
+                        <a href="/"className="text-white">Pricing</a>
                     </div>
                 </div>
             </div>

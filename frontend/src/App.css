@@ -53,3 +53,10 @@
     width: 90%;
   }
 }
+
+body{
+  font-family: 'Alkatra', cursive!important;
+}
+.css-1e6y48t-MuiButtonBase-root-MuiButton-root {
+  font-family: 'Alkatra', cursive!important; 
+}
