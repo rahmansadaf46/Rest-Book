@@ -105,13 +105,13 @@ const ServiceCheckout = () => {
   const handlePlaceOrder = (e) => {
     e.preventDefault();
  
-    service[0].service.garageName = service[0].title;
+    service[0].service.restaurantName = service[0].title;
     // localStorage.setItem('userAddress', )
     localStorage.setItem("userAddress", JSON.stringify([address]));
     const finalData = {
       service: service[0]?.service,
       address: address,
-      garageEmail: service[0]?.user,
+      restaurantEmail: service[0]?.user,
       email: sessionStorage.getItem("email"),
       amount: formatNumber(total),
       status: "Pending",
@@ -260,7 +260,7 @@ const ServiceCheckout = () => {
                       >
                         <div className="p-3">
                           <span className="text-danger">
-                            <b>Garage Name:</b>{" "}
+                            <b>Restaurant Name:</b>{" "}
                             <span className="font-weight-bold text-dark">
                               {service[0]?.title}
                             </span>

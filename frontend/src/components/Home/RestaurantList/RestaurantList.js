@@ -7,24 +7,22 @@ import RestaurantProfile from '../RestaurantProfile/RestaurantProfile';
 // import './Menu.css';
 
 const RestaurantList = ({handleLocation,area}) => {
-    const [garage, setGarage] = useState([]);
+    const [restaurant, setRestaurant] = useState([]);
     // const [allItem, setAllItem] = useState([]);
     const [loading, setLoading] = useState(true);
     const [noData, setNoData] = useState(false);
     // const [cart, setCart] = useState([]);
     useEffect(() => {
         setLoading(true)
-        setGarage([])
+        setRestaurant([])
         setNoData(false)
         fetch('http://localhost:4200/restaurants')
             .then(res => res.json())
             .then(data => {
-                console.log(data);
-                // setGarage(data);
                 setLoading(false)
-                let filterData = data.filter(garage=>  {return garage.area.some(data=> data === area)});
+                let filterData = data.filter(restaurant=>  {return restaurant.area.some(data=> data === area)});
                 console.log(filterData) 
-                setGarage(filterData);
+                setRestaurant(filterData);
                 if(filterData.length > 0){
                     setNoData(false)
                 }else{
@@ -90,7 +88,7 @@ const RestaurantList = ({handleLocation,area}) => {
                 {noData && <h2 className='text-center text-danger mt-5'>No <span className='text-dark'>Restaurant</span> Found</h2>}
                 <div className="row">
                     {
-                        garage.map(data => <div className="col-md-4"><RestaurantProfile garage={data}></RestaurantProfile></div>)
+                        restaurant.map(data => <div className="col-md-4"><RestaurantProfile restaurant={data}></RestaurantProfile></div>)
                     }
                 </div>
             </div>

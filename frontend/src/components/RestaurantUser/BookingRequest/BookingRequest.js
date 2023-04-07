@@ -35,10 +35,10 @@ const BookingRequest = () => {
             amount: data.finalData.amount,
             service: data.finalData.service,
             email: data.finalData.email,
-            garageEmail: data.finalData.garageEmail,
+            restaurantEmail: data.finalData.restaurantEmail,
             paymentData: data.finalData.paymentData,
             paymentCategory: data.finalData.paymentCategory,
-            status: "Mechanic Sent",
+            status: "Completed",
             category: "Service",
             date: new Date().toDateString()
         }
@@ -83,7 +83,6 @@ const BookingRequest = () => {
                                 <div className="font-weight-bold">Order No: <span style={{ color: 'purple' }}>{fd._id.split("").slice(15, 50)}</span></div>
                                 <br />
 
-                                {/* <p style={{ fontSize: '18px' }}><span className="font-weight-bold text-danger">{fd?.finalData?.service?.garageName}</span> </p> */}
                                 <p style={{ fontSize: '18px' }}><span className="font-weight-bold text-danger">{fd?.finalData?.service?.title}</span> </p> <br />
                                 <p style={{ fontSize: "18px" }}>
                                     <span className="font-weight-bold text-danger">
@@ -120,7 +119,7 @@ const BookingRequest = () => {
 
                                                 <input style={{ display: 'none' }} value={fd.finalData.email} type="email" name="user_email" />
 
-                                                <textarea value={`Your ${fd?.finalData?.service?.title} service mechanic is sent`} style={{ display: 'none' }} name="message" />
+                                                <textarea value={`Your ${fd?.finalData?.service?.title} booking is confirmed`} style={{ display: 'none' }} name="message" />
                                                 <label class="switch">
                                                     <input
                                                         onChange={() => handleChange(fd)}

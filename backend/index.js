@@ -315,7 +315,7 @@ client.connect(err => {
         const email = req.body.email;
         orderCollection.find({})
             .toArray((err, documents) => {
-                res.send(documents.filter(data => data.finalData.garageEmail === email));
+                res.send(documents.filter(data => data.finalData.restaurantEmail === email));
             })
     })
     app.patch('/updateOrder/:id', (req, res) => {

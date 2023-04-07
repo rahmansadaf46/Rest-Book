@@ -49,7 +49,7 @@ const ServiceShipment = ({ mylocation }) => {
                 }}
               >
                 <div className="p-3 text-center text-danger font-weight-bold">
-                  <span>Your Mechanic is Coming</span>
+                  <span>Your Booking is Confirmed</span>
                 </div>
                 <img
                   style={{ width: "150px", margin: "0px 40px 0px 70px" }}
@@ -84,7 +84,7 @@ const ServiceShipment = ({ mylocation }) => {
                         <br />
                       </li>
                       <li>
-                        <b>Garage Address</b>
+                        <b>Restaurant Address</b>
                         <p style={{ marginBottom: "-5px" }}></p>
                         <small>{service[0]?.address}</small>
                       </li>

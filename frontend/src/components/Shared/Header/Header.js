@@ -235,7 +235,7 @@ const Header = ({ cart }) => {
                         <>
                           <p style={{ fontSize: "18px" }}>
                             <span className="font-weight-bold text-danger">
-                              {fd?.finalData?.service?.garageName}
+                              {fd?.finalData?.service?.restaurantName}
                             </span>{" "}
                           </p>
                           <p style={{ fontSize: "18px" }}>

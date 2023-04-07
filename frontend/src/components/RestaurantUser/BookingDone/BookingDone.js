@@ -47,8 +47,6 @@ const BookingDone = () => {
 
                                 <div className="font-weight-bold">Order No: <span style={{ color: 'purple' }}>{fd._id.split("").slice(15, 50)}</span></div>
                                 <br />
-
-                                {/* <p style={{ fontSize: '18px' }}><span className="font-weight-bold text-danger">{fd?.finalData?.service?.garageName}</span> </p> */}
                                 <p style={{ fontSize: '18px' }}><span className="font-weight-bold text-danger">{fd?.finalData?.service?.title}</span> </p> <br />
                                 <p style={{ fontSize: "18px" }}>
                                     <span className="font-weight-bold text-danger">

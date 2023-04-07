@@ -101,10 +101,6 @@ const ItemList = () => {
               {search(items)?.map((item) => (
                 <div
                   onClick={() => {
-                    // garage.service = service;
-                    // localStorage.setItem('serviceInfo',JSON.stringify([garage]) )
-                    // console.log(garage)
-                    // window.location.href='/serviceCheckout';
                   }}
                   style={{ backgroundColor: "white", width: "550px" }}
                   className="col-12  mx-4 my-4 pb-3 p-3"

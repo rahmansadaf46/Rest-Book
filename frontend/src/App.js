@@ -21,7 +21,6 @@ import RestaurantProfileUser from "./components/RestaurantUser/RestaurantProfile
 import BookingRequest from "./components/RestaurantUser/BookingRequest/BookingRequest";
 import RestaurantTableList from "./components/RestaurantUser/RestaurantTableList/RestaurantTableList";
 import UpdateRestaurantTable from "./components/RestaurantUser/UpdateRestaurantTable/UpdateRestaurantTable";
-// import GarageList from "./components/Home/GarageList/GarageList";
 import Home from "./components/Home/Home/Home";
 import Item from "./components/Item/Item/Item";
 import Login from "./components/Login/Login/Login";

@@ -6,7 +6,7 @@ import About from '../About/About';
 // import Menu from '../Menu/Menu';
 import Search from '../Search/Search';
 import { getDatabaseCart } from '../../../utilities/databaseManager';
-import GarageList from '../RestaurantList/RestaurantList';
+import RestaurantList from '../RestaurantList/RestaurantList';
 import Location from '../Location/Location';
 // import fakeData from '../../../fakeData';
 
@@ -68,7 +68,7 @@ const Home = () => {
     return (
         <div>
             <Header cart={cart.length}></Header>
-            {location? <GarageList area={area} handleLocation={handleLocation}></GarageList> : <Search handleLocation={handleLocation}></Search>}
+            {location? <RestaurantList area={area} handleLocation={handleLocation}></RestaurantList> : <Search handleLocation={handleLocation}></Search>}
             
             
 

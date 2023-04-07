@@ -38,7 +38,7 @@ const UpdateFood = () => {
                 console.log(data);
                 setItem(data)
                 // setCategory(data.category)
-                // setGarage(data)
+                
                 // const area = data?.area.map(item=> {return{
                 //   value: `${item}`,
                 //   label: `${item?.toUpperCase()}`,
@@ -50,10 +50,10 @@ const UpdateFood = () => {
                 //   label: `${data.user}`,
                 // })
                 // // data.area = area;
-                // setGarage(data)
+                
                 // console.log(area)
                 // setServices(data)
-                // setGarage(data);
+                ;
                 // setAllItem(data);
                 // localStorage.setItem('item', JSON.stringify(data));
 

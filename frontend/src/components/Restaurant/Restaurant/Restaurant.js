@@ -13,7 +13,7 @@ import MapComponent from "../../MapComponent/MapComponent.js";
 
 const Restaurant = () => {
   const { id } = useParams();
-  const [garage, setGarage] = useState({});
+  const [restaurant, setRestaurant] = useState({});
   const [services, setServices] = useState([]);
   // const [count, setCount] = useState(1);
   const itemData = localStorage.getItem("item");
@@ -23,7 +23,7 @@ const Restaurant = () => {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        setGarage(data);
+        setRestaurant(data);
         // setAllItem(data);
         // localStorage.setItem('item', JSON.stringify(data));
       });
@@ -32,9 +32,6 @@ const Restaurant = () => {
       .then((data) => {
         console.log(data);
         setServices(data);
-        // setGarage(data);
-        // setAllItem(data);
-        // localStorage.setItem('item', JSON.stringify(data));
       });
     // const item = JSON.parse(itemData).find(pd => pd._id === id);
     // setItem(item);
@@ -44,9 +41,9 @@ const Restaurant = () => {
   let lat = "";
   let long = "";
 
-  if (garage) {
-    lat = garage?.coords?.split(",")[0];
-    long = garage?.coords?.split(",")[1];
+  if (restaurant) {
+    lat = restaurant?.coords?.split(",")[0];
+    long = restaurant?.coords?.split(",")[1];
     console.log(lat, long);
   }
 
@@ -100,7 +97,7 @@ const Restaurant = () => {
   //     }
 
   // };
-  console.log(garage.facebook);
+  console.log(restaurant.facebook);
   return (
     <div>
       <Header cart={cart.length}></Header>
@@ -112,21 +109,21 @@ const Restaurant = () => {
                 style={{ fontSize: "80px", color: "#E5194B" }}
                 className="mt-2 "
               >
-                {garage.title}
+                {restaurant.title}
               </p>
               <div
                 style={{ lineHeight: "0.9", color: "black", fontSize: "25px" }}
               >
                 <p className="text-success font-weight-bold">
-                  {garage.description}
+                  {restaurant.description}
                 </p>
                 <p>
                   Contact no:{" "}
                   <span className="text-danger">
-                    <b>{garage.mobile}</b>
+                    <b>{restaurant.mobile}</b>
                   </span>
                 </p>
-                <p className="text-dark font-weight-bold">{garage.address}</p>
+                <p className="text-dark font-weight-bold">{restaurant.address}</p>
               </div>
 
               {/* <button onClick={() => handleAddProduct(item)} style={{ backgroundColor: '#E5194B', color: 'white', borderRadius: '30px', height: '40px' }} className="btn  px-4 mt-3"><ShoppingCartIcon className="mr-2" /> Add</button> */}
@@ -138,25 +135,25 @@ const Restaurant = () => {
             <div className="col-md-6 text-left">
               <img
                 style={{ width: "450px", borderRadius: "50%", border: "5px solid #E5194B"}}
-                src={`http://localhost:4200/restaurant/${garage.image}`}
+                src={`http://localhost:4200/restaurant/${restaurant.image}`}
                 alt=""
               />
             </div>
           </div>
           <div>
             <h1 style={{ color: "#E5194B" }} className="text-center mt-5">
-              <u>Available Services</u>
+              <u>Table & Foods</u>
             </h1>
             <div className="row d-flex justify-content-center">
               {services?.map((service) => (
                 <div
                   onClick={() => {
-                    garage.service = service;
+                    restaurant.service = service;
                     localStorage.setItem(
                       "serviceInfo",
-                      JSON.stringify([garage])
+                      JSON.stringify([restaurant])
                     );
-                    console.log(garage);
+                    console.log(restaurant);
                     window.location.href = "/serviceCheckout";
                   }}
                   style={{
@@ -164,7 +161,7 @@ const Restaurant = () => {
                     borderRadius: "40px",
                     cursor: "pointer",
                   }}
-                  className="col-7 garage mx-4 my-4 pb-3"
+                  className="col-7 restaurant mx-4 my-4 pb-3"
                 >
                   <div>
                     {" "}
@@ -221,7 +218,7 @@ const Restaurant = () => {
           </div>
         </div>
       </div>
-      <MessengerCustomerChat pageId={garage.facebook} appId="370328294888437" />
+      <MessengerCustomerChat pageId={restaurant.facebook} appId="370328294888437" />
       <Footer></Footer>
     </div>
   );

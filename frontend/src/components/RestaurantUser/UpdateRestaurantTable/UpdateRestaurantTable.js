@@ -43,7 +43,6 @@ const UpdateRestaurantTable = () => {
                 setSelectedLayout({label:data.layout, value:data.layout});
                 setTableData(data)
                 // setServices(data)
-                // setGarage(data);
                 // setAllItem(data);
                 // localStorage.setItem('item', JSON.stringify(data));
 
