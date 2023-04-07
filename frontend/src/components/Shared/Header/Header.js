@@ -78,8 +78,8 @@ const Header = ({ cart }) => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto"></Nav>
           <Form inline>
-            {loggedInUser.email === "trustnride46@gmail.com" ||
-            sessionStorage.getItem("email") === "trustnride46@gmail.com" ? (
+            {loggedInUser.email === "admin@gmail.com" ||
+            sessionStorage.getItem("email") === "admin@gmail.com" ? (
               <div className="mr-2">
                 {" "}
                 {/* <Link to="/admin/restaurantList" className="cart ">

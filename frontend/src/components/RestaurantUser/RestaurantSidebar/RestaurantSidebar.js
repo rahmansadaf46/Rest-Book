@@ -9,56 +9,56 @@ const RestaurantSidebar = () => {
 
             <ul className="list-unstyled py-3">
             <li>
-                    <Link to="/restaurant/profile" className="">
-                        <span style={{  fontWeight: 'bold' }} className='text-dark'><FontAwesomeIcon icon={faBacon} /> Restaurant Profile</span>
+                    <Link to="/restaurant/profile" className='link-hover'>
+                        <span style={{  fontWeight: 'bold' }} ><FontAwesomeIcon icon={faBacon} /> Restaurant Profile</span>
                     </Link>
                 </li>
                 <br />
                 <li>
-                    <Link to="/restaurant/pending" className="">
-                        <span style={{  fontWeight: 'bold' }} className='text-dark'><FontAwesomeIcon icon={faCookieBite} /> Booking Request</span>
+                    <Link to="/restaurant/pending" className='link-hover'>
+                        <span style={{  fontWeight: 'bold' }} ><FontAwesomeIcon icon={faCookieBite} /> Booking Request</span>
                     </Link>
                 </li>
                 <br />
                 <li>
-                    <Link to="/restaurant/delivery" className="">
-                        <span style={{  fontWeight: 'bold' }} className='text-dark'><FontAwesomeIcon icon={faCheckCircle} /> Booking Done</span>
+                    <Link to="/restaurant/delivery" className='link-hover'>
+                        <span style={{  fontWeight: 'bold' }} ><FontAwesomeIcon icon={faCheckCircle} /> Booking Done</span>
                     </Link>
                 </li>
                 <br />
                 <li>
-                    <Link to="/restaurant/addTable" className="">
-                        <span style={{  fontWeight: 'bold' }} className='text-dark'><FontAwesomeIcon icon={faPlus} /> Add Table</span>
+                    <Link to="/restaurant/addTable" className='link-hover'>
+                        <span style={{  fontWeight: 'bold' }} ><FontAwesomeIcon icon={faPlus} /> Add Table</span>
                     </Link>
                 </li>
                 <br />
                 <li>
-                    <Link to="/restaurant/restaurantTableList" className="">
-                        <span style={{  fontWeight: 'bold' }} className='text-dark'><FontAwesomeIcon icon={faBars} /> Table List</span>
+                    <Link to="/restaurant/restaurantTableList" className='link-hover'>
+                        <span style={{  fontWeight: 'bold' }} ><FontAwesomeIcon icon={faBars} /> Table List</span>
                     </Link>
                 </li>
                 <br />
                 <li>
-                    <Link to="/restaurant/addFood" className="">
-                        <span style={{  fontWeight: 'bold' }} className='text-dark'><FontAwesomeIcon icon={faPlus} /> Add Food</span>
+                    <Link to="/restaurant/addFood" className='link-hover'>
+                        <span style={{  fontWeight: 'bold' }} ><FontAwesomeIcon icon={faPlus} /> Add Food</span>
                     </Link>
                 </li>
                 <br />
                 <li>
-                    <Link to="/restaurant/foodList" className="">
-                        <span style={{  fontWeight: 'bold' }} className='text-dark'><FontAwesomeIcon icon={faBars} /> Food List</span>
+                    <Link to="/restaurant/foodList" className='link-hover'>
+                        <span style={{  fontWeight: 'bold' }} ><FontAwesomeIcon icon={faBars} /> Food List</span>
                     </Link>
                 </li>
                 <br />
                 <li>
-                    <Link to="/restaurant/addLayout" className="">
-                        <span style={{  fontWeight: 'bold' }} className='text-dark'><FontAwesomeIcon icon={faPlus} /> Add Layout</span>
+                    <Link to="/restaurant/addLayout" className='link-hover'>
+                        <span style={{  fontWeight: 'bold' }} ><FontAwesomeIcon icon={faPlus} /> Add Layout</span>
                     </Link>
                 </li>
                 <br />
                 <li>
-                    <Link to="/restaurant/layoutList" className="">
-                        <span style={{  fontWeight: 'bold' }} className='text-dark'><FontAwesomeIcon icon={faBars} /> Layout List</span>
+                    <Link to="/restaurant/layoutList" className='link-hover'>
+                        <span style={{  fontWeight: 'bold' }} ><FontAwesomeIcon icon={faBars} /> Layout List</span>
                     </Link>
                 </li>
                 <br />

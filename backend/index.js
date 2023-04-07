@@ -35,6 +35,7 @@ client.connect(err => {
         const image = req.files.file.name;
         const title = req.body.title;
         const location = req.body.area;
+        const offDaysList = req.body.offDay;
         const status = req.body.status;
         const openingTime = req.body.openingTime;
         const closingTime = req.body.closingTime;
@@ -48,6 +49,7 @@ client.connect(err => {
         const beforeCheckIn = req.body.beforeCheckIn;
         const paymentAmount = req.body.paymentAmount;
         const area = location.split(',')
+        const offDay = offDaysList.split(',')
         file.mv(`${__dirname}/image/restaurant/${file.name}`, err => {
             if (err) {
                 return res.status(500).send({ msg: 'Failed to upload Image' });
@@ -56,7 +58,7 @@ client.connect(err => {
 
         restaurantCollection.insertOne({
             title, status, user, area, image, address, mobile, description, facebook, coords, openingTime, closingTime,
-            afterCheckIn, beforeCheckIn, paymentAmount
+            afterCheckIn, beforeCheckIn, paymentAmount, offDay
         })
             .then(result => {
                 res.send(result.insertedCount > 0);
@@ -65,6 +67,7 @@ client.connect(err => {
     app.patch('/updateRestaurant/:id', (req, res) => {
         const title = req.body.data.title;
         const area = req.body.data.area;
+        const offDay = req.body.data.offDay;
         const user = req.body.data.user;
         const address = req.body.data.address;
         const mobile = req.body.data.mobile;
@@ -80,7 +83,7 @@ client.connect(err => {
         restaurantCollection.updateOne({ _id: ObjectId(req.params.id) },
             {
                 $set: {
-                    title: title, area: area, user: user, address: address, mobile: mobile,
+                    title: title, area: area, user: user, address: address, mobile: mobile, offDay: offDay,
                     description: description, facebook: facebook, coords: coords, afterCheckIn: afterCheckIn,beforeCheckIn: beforeCheckIn,paymentAmount: paymentAmount, status: status, openingTime: openingTime, closingTime: closingTime
                 }   
             })

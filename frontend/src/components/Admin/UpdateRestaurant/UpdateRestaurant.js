@@ -18,9 +18,28 @@ const UpdateRestaurant = () => {
   const [beforeCheckIn, setBeforeCheckIn] = useState(false);
   const [activeStatus, setActiveStatus] = useState('Active');
   const [areaList, setAreaList] = useState([]);
+  const [offDayList] = useState([{
+    label: 'Sat', value:'Sat'
+  },{
+    label: 'Sun', value:'Sun'
+  },{
+    label: 'Mon', value:'Mon'
+  },{
+    label: 'Tue', value:'Tue'
+  },{
+    label: 'Wed', value:'Wed'
+  },{
+    label: 'Thu', value:'Thu'
+  },{
+    label: 'Fri', value:'Fri'
+  }]);
   const [area, setArea] = useState([]);
   const handleArea = (e) => {
     setArea(e);
+  };
+  const [offDay, setOffDay] = useState([]);
+  const handleOffDay = (e) => {
+    setOffDay(e);
   };
   const [userList, setUserList] = useState([]);
   const [selectedUser, setSelectedUser] = useState([]);
@@ -39,7 +58,7 @@ const UpdateRestaurant = () => {
   //   setFile(newFile);
   // };
   useEffect(() => {
-    if (email !== "trustnride46@gmail.com") {
+    if (email !== "admin@gmail.com") {
       sessionStorage.clear();
       localStorage.clear();
       window.location.assign("/");
@@ -80,6 +99,14 @@ const UpdateRestaurant = () => {
           }
         })
         setArea(area)
+        const existingOffDay = data?.offDay.map(item => {
+          return {
+            value: `${item}`,
+            label: `${item?.toUpperCase()}`,
+          }
+        })
+        console.log(existingOffDay)
+        setOffDay(existingOffDay)
         setUser(data.user)
         setSelectedUser({
           value: `${data.user}`,
@@ -113,12 +140,17 @@ const UpdateRestaurant = () => {
 
   const onSubmit = (data) => {
     // return console.log(data);
-    let tempArray = [];
+    let areas = [];
     area.forEach((data) => {
-      tempArray.push(data.value);
+      areas.push(data.value);
+    });
+    let offDays = [];
+    offDay.forEach((data) => {
+      offDays.push(data.value);
     });
     data.coords = `${data?.lat}, ${data?.long}`;
-    data.area = tempArray;
+    data.area = areas;
+    data.offDay = offDays;
     data.user = user;
     if (data.openingTime > data.closingTime) {
       window.alert("Opening time must be less than closing time")
@@ -162,7 +194,7 @@ const UpdateRestaurant = () => {
           <AdminSidebar />
         </div>
         <div
-          style={{ backgroundColor: "#FCF4E0", height: "210vh" }}
+          style={{ backgroundColor: "#FCF4E0", height: "250vh" }}
           className="col-md-10 pt-4"
         >
           <div className="text-center text-danger">
@@ -330,6 +362,25 @@ const UpdateRestaurant = () => {
                         handleArea(e);
                       }}
                       value={area}
+                      isSearchable={true}
+                      isClearable={true}
+                    />
+                  </div>
+                </div>
+                <div className="form-group row mb-1 d-flex justify-content-center">
+                  <div className="form-group col-6  text-center">
+                    <label for="">
+                      <b>Enter Off Day</b>
+                    </label>
+                    <Select
+                      isMulti
+                      styles={customStyles}
+                      required
+                      options={offDayList}
+                      onChange={(e) => {
+                        handleOffDay(e);
+                      }}
+                      value={offDay}
                       isSearchable={true}
                       isClearable={true}
                     />

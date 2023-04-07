@@ -10,7 +10,7 @@ const AreaList = () => {
   const email = sessionStorage.getItem("email");
 
   useEffect(() => {
-    if (email !== "trustnride46@gmail.com") {
+    if (email !== "admin@gmail.com") {
       sessionStorage.clear();
       localStorage.clear();
       window.location.assign("/");

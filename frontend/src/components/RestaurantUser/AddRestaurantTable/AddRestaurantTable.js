@@ -60,20 +60,22 @@ const AddRestaurantTable = () => {
   const onSubmit = (data) => {
     data.restaurantId = restaurantData._id;
     data.layout = selectedLayout;
-    fetch("http://localhost:4200/addService", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ data }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        window.alert("Service added successfully");
-        window.location.reload();
-      })
+    data.file = file;
+    console.log(data);
+    // fetch("http://localhost:4200/addService", {
+    //   method: "POST",
+    //   headers: { "Content-Type": "application/json" },
+    //   body: JSON.stringify({ data }),
+    // })
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     window.alert("Service added successfully");
+    //     window.location.reload();
+    //   })
 
-      .catch((error) => {
-        console.error(error);
-      });
+    //   .catch((error) => {
+    //     console.error(error);
+    //   });
   };
   const customStyles = {
     control: (provided, state) => ({

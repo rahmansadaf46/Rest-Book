@@ -12,9 +12,28 @@ const AddRestaurant = () => {
   const email = sessionStorage.getItem("email");
   // const [RestaurantLocation, setRestaurantLocation] = useState('');
   const [areaList, setAreaList] = useState([]);
+  const [offDayList] = useState([{
+    label: 'Sat', value:'Sat'
+  },{
+    label: 'Sun', value:'Sun'
+  },{
+    label: 'Mon', value:'Mon'
+  },{
+    label: 'Tue', value:'Tue'
+  },{
+    label: 'Wed', value:'Wed'
+  },{
+    label: 'Thu', value:'Thu'
+  },{
+    label: 'Fri', value:'Fri'
+  }]);
   const [area, setArea] = useState([]);
   const handleArea = (e) => {
     setArea(e);
+  };
+  const [offDay, setOffDay] = useState([]);
+  const handleOffDay = (e) => {
+    setOffDay(e);
   };
   const [userList, setUserList] = useState([]);
   const [afterCheckIn, setAfterCheckIn] = useState(true);
@@ -33,7 +52,7 @@ const AddRestaurant = () => {
     setFile(newFile);
   };
   useEffect(() => {
-    if (email !== "trustnride46@gmail.com") {
+    if (email !== "admin@gmail.com") {
       sessionStorage.clear();
       localStorage.clear();
       window.location.assign("/");
@@ -79,15 +98,20 @@ const AddRestaurant = () => {
   const onSubmit = (data) => {
     // return console.log(data);
     // console.log(data)
-    let tempArray = [];
+    let areas = [];
     area.forEach((data) => {
-      tempArray.push(data.value);
+      areas.push(data.value);
+    });
+    let offDays = [];
+    offDay.forEach((data) => {
+      offDays.push(data.value);
     });
     const coords = `${data?.lat}, ${data?.long}`;
     const formData = new FormData();
     formData.append("file", file);
     formData.append("title", data.title);
-    formData.append("area", tempArray);
+    formData.append("area", areas);
+    formData.append("offDay", offDays);
     formData.append("user", user);
     formData.append("address", data.address);
     formData.append("mobile", data.mobile);
@@ -300,6 +324,24 @@ const AddRestaurant = () => {
                       options={areaList}
                       onChange={(e) => {
                         handleArea(e);
+                      }}
+                      isSearchable={true}
+                      isClearable={true}
+                    />
+                  </div>
+                </div>
+                <div className="form-group row mb-1 d-flex justify-content-center">
+                  <div className="form-group col-6  text-center">
+                    <label for="">
+                      <b>Enter Off Day</b>
+                    </label>
+                    <Select
+                      isMulti
+                      styles={customStyles}
+                      required
+                      options={offDayList}
+                      onChange={(e) => {
+                        handleOffDay(e);
                       }}
                       isSearchable={true}
                       isClearable={true}

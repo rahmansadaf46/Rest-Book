@@ -23,7 +23,13 @@
   width: 50px !important;
   height: 50px;
 }
-
+.link-hover{
+  color: black!important;
+}
+.link-hover:hover{
+  color: #E5194B!important;
+  text-decoration: none;
+}
 @media (max-width: 1140px) {
   .cart__container {
     width: 40%;
