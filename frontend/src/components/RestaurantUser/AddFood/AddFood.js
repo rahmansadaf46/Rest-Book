@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 // import AdminHeader from "../AdminHeader/AdminHeader";
 // import AdminSidebar from "../AdminSidebar/AdminSidebar";
@@ -7,6 +7,8 @@ import RestaurantSidebar from "../RestaurantSidebar/RestaurantSidebar";
 
 const AddFood = () => {
   const { register, handleSubmit, errors } = useForm();
+  const [restaurantData, setRestaurantData] = useState([]);
+  const user = sessionStorage.getItem("email");
   // const [loading, setLoading] = useState(false);
   // const [dept, setDept] = useState([]);
   // document.title = "Enroll A Student";
@@ -31,12 +33,16 @@ const AddFood = () => {
   };
 
   const onSubmit = (data) => {
+    data.restaurantId = restaurantData._id;
     const formData = new FormData();
     formData.append("file", file);
     formData.append("title", data.title);
     formData.append("price", data.price);
     formData.append("description", data.description);
     formData.append("shortDescription", data.shortDescription);
+    formData.append("restaurantId", restaurantData._id);
+    formData.append("restaurantName", restaurantData.title);
+    formData.append("restaurantImage", restaurantData.image);
     // formData.append("category", category);
     fetch("http://localhost:4200/addFood", {
       method: "POST",
@@ -52,7 +58,21 @@ const AddFood = () => {
         console.error(error);
       });
   };
+  useEffect(() => {
+    if (user) {
+      fetch("http://localhost:4200/restaurantUser", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ user: user }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data[0]);
+          setRestaurantData(data[0]);
+        });
+    }
 
+  }, [user]);
   // useEffect(() => {
   //     setDept(JSON.parse(localStorage.getItem("dept")) || {});
   // }, [])

@@ -15,10 +15,17 @@ const Item = () => {
     const itemData = localStorage.getItem('item')
     useEffect(() => {
         // setAllitem(JSON.parse(itemData))
-        const item = JSON.parse(itemData).find(pd => pd._id === id);
-        setItem(item);
+        fetch(`http://localhost:4200/food/${id}`)
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          setItem(data);
+          // setAllItem(data);
+          // localStorage.setItem('item', JSON.stringify(data));
+        });
+        
         window.scrollTo(0, 0);
-    }, [itemData, id])
+    }, [id])
     const [cart, setCart] = useState([]);
 
     useEffect(() => {
@@ -73,6 +80,10 @@ const Item = () => {
         <div>
             <Header cart={cart.length}></Header>
             <div className="container mt-5 py-5">
+                <div className='d-flex '>
+                    <img style={{width:'80px', borderRadius:'50px'}} src={`http://localhost:4200/restaurant/${item.restaurantImage}`} alt="" />
+                    <h2 className='ml-4 mt-4 text-danger'>{item.restaurantName}</h2>
+                </div>
                 <div className="row">
                     <div className="col-md-5">
                         <p style={{ fontSize: '50px' }} className="mt-4 ">{item.title}</p>
@@ -91,12 +102,12 @@ const Item = () => {
                         </div>
                         <button onClick={() => handleAddProduct(item)} style={{ backgroundColor: '#E5194B', color: 'white', borderRadius: '30px', height: '40px' }} className="btn  px-4 mt-3"><ShoppingCartIcon className="mr-2" /> Add</button>
                         <div className="row mt-4">
-                            <img width="200px" className="mx-4" src={`http://localhost:4200/item/${item.image}`} alt="" />
-                            <img width="200px" className="mx-2" src={`http://localhost:4200/item/${item.image}`} alt="" />
+                            <img width="200px" className="mx-4" src={`http://localhost:4200/food/${item.image}`} alt="" />
+                            <img width="200px" className="mx-2" src={`http://localhost:4200/food/${item.image}`} alt="" />
                         </div>
                     </div>
                     <div className="col-md-7 text-right">
-                        <img style={{ width: '550px' }} src={`http://localhost:4200/item/${item.image}`} alt="" />
+                        <img style={{ width: '550px' }} src={`http://localhost:4200/food/${item.image}`} alt="" />
                     </div>
                 </div>
             </div>

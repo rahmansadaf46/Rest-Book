@@ -21,7 +21,7 @@ const FoodList = () => {
   //   }
   // }, [email]);
   useEffect(() => {
-    fetch("http://localhost:4200/foods")
+    fetch(`http://localhost:4200/foods/${JSON.parse(sessionStorage.getItem('restaurantUser'))[0]._id}`)
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
@@ -110,7 +110,7 @@ const FoodList = () => {
                   <div className="d-flex justify-content-center">
                     <img
                       style={{ width: "150px" }}
-                      src={`http://localhost:4200/item/${item.image}`}
+                      src={`http://localhost:4200/food/${item.image}`}
                       alt=""
                     />
                   </div>

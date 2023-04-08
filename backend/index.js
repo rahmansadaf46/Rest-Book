@@ -24,6 +24,7 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 client.connect(err => {
     const orderCollection = client.db("restBook").collection("allOrder");
     const itemCollection = client.db("restBook").collection("allItem");
+    const foodCollection = client.db("restBook").collection("allFood");
     const userCollection = client.db("restBook").collection("allUser");
     const areaCollection = client.db("restBook").collection("allArea");
     const restaurantCollection = client.db("restBook").collection("allRestaurant");
@@ -84,8 +85,8 @@ client.connect(err => {
             {
                 $set: {
                     title: title, area: area, user: user, address: address, mobile: mobile, offDay: offDay,
-                    description: description, facebook: facebook, coords: coords, afterCheckIn: afterCheckIn,beforeCheckIn: beforeCheckIn,paymentAmount: paymentAmount, status: status, openingTime: openingTime, closingTime: closingTime
-                }   
+                    description: description, facebook: facebook, coords: coords, afterCheckIn: afterCheckIn, beforeCheckIn: beforeCheckIn, paymentAmount: paymentAmount, status: status, openingTime: openingTime, closingTime: closingTime
+                }
             })
             .then(result => {
                 res.send(result.matchedCount > 0);
@@ -180,6 +181,73 @@ client.connect(err => {
             })
     })
 
+
+    //food
+    app.post('/addFood', (req, res) => {
+        const file = req.files.file;
+        const image = req.files.file.name;
+        const title = req.body.title;
+        const price = req.body.price;
+        const description = req.body.description;
+        const shortDescription = req.body.shortDescription;
+        const restaurantId = req.body.restaurantId;
+        const restaurantName = req.body.restaurantName;
+        const restaurantImage = req.body.restaurantImage;
+
+        file.mv(`${__dirname}/image/food/${file.name}`, err => {
+            if (err) {
+                return res.status(500).send({ msg: 'Failed to upload Image' });
+            }
+        })
+
+        foodCollection.insertOne({ title, price, restaurantName,restaurantImage, description, shortDescription, image, restaurantId })
+            .then(result => {
+                res.send(result.insertedCount > 0);
+            })
+    })
+    app.patch('/updateFood/:id', (req, res) => {
+        const title = req.body.data.title;
+        const price = req.body.data.price;
+        const category = req.body.data.category;
+        const description = req.body.data.description;
+        const shortDescription = req.body.data.shortDescription;
+        foodCollection.updateOne({ _id: ObjectId(req.params.id) },
+            {
+                $set: {
+                    title: title, price: price, category: category, description: description, shortDescription: shortDescription
+                }
+            })
+            .then(result => {
+                res.send(result.matchedCount > 0);
+            })
+    })
+    // app.get('/foods', (req, res) => {
+    //     foodCollection.find({})
+    //         .toArray((err, documents) => {
+    //             res.send(documents);
+    //         })
+    // })
+    app.get('/foods/:id', (req, res) => {
+        foodCollection.find({ restaurantId: req.params.id })
+            .toArray((err, documents) => {
+                res.send(documents);
+            })
+    })
+    app.delete('/deleteFood/:id', (req, res) => {
+        foodCollection.deleteOne({ _id: ObjectId(req.params.id) })
+            .then((result) => {
+                res.send(result.deletedCount > 0);
+                // console.log(res);
+            })
+    })
+    app.get('/food/:id', (req, res) => {
+        // console.log(req.params.user)
+        foodCollection.find({ _id: ObjectId(req.params.id) })
+            .toArray((err, documents) => {
+                // console.log(documents[0])
+                res.send(documents[0]);
+            })
+    })
     // layout
     app.post('/addLayout', (req, res) => {
         const layout = req.body.data.layout;
@@ -274,7 +342,7 @@ client.connect(err => {
                 res.send(documents[0]);
             })
     })
-   
+
     app.delete('/deleteTable/:id', (req, res) => {
         tableCollection.deleteOne({ _id: ObjectId(req.params.id) })
             .then((result) => {
