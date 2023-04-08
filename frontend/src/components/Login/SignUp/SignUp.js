@@ -258,7 +258,7 @@ const SignUp = () => {
                             <b>Sign up</b></Button>
                         <br />
                         <br />
-                        <Link to="/login" style={{ color: 'black' }}> <b>Already have an Account</b> </Link>
+                        <Link to="/login" className='link-hover' style={{ color: 'black' }}> <b>Already have an Account</b> </Link>
                     </Form>
                 </div>
             </div>

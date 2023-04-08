@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const RestaurantProfile = ({ restaurant }) => {
   return (
     <div className=" d-flex justify-content-center restaurant mb-3">
-      <Link to={`/restaurant/${restaurant._id}`} className="card-item">
+      <Link to={`/restaurant/${restaurant._id}`} className="card-item link-hover">
         <Card
           className="restaurant-item"
           style={{

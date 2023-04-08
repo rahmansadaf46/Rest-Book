@@ -76,7 +76,7 @@ const RestaurantList = ({handleLocation,area}) => {
                     </ul>
                 </nav>
             </div> */}
-            <div className="container mt-5 mb-5">
+            <div className="container mt-5 mb-5 ">
                 
                 <h4 className='text-center mb-3 pt-5  text-danger'>Selected Location: <span className='text-uppercase text-dark'>{sessionStorage.getItem('location')}</span> 
                 </h4>

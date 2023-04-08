@@ -146,7 +146,7 @@ const FoodList = () => {
                       <hr />
                       <h4 className="text-center mt-3">
                         <span style={{ color: "#E5194B" }}>Price:</span>{" "}
-                        <span className="text-danger font-weight-bold">
+                        <span className=" font-weight-bold">
                           {item.price}/-
                         </span>
                       </h4>

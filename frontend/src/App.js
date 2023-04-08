@@ -34,6 +34,7 @@ import UpdateFood from "./components/RestaurantUser/UpdateFood/UpdateFood";
 import FoodList from "./components/RestaurantUser/FoodList/FoodList";
 import AddLayout from "./components/RestaurantUser/AddLayout/AddLayout";
 import LayoutList from "./components/RestaurantUser/LayoutList/LayoutList";
+import UpdateRestaurantUser from "./components/RestaurantUser/UpdateRestaurantUser/UpdateRestaurantUser";
 
 export const UserContext = createContext();
 
@@ -113,8 +114,11 @@ function App() {
           <PrivateRoute path="/admin/customer">
             <Customer></Customer>
           </PrivateRoute>
-          <PrivateRoute path="/restaurant/profile">
+          <PrivateRoute path="/restaurant/profile/">
             <RestaurantProfileUser></RestaurantProfileUser>
+          </PrivateRoute>
+          <PrivateRoute path="/restaurant/updateRestaurant/:id">
+            <UpdateRestaurantUser></UpdateRestaurantUser>
           </PrivateRoute>
           <PrivateRoute path="/restaurant/pending">
             <BookingRequest></BookingRequest>

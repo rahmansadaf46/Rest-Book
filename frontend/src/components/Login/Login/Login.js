@@ -127,7 +127,7 @@ const Login = () => {
                             <b> Sign in</b></Button>
                         <br />
                         <br />
-                        <Link to="/signup" style={{ color: 'black' }}> <b>Create an Account</b> </Link>
+                        <Link to="/signup" style={{ color: 'black' }} className='link-hover'> <b>Create an Account</b> </Link>
                     </Form>
 
                 </div>

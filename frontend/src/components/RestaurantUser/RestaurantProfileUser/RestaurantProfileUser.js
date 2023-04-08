@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 // import { Link } from 'react-router-dom';
 import RestaurantHeader from '../RestaurantHeader/RestaurantHeader';
 import RestaurantSidebar from '../RestaurantSidebar/RestaurantSidebar';
+import { Link } from 'react-router-dom';
 // import './BookingRequest.css'
 const RestaurantProfileUser = () => {
     const [restaurant, setRestaurant] = useState([]);
@@ -9,7 +10,22 @@ const RestaurantProfileUser = () => {
 
 
     useEffect(() => {
-        setRestaurant(JSON.parse(sessionStorage.getItem('restaurantUser')))
+        console.log(JSON.parse(sessionStorage.getItem('restaurantUser'))[0]._id)
+        fetch('http://localhost:4200/restaurantProfile/' + JSON.parse(sessionStorage.getItem('restaurantUser'))[0]._id)
+        .then(res => res.json())
+        .then(data => {
+          console.log(data);
+       
+        
+          // data.area = area;
+          setRestaurant([data])
+       
+          // setServices(data)
+          // setRestaurant(data);
+          // setAllItem(data);
+          // localStorage.setItem('item', JSON.stringify(data));
+  
+        })
         // fetch(`http://localhost:4200/service/${JSON.parse(sessionStorage.getItem('restaurantUser'))[0]._id}`)
         //     .then(res => res.json())
         //     .then(data => {
@@ -41,7 +57,7 @@ console.log(restaurant)
                             <h2><u>restaurant Profile</u></h2>
                         </div> */}
                         <div>
-                        <div style={{ backgroundColor: 'white', borderRadius: '20px'  }} className="col-12  mx-4 my-4 pb-3 p-3">
+                        <div style={{ backgroundColor: 'white', borderRadius: '20px',border:'3px solid #E5194B'  }} className="col-12  mx-4 my-4 pb-3 p-3">
                                 <div > <div >
                                     {/* <h3 className="text-center text-warning my-3">{service.title}</h3> */}
                                     {/* <p style={{ lineHeight: '0.3', color: 'gray', fontWeight: 'bold', marginBottom: '30px' }}>{service.description.split('\n').map(str => <p>{str}</p>)}</p> */}
@@ -49,31 +65,66 @@ console.log(restaurant)
                                     <div className='d-flex justify-content-center'>
                                     <img style={{ width: '200px', borderRadius: '50%' }} src={`http://localhost:4200/restaurant/${restaurant[0]?.image}`} alt="" />
                                     </div>
-                                    <h4 className="text-left mt-3">
-                                        <span style={{ color: '#E5194B' }}>Restaurant Name:</span> 
-                                    <span className=" font-weight-bold"> {restaurant[0]?.title}</span>
-                                    </h4>
-                                    <h4 className="text-left     mt-3">
-                                        <span style={{ color: '#E5194B' }}>Restaurant Address:</span> 
-                                    <span className=" font-weight-bold"> {restaurant[0]?.address}</span>
-                                    </h4>
-                                    <h4 className="text-left     mt-3">
-                                        <span style={{ color: '#E5194B' }}>Restaurant Description:</span> 
-                                    <span className=" font-weight-bold"> {restaurant[0]?.description}</span>
-                                    </h4>
-                                    <h4 className="text-left     mt-3">
-                                        <span style={{ color: '#E5194B' }}>Restaurant Contact:</span> 
-                                    <span className=" font-weight-bold"> {restaurant[0]?.mobile}</span>
-                                    </h4>
-                                    <h4 className="text-left     mt-3">
-                                        <span style={{ color: '#E5194B' }}>Restaurant User Email:</span> 
-                                    <span className=" font-weight-bold"> {restaurant[0]?.user}</span>
-                                    </h4>
+                                    <p className="text-left font-weight-bold  mt-3">
+                          <span style={{ color: "#E5194B" }}>Restaurant Name:</span>
+                          <span className=" font-weight-bold">
+                            {" "}
+                            {restaurant[0]?.title}
+                          </span>
+                        </p>
+                        <p className="text-left   font-weight-bold   mt-3">
+                          <span style={{ color: "#E5194B" }}>Address:</span>
+                          <span className=" font-weight-bold">
+                            {" "}
+                            {restaurant[0]?.address}
+                          </span>
+                        </p>
+                        <p className="text-left  font-weight-bold    mt-3">
+                          <span style={{ color: "#E5194B" }}>Description:</span>
+                          <span className=" font-weight-bold">
+                            {" "}
+                            {restaurant[0]?.description}
+                          </span>
+                        </p>
+                        <p className="text-left   font-weight-bold   mt-3">
+                          <span style={{ color: "#E5194B" }}>Contact:</span>
+                          <span className=" font-weight-bold">
+                            {" "}
+                            {restaurant[0]?.mobile}
+                          </span>
+                        </p>
+                        <p className="text-left  font-weight-bold   mt-3">
+                          <span style={{ color: "#E5194B" }}>
+                          Restaurant User Email:
+                          </span>
+                          <span className=" font-weight-bold">
+                            {" "}
+                            {restaurant[0]?.user}
+                          </span>
+                        </p>
+                        <p className="text-left  font-weight-bold   mt-3">
+                          <span style={{ color: "#E5194B" }}>
+                            Facebook Code:
+                          </span>
+                          <span className=" font-weight-bold">
+                            {" "}
+                            {restaurant[0]?.facebook}
+                          </span>
+                        </p>
+                        <p className="text-left  font-weight-bold   mt-3">
+                          <span style={{ color: "#E5194B" }}>
+                            Active Status:
+                          </span>
+                          <span className=" font-weight-bold">
+                            {" "}
+                            {restaurant[0]?.status === 'Active' ? <span className="text-success">{restaurant[0]?.status}</span> : <span>{restaurant[0]?.status}</span>}
+                          </span>
+                        </p>
                                     <hr/>
-                                    <h4 className="text-center     mt-3">
+                                    <p className="text-center     mt-3">
                                         <span  style={{ color: 'orange' }}>Areas</span> 
                                     <ul style={{listStyle:'none'}} className=" font-weight-bold text-center"> {restaurant[0]?.area.map(data=> <li className="mr-5 my-2 text-uppercase"># {data}</li>)}</ul>
-                                    </h4>
+                                    </p>
                                     {/* <h4 className="text-left     mt-3">
                                         <span style={{ color: '#E5194B' }}>restaurant Facebook Code:</span> 
                                     <span className=" font-weight-bold"> {restaurant[0].facebook}</span>
@@ -83,13 +134,11 @@ console.log(restaurant)
                                     <span className=" font-weight-bold"> {restaurant[0].facebook}</span>
                                     </h4> */}
                                     <div className='row text-center mt-3 p-3'>
-                                        <div className='col-6'>
-                                            {/* <Link to={`/restaurant/updateTable/${service._id}`} class="btn btn-warning font-weight-bold" >Update Service</Link> */}
+                                        <div className='col-12'>
+                                            <Link to={`/restaurant/updateRestaurant/${restaurant[0]?._id}`} class="btn btn-warning font-weight-bold" >Update Restaurant</Link>
                                             
                                         </div>
-                                        <div className='col-6'>
-                                        {/* <button class="btn btn-danger font-weight-bold" >Delete Service</button> */}
-                                        </div>
+                                        
                                     </div>
                                 </div></div>
                             </div>
