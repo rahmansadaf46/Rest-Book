@@ -41,7 +41,6 @@ const AddFood = () => {
     formData.append("description", data.description);
     formData.append("shortDescription", data.shortDescription);
     formData.append("restaurantId", restaurantData._id);
-    // formData.append("category", category);
     fetch("http://localhost:4200/addFood", {
       method: "POST",
       body: formData,
