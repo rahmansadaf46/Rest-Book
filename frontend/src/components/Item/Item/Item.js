@@ -11,19 +11,28 @@ import { addToDatabaseCart, getDatabaseCart } from '../../../utilities/databaseM
 const Item = () => {
     const { id } = useParams();
     const [item, setItem] = useState({});
+    const [restaurant, setRestaurant] = useState({});
     const [count, setCount] = useState(1);
     const itemData = localStorage.getItem('item')
     useEffect(() => {
         // setAllitem(JSON.parse(itemData))
         fetch(`http://localhost:4200/food/${id}`)
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data);
-          setItem(data);
-          // setAllItem(data);
-          // localStorage.setItem('item', JSON.stringify(data));
-        });
-        
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data);
+                setItem(data);
+                fetch(`http://localhost:4200/restaurantProfile/${data.restaurantId}`)
+                    .then((res) => res.json())
+                    .then((data) => {
+                        console.log(data);
+                        setRestaurant(data);
+                        // setAllItem(data);
+                        // localStorage.setItem('item', JSON.stringify(data));
+                    });
+                // setAllItem(data);
+                // localStorage.setItem('item', JSON.stringify(data));
+            });
+
         window.scrollTo(0, 0);
     }, [id])
     const [cart, setCart] = useState([]);
@@ -81,8 +90,8 @@ const Item = () => {
             <Header cart={cart.length}></Header>
             <div className="container mt-5 py-5">
                 <div className='d-flex '>
-                    <img style={{width:'80px', borderRadius:'50px'}} src={`http://localhost:4200/restaurant/${item.restaurantImage}`} alt="" />
-                    <h2 className='ml-4 mt-4 text-danger'>{item.restaurantName}</h2>
+                    <img style={{ width: '80px', borderRadius: '50px' }} src={`http://localhost:4200/restaurant/${restaurant.image}`} alt="" />
+                    <h2 className='ml-4 mt-4 text-danger'>{restaurant.title}</h2>
                 </div>
                 <div className="row">
                     <div className="col-md-5">

@@ -11,7 +11,7 @@ const Footer = () => {
                     <div className="col-md-6"> <img style={{ width: '200px' }} src={logo2} alt="" /></div>
                     <div className=" col-md-3">
                         <ul style={{listStyle:'none'}}>
-                            <li className="mb-2"><a href="/"className="text-white link-hover">About Online item</a></li>
+                            <li className="mb-2"><a href="/"className="text-white link-hover">About Online food</a></li>
                             <li className="mb-2"><a href="/"className="text-white link-hover">Read our blog</a></li>
                             <li className="mb-2"><a href="/"className="text-white link-hover">Sign up for Restaurant</a></li>
                             <li className="mb-2"><a href="/"className="text-white link-hover">Add your Restaurant</a></li>

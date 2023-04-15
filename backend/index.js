@@ -191,8 +191,6 @@ client.connect(err => {
         const description = req.body.description;
         const shortDescription = req.body.shortDescription;
         const restaurantId = req.body.restaurantId;
-        const restaurantName = req.body.restaurantName;
-        const restaurantImage = req.body.restaurantImage;
 
         file.mv(`${__dirname}/image/food/${file.name}`, err => {
             if (err) {
@@ -200,7 +198,7 @@ client.connect(err => {
             }
         })
 
-        foodCollection.insertOne({ title, price, restaurantName,restaurantImage, description, shortDescription, image, restaurantId })
+        foodCollection.insertOne({ title, price, description, shortDescription, image, restaurantId })
             .then(result => {
                 res.send(result.insertedCount > 0);
             })
