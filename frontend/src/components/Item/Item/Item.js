@@ -19,12 +19,10 @@ const Item = () => {
         fetch(`http://localhost:4200/food/${id}`)
             .then((res) => res.json())
             .then((data) => {
-                console.log(data);
                 setItem(data);
                 fetch(`http://localhost:4200/restaurantProfile/${data.restaurantId}`)
                     .then((res) => res.json())
                     .then((data) => {
-                        console.log(data);
                         setRestaurant(data);
                         // setAllItem(data);
                         // localStorage.setItem('item', JSON.stringify(data));
