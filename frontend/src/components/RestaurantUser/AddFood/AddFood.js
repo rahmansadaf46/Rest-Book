@@ -65,7 +65,6 @@ const AddFood = () => {
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log(data[0]);
           setRestaurantData(data[0]);
         });
     }

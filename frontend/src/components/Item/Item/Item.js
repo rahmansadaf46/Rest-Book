@@ -91,6 +91,7 @@ const Item = () => {
                     <img style={{ width: '80px', borderRadius: '50px' }} src={`http://localhost:4200/restaurant/${restaurant.image}`} alt="" />
                     <h2 className='ml-4 mt-4 text-danger'>{restaurant.title}</h2>
                 </div>
+                
                 <div className="row">
                     <div className="col-md-5">
                         <p style={{ fontSize: '50px' }} className="mt-4 ">{item.title}</p>
