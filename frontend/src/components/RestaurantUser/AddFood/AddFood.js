@@ -70,9 +70,7 @@ const AddFood = () => {
     }
 
   }, [user]);
-  // useEffect(() => {
-  //     setDept(JSON.parse(localStorage.getItem("dept")) || {});
-  // }, [])
+
   return (
     <div>
       <RestaurantHeader />
