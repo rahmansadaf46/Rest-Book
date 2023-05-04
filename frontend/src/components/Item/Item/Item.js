@@ -9,13 +9,13 @@ import { addToDatabaseCart, getDatabaseCart } from '../../../utilities/databaseM
 
 
 const Item = () => {
-    const { id } = useParams();
+    const { category, id } = useParams();
     const [item, setItem] = useState({});
     const [restaurant, setRestaurant] = useState({});
     const [count, setCount] = useState(1);
     const itemData = localStorage.getItem('item')
     useEffect(() => {
-        fetch(`http://localhost:4200/food/${id}`)
+        fetch(`http://localhost:4200/${category}/${id}`)
             .then((res) => res.json())
             .then((data) => {
                 setItem(data);
@@ -97,7 +97,7 @@ const Item = () => {
                         <p style={{ fontSize: '15px', lineHeight: '2.1', color: 'gray' }}>{item.description}</p>
                         <div className="row">
                             <p style={{ fontSize: '40px', margin: '0px 30px 0px 20px' }}>{item.price}/-</p>
-                            <span>
+                            {category === 'food' &&  <span>
                                 <div className="input-group item-area">
                                     <input onClick={() => decrementCount()} type="button" defaultValue="-" className="button-minus" data-field="quantity" />
                                     <input type="number" onChange={(event) => {
@@ -105,16 +105,19 @@ const Item = () => {
                                     }} value={count} step={1} max defaultValue={1} name="quantity" className="quantity-field" />
                                     <input onClick={() => incrementCount()} type="button" defaultValue="+" className="button-plus" data-field="quantity" />
                                 </div>
-                            </span>
+                            </span>}
+                           
                         </div>
                         <button onClick={() => handleAddProduct(item)} style={{ backgroundColor: '#E5194B', color: 'white', borderRadius: '30px', height: '40px' }} className="btn  px-4 mt-3"><ShoppingCartIcon className="mr-2" /> Add</button>
-                        <div className="row mt-4">
+                        {category === 'food' && <div className="row mt-4">
+                            
                             <img width="200px" className="mx-4" src={`http://localhost:4200/food/${item.image}`} alt="" />
                             <img width="200px" className="mx-2" src={`http://localhost:4200/food/${item.image}`} alt="" />
-                        </div>
+                        </div>}
+                        
                     </div>
                     <div className="col-md-7 text-right">
-                        <img style={{ width: '550px' }} src={`http://localhost:4200/food/${item.image}`} alt="" />
+                        <img style={{ width: '550px' }} src={`http://localhost:4200/${category}/${item.image}`} alt="" />
                     </div>
                 </div>
             </div>

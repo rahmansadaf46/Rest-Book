@@ -334,7 +334,7 @@ client.connect(err => {
             })
     })
 
-    app.get('/tableDetails/:id', (req, res) => {
+    app.get('/table/:id', (req, res) => {
         tableCollection.find({ _id: ObjectId(req.params.id) })
             .toArray((err, documents) => {
                 res.send(documents[0]);

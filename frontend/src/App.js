@@ -71,7 +71,7 @@ function App() {
           <PrivateRoute path="/serviceCheckout">
             <ServiceCheckout></ServiceCheckout>
           </PrivateRoute>
-          <PrivateRoute path="/item/:id">
+          <PrivateRoute path="/item/:category/:id">
             <Item></Item>
           </PrivateRoute>
 

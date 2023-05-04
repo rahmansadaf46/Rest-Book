@@ -60,3 +60,18 @@ body{
 .css-1e6y48t-MuiButtonBase-root-MuiButton-root {
   font-family: 'Alkatra', cursive!important; 
 }
+.cardImg{
+  width: 50px;
+  height: 200px;
+}
+.card{
+  border-radius: 30px!important;
+  /* background-color: #FCF4E0!important; */
+}
+.card:hover{
+  /* background-color: white!important; */
+  background-color: white!important;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 30px;
+  transition: box-shadow 0.2s ease-in-out;
+}

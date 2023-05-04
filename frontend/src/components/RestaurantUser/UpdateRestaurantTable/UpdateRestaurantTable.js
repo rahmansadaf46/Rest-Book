@@ -36,7 +36,7 @@ const UpdateRestaurantTable = () => {
       })
   }, [])
     useEffect(() => {
-        fetch('http://localhost:4200/tableDetails/' + id)
+        fetch('http://localhost:4200/table/' + id)
             .then(res => res.json())
             .then(data => {
                 console.log(data);

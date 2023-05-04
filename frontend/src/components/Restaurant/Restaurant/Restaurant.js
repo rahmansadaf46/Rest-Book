@@ -10,6 +10,7 @@ import MessengerCustomerChat from "react-messenger-customer-chat";
 
 import { getDatabaseCart } from "../../../utilities/databaseManager";
 import MapComponent from "../../MapComponent/MapComponent.js";
+import Menu from "../Menu/Menu";
 
 const Restaurant = () => {
   const { id } = useParams();
@@ -141,9 +142,10 @@ const Restaurant = () => {
             </div>
           </div>
           <div>
-            <h1 style={{ color: "#E5194B" }} className="text-center mt-5">
+            {/* <h1 style={{ color: "#E5194B" }} className="text-center mt-5">
               <u>Table & Foods</u>
-            </h1>
+            </h1> */}
+            <Menu restaurant={restaurant} />
             <div className="row d-flex justify-content-center">
               {services?.map((service) => (
                 <div
