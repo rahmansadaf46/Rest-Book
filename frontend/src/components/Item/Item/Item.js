@@ -31,7 +31,7 @@ const Item = () => {
             });
 
         window.scrollTo(0, 0);
-    }, [id])
+    }, [category, id])
     const [cart, setCart] = useState([]);
 
     useEffect(() => {

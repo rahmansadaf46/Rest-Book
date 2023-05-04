@@ -21,7 +21,7 @@ const Footer = () => {
                         <ul style={{listStyle:'none'}}>
                             <li className="mb-2"><a href="/"className="text-white link-hover">Get help</a></li>
                             <li className="mb-2"><a href="/"className="text-white link-hover">Read FAQs</a></li>
-                            <li className="mb-2"><a href="/"className="text-white link-hover">View all cities</a></li>
+                            <li className="mb-2"><a href="/"className="text-white link-hover">View all restaurants</a></li>
                             <li className="mb-2"><a href="/"className="text-white link-hover">Restaurant near me</a></li>
                         </ul>
                     </div>
