@@ -190,6 +190,7 @@ client.connect(err => {
         const price = req.body.price;
         const description = req.body.description;
         const shortDescription = req.body.shortDescription;
+        const type = 'food';
         const restaurantId = req.body.restaurantId;
 
         file.mv(`${__dirname}/image/food/${file.name}`, err => {
@@ -198,7 +199,7 @@ client.connect(err => {
             }
         })
 
-        foodCollection.insertOne({ title, price, description, shortDescription, image, restaurantId })
+        foodCollection.insertOne({type, title, price, description, shortDescription, image, restaurantId })
             .then(result => {
                 res.send(result.insertedCount > 0);
             })
@@ -206,13 +207,13 @@ client.connect(err => {
     app.patch('/updateFood/:id', (req, res) => {
         const title = req.body.data.title;
         const price = req.body.data.price;
-        const category = req.body.data.category;
         const description = req.body.data.description;
         const shortDescription = req.body.data.shortDescription;
+        const type = 'food';
         foodCollection.updateOne({ _id: ObjectId(req.params.id) },
             {
                 $set: {
-                    title: title, price: price, category: category, description: description, shortDescription: shortDescription
+                    title: title, price: price, description: description, shortDescription: shortDescription, type: type
                 }
             })
             .then(result => {
@@ -300,14 +301,14 @@ client.connect(err => {
         const layout = req.body.layout;
         const description = req.body.description;
         const restaurantId = req.body.restaurantId;
-
+        const type = 'table';
         file.mv(`${__dirname}/image/table/${file.name}`, err => {
             if (err) {
                 return res.status(500).send({ msg: 'Failed to upload Image' });
             }
         })
 
-        tableCollection.insertOne({ title, price, layout, description, restaurantId, image })
+        tableCollection.insertOne({ title, price, layout, description, restaurantId, image,type })
             .then(result => {
                 res.send(result.insertedCount > 0);
             })
@@ -317,10 +318,11 @@ client.connect(err => {
         const price = req.body.data.price;
         const layout = req.body.data.layout;
         const description = req.body.data.description;
+        const type = 'table';
         tableCollection.updateOne({ _id: ObjectId(req.params.id) },
             {
                 $set: {
-                    title: title, price: price, layout: layout, description: description
+                    title: title, price: price, layout: layout, description: description, type:type
                 }
             })
             .then(result => {
