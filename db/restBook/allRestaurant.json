@@ -1,0 +1,25 @@
+[{
+  "_id": {
+    "$oid": "643af0b57621d80a4ac2bf0e"
+  },
+  "title": "Sultan's Dine",
+  "status": "Active",
+  "user": "xycovampz@gmail.com",
+  "area": [
+    "dhanmondi"
+  ],
+  "image": "sultans dine.jpeg",
+  "address": "Jighatola, Dhanmondi ",
+  "mobile": "01630657735",
+  "description": "Best Kacchi in the town.",
+  "facebook": "2342342342338",
+  "coords": "23.74175377546569,90.37593085542143",
+  "openingTime": "10:00",
+  "closingTime": "22:00",
+  "afterCheckIn": true,
+  "beforeCheckIn": true,
+  "paymentAmount": "200",
+  "offDay": [
+    "Sat"
+  ]
+}]

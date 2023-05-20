@@ -1,0 +1,13 @@
+[{
+  "_id": {
+    "$oid": "6453eaae99d5c03ca428e7f6"
+  },
+  "layout": "North",
+  "restaurantId": "643af0b57621d80a4ac2bf0e"
+},{
+  "_id": {
+    "$oid": "6454063c99d5c03ca428e7f8"
+  },
+  "layout": "East",
+  "restaurantId": "643af0b57621d80a4ac2bf0e"
+}]

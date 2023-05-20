@@ -1,0 +1,11 @@
+[{
+  "_id": {
+    "$oid": "643af36b62d43faec9ad1d49"
+  },
+  "title": "Bashmoti Kacchi",
+  "price": "379",
+  "description": "The dish is made with long-grain Basmati rice, marinated meat (usually beef or mutton), and a blend of aromatic spices and herbs. The meat is layered with the rice in a deep pot and then slow-cooked in an oven or over a stove until the flavors meld together, resulting in a rich and aromatic dish.",
+  "shortDescription": "Kacchi with alu",
+  "image": "kacchi.png",
+  "restaurantId": "643af0b57621d80a4ac2bf0e"
+}]
