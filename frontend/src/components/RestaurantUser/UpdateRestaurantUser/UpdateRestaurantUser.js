@@ -143,7 +143,7 @@ const UpdateRestaurantUser = () => {
     offDay.forEach((data) => {
       offDays.push(data.value);
     });
-    data.coords = `${data?.lat}, ${data?.long}`;
+    data.coords = `${data?.lat},${data?.long}`;
     data.area = areas;
     data.offDay = offDays;
     data.user = user;

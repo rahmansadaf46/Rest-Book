@@ -106,7 +106,7 @@ const AddRestaurant = () => {
     offDay.forEach((data) => {
       offDays.push(data.value);
     });
-    const coords = `${data?.lat}, ${data?.long}`;
+    const coords = `${data?.lat},${data?.long}`;
     const formData = new FormData();
     formData.append("file", file);
     formData.append("title", data.title);
