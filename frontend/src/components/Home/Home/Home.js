@@ -16,14 +16,14 @@ const Home = () => {
     const [location, setLocation] = useState(false);
     const itemData = localStorage.getItem('item')
     useEffect(() => {
-        const savedCart = getDatabaseCart();
-        const productKeys = Object.keys(savedCart);
-        const previousCart = productKeys.map(existingKey => {
-            const product = JSON.parse(localStorage.getItem('item')).find(pd => pd._id === existingKey);
-            product.quantity = savedCart[existingKey];
-            return product;
-        })
-        setCart(previousCart);
+        // const savedCart = getDatabaseCart();
+        // const productKeys = Object.keys(savedCart);
+        // const previousCart = productKeys.map(existingKey => {
+        //     const product = JSON.parse(localStorage.getItem('item')).find(pd => pd._id === existingKey);
+        //     product.quantity = savedCart[existingKey];
+        //     return product;
+        // })
+        // setCart(previousCart);
     }, [itemData])
 
     const handleLocation = () =>{

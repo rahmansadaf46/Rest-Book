@@ -6,6 +6,7 @@ import Header from '../../Shared/Header/Header';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import './Item.css'
 import { addToDatabaseCart, getDatabaseCart } from '../../../utilities/databaseManager';
+import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 
 
 const Item = () => {
@@ -17,6 +18,23 @@ const Item = () => {
     const itemData = localStorage.getItem('item')
     const [timeSlot, setTimeSlot] = useState([]);
     const [currentDate, setCurrentDate] = useState('');
+    const [timeRemaining, setTimeRemaining] = useState(120);
+
+  useEffect(() => {
+    const countdownInterval = setInterval(() => {
+      setTimeRemaining(prevTime => prevTime - 1);
+    }, 1000);
+
+    return () => {
+      clearInterval(countdownInterval);
+    };
+  }, []);
+
+  const formatTime = (time) => {
+    const minutes = Math.floor(time / 60);
+    const seconds = time % 60;
+    return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  };
     useEffect(() => {
         fetch(`http://localhost:4200/${category}/${id}`)
             .then((res) => res.json())
@@ -86,14 +104,14 @@ const Item = () => {
     const [cart, setCart] = useState([]);
 
     useEffect(() => {
-        const savedCart = getDatabaseCart();
-        const productKeys = Object.keys(savedCart);
-        const previousCart = productKeys.map(existingKey => {
-            const product = JSON.parse(localStorage.getItem('item')).find(pd => pd._id === existingKey);
-            product.quantity = savedCart[existingKey];
-            return product;
-        })
-        setCart(previousCart);
+        // const savedCart = getDatabaseCart();
+        // const productKeys = Object.keys(savedCart);
+        // const previousCart = productKeys.map(existingKey => {
+        //     const product = JSON.parse(localStorage.getItem('item')).find(pd => pd._id === existingKey);
+        //     product.quantity = savedCart[existingKey];
+        //     return product;
+        // })
+        // setCart(previousCart);
     }, [itemData])
 
     const handleAddProduct = (product) => {
@@ -173,16 +191,41 @@ const Item = () => {
 
     //   const timeSlots = generateTimeSlots(openingTime, closingTime);
     //   console.log(timeSlots);
+    const handleAddBooking = (slot) =>{
+        let data = {
+            date: currentDate,
+            bookingInfo: [{...slot, userEmail: sessionStorage.getItem('email'), encounterTime: new Date().toLocaleTimeString()} ],
+            restaurantId: item.restaurantId,
+           
+            tableId: id
+        }
+        console.log(data);
+        fetch("http://localhost:4200/addBooking", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ data }),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              window.alert("Booking added successfully");
+            //   window.location.reload();
+            })
+      
+            .catch((error) => {
+              console.error(error);
+            });
+    }
 
     const handleSlot = (slot, index) => {
         console.log(slot, index)
         let existingSlot = [...timeSlot]
-        if(existingSlot[index].status === 'Selected'){
-            existingSlot[index].status = 'Available'
+        if (existingSlot[index].status === 'Available') {
+            existingSlot[index].status = 'Selected'
+            handleAddBooking(slot)
         }
-       else{
-        existingSlot[index].status = 'Selected'
-       }
+        else {
+            existingSlot[index].status = 'Selected'
+        }
         console.log(existingSlot)
         setTimeSlot(existingSlot)
     }
@@ -190,12 +233,12 @@ const Item = () => {
         <div>
             <Header cart={cart.length}></Header>
             <div className="container mt-5 py-5">
-                <div className='d-flex '>
-                    <img style={{ width: '80px', borderRadius: '50px' }} src={`http://localhost:4200/restaurant/${restaurant.image}`} alt="" />
-                    <h2 className='ml-4 mt-4 text-danger'>{restaurant.title}</h2>
-                </div>
+                <Link to={`/restaurant/${item.restaurantId}` } className='d-flex res-title'>
+                    <img className='res-img' style={{ }} src={`http://localhost:4200/restaurant/${restaurant.image}`} alt="" />
+                    <h2 className='ml-4 mt-4 res-name '>{restaurant.title}</h2>
+                </Link>
 
-                <div className="row">
+                <div className="row  pt-2 mt-5">
                     <div className="col-md-5">
                         <p style={{ fontSize: '50px' }} className="mt-4 ">{item.title}</p>
                         <p style={{ fontSize: '15px', lineHeight: '2.1', color: 'gray' }}>{item.description}</p>
@@ -212,8 +255,8 @@ const Item = () => {
                             </span>}
 
                         </div>
-                        { category === 'food' && <button  onClick={() => handleAddProduct(item)} style={{ backgroundColor: '#E5194B', color: 'white', borderRadius: '30px', height: '40px' }} className="btn  px-4 mt-3"><ShoppingCartIcon className="mr-2" /> Add</button> }
-                        
+                        {category === 'food' && <button onClick={() => handleAddProduct(item)} style={{ backgroundColor: '#E5194B', color: 'white', borderRadius: '30px', height: '40px' }} className="btn  px-4 mt-3"><ShoppingCartIcon className="mr-2" /> Add</button>}
+
                         {category === 'food' && <div className="row mt-4">
 
                             <img width="200px" className="mx-4" src={`http://localhost:4200/food/${item.image}`} alt="" />
@@ -228,16 +271,16 @@ const Item = () => {
 
 
                 </div>
-                <div style={{ display: category === 'food'? 'none' : '' }} className='text-center mt-5'>
+                <div style={{ display: category === 'food' ? 'none' : '' }} className='text-center mt-5'>
                     <label>Enter Date: &nbsp;</label><input onChange={dateChange} min={new Date().toISOString().split('T')[0]} value={currentDate} type="date" />
                     <div className="d-flex justify-content-center">
-                        <div className='d-flex mx-2'><div className="p-2 mx-1 mb-3 mt-1 bg-success"></div>&nbsp;<label>Available</label></div>
-                        <div className='d-flex mx-2'><div className="p-2 mx-1  mb-3 mt-1 bg-dark"></div>&nbsp;<label>Not Available</label></div>
-                        <div className='d-flex mx-2'><div className="p-2 mx-1 mb-3 mt-1 bg-warning"></div>&nbsp;<label>Selected</label></div>
+                        <div className='d-flex mx-2'><div style={{ borderRadius: '50%' }} className="p-2 mx-1 mb-3 mt-1 bg-success"></div>&nbsp;<label>Available</label></div>
+                        <div className='d-flex mx-2'><div style={{ borderRadius: '50%' }} className="p-2 mx-1  mb-3 mt-1 bg-dark"></div>&nbsp;<label>Not Available</label></div>
+                        <div className='d-flex mx-2'><div style={{ borderRadius: '50%' }} className="p-2 mx-1 mb-3 mt-1 bg-warning"></div>&nbsp;<label>Selected</label></div>
                     </div>
                     <div className='text-center mt-4'>
-                        <h3 style={{color:'#E5194B'}}>Available Slot</h3>
-                        <div className="row">{timeSlot.map((time, index) => <div onClick={()=>handleSlot(time, index)} style={{ cursor: 'pointer' }} className={`card m-3 col-2 p-1 ${time.status==='Available'? 'bg-success  text-white':time.status==='Selected'? 'bg-warning text-dark': 'bg-danger text-white'}`}><p>{time.time}</p> <p>{time.status}</p></div>)}</div>
+                        <h3 style={{ color: '#E5194B' }}>Available Slot</h3>
+                        <div className="row">{timeSlot.map((time, index) => <div onClick={() => handleSlot(time, index)} style={{ cursor: 'pointer' }} className={`card m-3 col-2 p-1 ${time.status === 'Available' ? 'bg-success  text-white' : time.status === 'Selected' ? 'bg-warning text-dark' : 'bg-danger text-white'}`}><p>{time.time}</p> <p>{time.status === 'Available' ? time.status : `You are selected this slots for 2 minutes.`}</p></div>)}</div>
                     </div>
                 </div>
             </div>

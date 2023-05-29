@@ -64,17 +64,17 @@ const Checkout = () => {
   };
 
   useEffect(() => {
-    const savedCart = getDatabaseCart();
-    const productKeys = Object.keys(savedCart);
-    const previousCart = productKeys.map((existingKey) => {
-      const product = JSON.parse(itemData)?.find(
-        (pd) => pd._id === existingKey
-      );
-      product.quantity = savedCart[existingKey];
-      return product;
-    });
+    // const savedCart = getDatabaseCart();
+    // const productKeys = Object.keys(savedCart);
+    // const previousCart = productKeys.map((existingKey) => {
+    //   const product = JSON.parse(itemData)?.find(
+    //     (pd) => pd._id === existingKey
+    //   );
+    //   product.quantity = savedCart[existingKey];
+    //   return product;
+    // });
 
-    setCart(previousCart);
+    // setCart(previousCart);
   }, [itemData]);
 
   let subTotal = 0;

@@ -30,6 +30,7 @@ client.connect(err => {
     const restaurantCollection = client.db("restBook").collection("allRestaurant");
     const tableCollection = client.db("restBook").collection("allTable");
     const layoutCollection = client.db("restBook").collection("allLayout");
+    const bookingCollection = client.db("restBook").collection("allBooking");
     //restaurant 
     app.post('/addRestaurant', (req, res) => {
         const file = req.files.file;
@@ -424,6 +425,32 @@ client.connect(err => {
     })
 
 
+    //For booking
+    app.post('/addBooking', (req, res) => {
+        const date = req.body.data.date;
+        const bookingInfo = req.body.data.bookingInfo;
+        const restaurantId = req.body.data.restaurantId;
+        const tableId = req.body.data.tableId;
+
+        // console.log(req.body)
+        bookingCollection.insertOne({ date,bookingInfo, restaurantId , tableId})
+            .then(result => {
+                res.send(result.insertedCount > 0);
+            })
+    })
+
+    app.post('/findBooking', (req, res) => {
+        const date = req.body.date;
+        const restaurantId = req.body.restaurantId;
+        const tableId = req.body.tableId;
+
+        bookingCollection.find({ date: date, restaurantId:restaurantId,tableId:tableId })
+            .toArray((err, documents) => {
+                res.send(documents);
+            })
+    })
+
+   
 
 
     // app.get('/students/:department/:roll', (req, res) => {

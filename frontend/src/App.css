@@ -75,3 +75,33 @@ body{
   border-radius: 30px;
   transition: box-shadow 0.2s ease-in-out;
 }
+
+.res-title{
+  color: black;
+  
+}
+.res-name{
+  position: relative;
+  left: 240px;
+  font-size: 20px!important;
+  position: absolute;
+}
+
+.res-img{
+  width: 80px;
+  border-radius: 50px; 
+  position: absolute;
+}
+.res-title:hover{
+  color: #E5194B;
+  text-decoration: none;
+  font-size: 25px;
+  .res-img{
+    transition: 0.5s ease-in-out;
+    width: 85px;
+  }
+  .res-name{
+    transition: 0.5s ease-in-out;
+    font-size: 25px!important;
+  }
+}
