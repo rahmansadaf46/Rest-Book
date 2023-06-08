@@ -7,6 +7,7 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import './Item.css'
 import { addToDatabaseCart, getDatabaseCart } from '../../../utilities/databaseManager';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
+import CountdownTimer from './CountdownTimer';
 
 
 const Item = () => {
@@ -18,33 +19,17 @@ const Item = () => {
     const itemData = localStorage.getItem('item')
     const [timeSlot, setTimeSlot] = useState([]);
     const [currentDate, setCurrentDate] = useState('');
-    const [timeRemaining, setTimeRemaining] = useState(120);
-
-  useEffect(() => {
-    const countdownInterval = setInterval(() => {
-      setTimeRemaining(prevTime => prevTime - 1);
-    }, 1000);
-
-    return () => {
-      clearInterval(countdownInterval);
-    };
-  }, []);
-
-  const formatTime = (time) => {
-    const minutes = Math.floor(time / 60);
-    const seconds = time % 60;
-    return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-  };
+   
     useEffect(() => {
         fetch(`http://localhost:4200/${category}/${id}`)
             .then((res) => res.json())
             .then((response) => {
                 setItem(response);
-                console.log(response)
+                // console.log(response)
                 fetch(`http://localhost:4200/restaurantProfile/${response.restaurantId}`)
                     .then((res) => res.json())
                     .then((data) => {
-                        console.log(data)
+                        // console.log(data)
                         setRestaurant(data);
                         function generateTimeSlots(openingTime, closingTime) {
                             const slots = [];
@@ -77,13 +62,35 @@ const Item = () => {
                             return slots;
                         }
                         const slot = generateTimeSlots(data.openingTime, data.closingTime)
-                        console.log(slot)
+                        // console.log(slot)
                         let allSlot = slot.map(el => {
                             return {
                                 time: el,
                                 status: 'Available'
                             }
                         })
+                        console.log()
+                        const now = new Date();
+
+                        // Format the date in YYYY-MM-DD format
+                        const formattedDate = now.toISOString().split('T')[0];
+                        setCurrentDate(formattedDate);
+                        let dataBody = {
+                            date: `${formattedDate}`,
+                            restaurantId: response.restaurantId,
+                            tableId: response._id
+                        }
+                
+                        fetch("http://localhost:4200/findBooking", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({ dataBody }),
+                          })
+                            .then((res) => res.json())
+                            .then((data) => {
+                                console.log(allSlot)
+                              console.log(data, "success");
+                            });
                         setTimeSlot(allSlot)
                         // setAllItem(data);
                         // localStorage.setItem('item', JSON.stringify(data));
@@ -91,13 +98,8 @@ const Item = () => {
                 // setAllItem(data);
                 // localStorage.setItem('item', JSON.stringify(data));
             });
-        const now = new Date();
-
-        // Format the date in YYYY-MM-DD format
-        const formattedDate = now.toISOString().split('T')[0];
-
-        // Set the current date
-        setCurrentDate(formattedDate);
+ 
+       
         window.scrollTo(0, 0);
 
     }, [category, id])
@@ -112,8 +114,25 @@ const Item = () => {
         //     return product;
         // })
         // setCart(previousCart);
-    }, [itemData])
+        console.log(item)
+        // let dataBody = {
+        //     date: `${currentDate}`,
+        //     restaurantId: item.restaurantId,
+        //     tableId: item._id
+        // }
 
+        // fetch("http://localhost:4200/findBooking", {
+        //     method: "POST",
+        //     headers: { "Content-Type": "application/json" },
+        //     body: JSON.stringify({ dataBody }),
+        //   })
+        //     .then((res) => res.json())
+        //     .then((data) => {
+        //       console.log(data, "success");
+        //     });
+        // /findBooking
+    }, [currentDate, item])
+    console.log(currentDate)
     const handleAddProduct = (product) => {
         const toBeAddedKey = product._id;
         const sameProduct = cart.find(pd => pd._id === toBeAddedKey);
@@ -181,7 +200,7 @@ const Item = () => {
     }
 
     const dateChange = (e) => {
-        console.log(e);
+        // console.log(e);
         setCurrentDate(e.target.value);
     }
 
@@ -191,50 +210,52 @@ const Item = () => {
 
     //   const timeSlots = generateTimeSlots(openingTime, closingTime);
     //   console.log(timeSlots);
-    const handleAddBooking = (slot) =>{
+    const handleAddBooking = (slot) => {
         let data = {
             date: currentDate,
-            bookingInfo: [{...slot, userEmail: sessionStorage.getItem('email'), encounterTime: new Date().toLocaleTimeString()} ],
+            bookingInfo: [{ ...slot, userEmail: sessionStorage.getItem('email'), encounterTime: new Date(), encounterDate: currentDate }],
             restaurantId: item.restaurantId,
-           
+
             tableId: id
         }
-        console.log(data);
+        // console.log(data);
         fetch("http://localhost:4200/addBooking", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ data }),
-          })
+        })
             .then((response) => response.json())
             .then((data) => {
-              window.alert("Booking added successfully");
-            //   window.location.reload();
+                window.alert("Booking added successfully");
+                //   window.location.reload();
             })
-      
+
             .catch((error) => {
-              console.error(error);
+                console.error(error);
             });
     }
 
     const handleSlot = (slot, index) => {
-        console.log(slot, index)
+        // console.log(slot, index)
         let existingSlot = [...timeSlot]
         if (existingSlot[index].status === 'Available') {
             existingSlot[index].status = 'Selected'
+            existingSlot[index].encounterTime = new Date()
+            existingSlot[index].duration = 2
             handleAddBooking(slot)
         }
         else {
             existingSlot[index].status = 'Selected'
         }
-        console.log(existingSlot)
+        // console.log(existingSlot)
         setTimeSlot(existingSlot)
     }
     return (
         <div>
             <Header cart={cart.length}></Header>
             <div className="container mt-5 py-5">
-                <Link to={`/restaurant/${item.restaurantId}` } className='d-flex res-title'>
-                    <img className='res-img' style={{ }} src={`http://localhost:4200/restaurant/${restaurant.image}`} alt="" />
+                <Link to={`/restaurant/${item.restaurantId}`} className='d-flex res-title'>
+                    <img className='res-img' style={{}} src={`http://localhost:4200/restaurant/${restaurant.image}`} alt="" />
                     <h2 className='ml-4 mt-4 res-name '>{restaurant.title}</h2>
                 </Link>
 
@@ -280,7 +301,17 @@ const Item = () => {
                     </div>
                     <div className='text-center mt-4'>
                         <h3 style={{ color: '#E5194B' }}>Available Slot</h3>
-                        <div className="row">{timeSlot.map((time, index) => <div onClick={() => handleSlot(time, index)} style={{ cursor: 'pointer' }} className={`card m-3 col-2 p-1 ${time.status === 'Available' ? 'bg-success  text-white' : time.status === 'Selected' ? 'bg-warning text-dark' : 'bg-danger text-white'}`}><p>{time.time}</p> <p>{time.status === 'Available' ? time.status : `You are selected this slots for 2 minutes.`}</p></div>)}</div>
+                        <div className="row">{timeSlot.map((time, index) => <div onClick={() => handleSlot(time, index)} style={{ cursor: 'pointer' }} className={`card m-3 col-2 p-1 ${time.status === 'Available' ? 'bg-success  text-white' : time.status === 'Selected' ? 'bg-warning text-dark' : 'bg-danger text-white'}`}><p>{time.time}</p> <p>{time.status === 'Available' ? time.status : (
+                            <span>
+                                You have selected this slot for{' '}
+                                {time.status === 'Selected' ? (
+                                    <CountdownTimer startCountdown={time.status === 'Selected'} time={time.encounterTime} duration={time.duration} />
+                                ) : (
+                                    <span>Loading...</span>
+                                )}{' '}
+                                minutes.
+                            </span>
+                        )}</p></div>)}</div>
                     </div>
                 </div>
             </div>

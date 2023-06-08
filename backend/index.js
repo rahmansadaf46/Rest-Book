@@ -440,13 +440,15 @@ client.connect(err => {
     })
 
     app.post('/findBooking', (req, res) => {
-        const date = req.body.date;
-        const restaurantId = req.body.restaurantId;
-        const tableId = req.body.tableId;
+        const date = req.body.dataBody.date;
+        const restaurantId = req.body.dataBody.restaurantId;
+        const tableId = req.body.dataBody.tableId;
 
-        bookingCollection.find({ date: date, restaurantId:restaurantId,tableId:tableId })
+        bookingCollection.find({})
             .toArray((err, documents) => {
-                res.send(documents);
+                
+                let filterData = documents.filter(data=>  data.date=== date && data.restaurantId=== restaurantId && data.tableId=== tableId )
+                res.send(filterData);
             })
     })
 

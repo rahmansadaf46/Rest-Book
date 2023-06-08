@@ -30,7 +30,7 @@ const Header = ({ cart }) => {
       .then((data) => {
         const email = sessionStorage.getItem("email");
         const items = data.filter((item) => item.finalData.email === email);
-        console.log(items);
+        // console.log(items);
         setItem(items.reverse());
       });
     if (user) {
@@ -41,7 +41,7 @@ const Header = ({ cart }) => {
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
+          // console.log(data);
           setRestaurantUser(data);
           sessionStorage.setItem("restaurantUser", JSON.stringify(data));
           // const email = sessionStorage.getItem('email')
