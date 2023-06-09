@@ -212,7 +212,7 @@ client.connect(err => {
         foodCollection.updateOne({ _id: ObjectId(req.params.id) },
             {
                 $set: {
-                    title: title, price: price, description: description, shortDescription: shortDescription, 
+                    title: title, price: price, description: description, shortDescription: shortDescription,
                 }
             })
             .then(result => {
@@ -319,7 +319,7 @@ client.connect(err => {
         tableCollection.updateOne({ _id: ObjectId(req.params.id) },
             {
                 $set: {
-                    title: title, price: price, layout: layout, description: description, 
+                    title: title, price: price, layout: layout, description: description,
                 }
             })
             .then(result => {
@@ -433,9 +433,25 @@ client.connect(err => {
         const tableId = req.body.data.tableId;
 
         // console.log(req.body)
-        bookingCollection.insertOne({ date,bookingInfo, restaurantId , tableId})
+        bookingCollection.insertOne({ date, bookingInfo, restaurantId, tableId })
             .then(result => {
                 res.send(result.insertedCount > 0);
+            })
+    })
+
+    app.patch('/updateBooking/:id', (req, res) => {
+        const date = req.body.updateData.date;
+        const bookingInfo = req.body.updateData.bookingInfo;
+        const restaurantId = req.body.updateData.restaurantId;
+        const tableId = req.body.updateData.tableId;
+        bookingCollection.updateOne({ _id: ObjectId(req.params.id) },
+            {
+                $set: {
+                    bookingInfo: bookingInfo, tableId: tableId, restaurantId: restaurantId, date: date
+                },
+            })
+            .then(result => {
+                res.send(result.matchedCount > 0);
             })
     })
 
@@ -446,13 +462,13 @@ client.connect(err => {
 
         bookingCollection.find({})
             .toArray((err, documents) => {
-                
-                let filterData = documents.filter(data=>  data.date=== date && data.restaurantId=== restaurantId && data.tableId=== tableId )
+
+                let filterData = documents.filter(data => data.date === date && data.restaurantId === restaurantId && data.tableId === tableId)
                 res.send(filterData);
             })
     })
 
-   
+
 
 
     // app.get('/students/:department/:roll', (req, res) => {

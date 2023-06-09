@@ -19,7 +19,7 @@ const Item = () => {
     const itemData = localStorage.getItem('item')
     const [timeSlot, setTimeSlot] = useState([]);
     const [currentDate, setCurrentDate] = useState('');
-   
+    const [bookingData, setBookingData] = useState([]);
     useEffect(() => {
         fetch(`http://localhost:4200/${category}/${id}`)
             .then((res) => res.json())
@@ -90,6 +90,9 @@ const Item = () => {
                             .then((data) => {
                                 console.log(allSlot)
                               console.log(data, "success");
+                              if(data.length>0){
+                                setBookingData(data)
+                              }
                             });
                         setTimeSlot(allSlot)
                         // setAllItem(data);
@@ -213,26 +216,90 @@ const Item = () => {
     const handleAddBooking = (slot) => {
         let data = {
             date: currentDate,
-            bookingInfo: [{ ...slot, userEmail: sessionStorage.getItem('email'), encounterTime: new Date(), encounterDate: currentDate }],
+            bookingInfo: [{ time: slot.time, status: slot.status, userEmail: sessionStorage.getItem('email'), encounterTime: new Date(), encounterDate: currentDate }],
             restaurantId: item.restaurantId,
 
             tableId: id
         }
         // console.log(data);
-        fetch("http://localhost:4200/addBooking", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ data }),
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                window.alert("Booking added successfully");
-                //   window.location.reload();
+        if(bookingData.length>0){
+            let updateData = {
+                date: currentDate,
+                bookingInfo: [...bookingData[0].bookingInfo, { time: slot.time, status: slot.status, userEmail: sessionStorage.getItem('email'), encounterTime: new Date(), encounterDate: currentDate }],
+                restaurantId: item.restaurantId,
+    
+                tableId: id
+            }
+            console.log(updateData)
+            fetch(`http://localhost:4200/updateBooking/${bookingData[0]._id}`, {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ updateData }),
             })
-
-            .catch((error) => {
-                console.error(error);
-            });
+                .then((response) => response.json())
+                .then((data) => {
+                    window.alert("Booking added successfully");
+                    //   window.location.reload();
+                    let dataBody = {
+                        date: `${currentDate}`,
+                        restaurantId: item.restaurantId,
+                        tableId: id
+                    }
+            
+                    fetch("http://localhost:4200/findBooking", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ dataBody }),
+                      })
+                        .then((res) => res.json())
+                        .then((data) => {
+                            // console.log(allSlot)
+                          console.log(data, "success");
+                          if(data.length>0){
+                            setBookingData(data)
+                          }
+                        });
+                })
+    
+                .catch((error) => {
+                    console.error(error);
+                });
+        }else{
+            fetch("http://localhost:4200/addBooking", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ data }),
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    window.alert("Booking added successfully");
+                    //   window.location.reload();
+                    let dataBody = {
+                        date: `${currentDate}`,
+                        restaurantId: item.restaurantId,
+                        tableId: id
+                    }
+            
+                    fetch("http://localhost:4200/findBooking", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ dataBody }),
+                      })
+                        .then((res) => res.json())
+                        .then((data) => {
+                            // console.log(allSlot)
+                          console.log(data, "success");
+                          if(data.length>0){
+                            setBookingData(data)
+                          }
+                        });
+                })
+    
+                .catch((error) => {
+                    console.error(error);
+                });
+        }
+   
     }
 
     const handleSlot = (slot, index) => {
