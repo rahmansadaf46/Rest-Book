@@ -13,6 +13,7 @@ import CountdownTimer from './CountdownTimer';
 const Item = () => {
     const { category, id } = useParams();
     // const [selectedSlot, setSelectedSlot] = useState([]);
+    const [loading, setLoading] = useState(true);
     const [item, setItem] = useState({});
     const [restaurant, setRestaurant] = useState({});
     const [count, setCount] = useState(1);
@@ -20,7 +21,16 @@ const Item = () => {
     const [timeSlot, setTimeSlot] = useState([]);
     const [currentDate, setCurrentDate] = useState('');
     const [bookingData, setBookingData] = useState([]);
+    const duration = 2;
     useEffect(() => {
+
+        getItemData(new Date())
+
+        window.scrollTo(0, 0);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [category, id])
+    const getItemData = (date) => {
+        setLoading(true)
         fetch(`http://localhost:4200/${category}/${id}`)
             .then((res) => res.json())
             .then((response) => {
@@ -70,7 +80,7 @@ const Item = () => {
                             }
                         })
                         console.log()
-                        const now = new Date();
+                        const now = new Date(date);
 
                         // Format the date in YYYY-MM-DD format
                         const formattedDate = now.toISOString().split('T')[0];
@@ -80,61 +90,101 @@ const Item = () => {
                             restaurantId: response.restaurantId,
                             tableId: response._id
                         }
-                
+
                         fetch("http://localhost:4200/findBooking", {
                             method: "POST",
                             headers: { "Content-Type": "application/json" },
                             body: JSON.stringify({ dataBody }),
-                          })
+                        })
                             .then((res) => res.json())
                             .then((data) => {
                                 console.log(allSlot)
-                              console.log(data, "success");
-                              if(data.length>0){
-                                setBookingData(data)
-                              }
-                            });
-                        setTimeSlot(allSlot)
-                        // setAllItem(data);
-                        // localStorage.setItem('item', JSON.stringify(data));
-                    });
-                // setAllItem(data);
-                // localStorage.setItem('item', JSON.stringify(data));
-            });
- 
-       
-        window.scrollTo(0, 0);
+                                console.log(data, "success");
+                                if (data.length > 0) {
+                                    let userTimeSlots = filterAvailableTimeSlots(allSlot, data[0]?.bookingInfo);
+                                    console.log(userTimeSlots)
+                                    let combineSlots = combineArrays(allSlot, userTimeSlots)
+                                    console.log(combineSlots)
+                                    setTimeSlot(combineSlots)
+                                    setLoading(false)
 
-    }, [category, id])
+                                    setBookingData(data)
+                                    // console.log(filterAvailableTimeSlots(allSlot, data[0]?.bookingInfo))
+                                }
+                                else {
+                                    setBookingData(data)
+                                    setLoading(false)
+
+                                    setTimeSlot(allSlot)
+                                }
+                            });
+
+                    });
+            });
+    }
+    function combineArrays(array1, array2) {
+        // Create a deep copy of array1
+        const mergedArray = JSON.parse(JSON.stringify(array1));
+
+        // Iterate over array2 and update the status in mergedArray
+        for (let i = 0; i < array2.length; i++) {
+            const selectedTime = array2[i];
+            const index = mergedArray.findIndex((time) => time.time === selectedTime.time);
+
+            if (index !== -1) {
+                mergedArray[index] = selectedTime;
+            } else {
+                mergedArray.push(selectedTime);
+            }
+        }
+
+        return mergedArray;
+    }
+
+    function calculateRemainingTime(dateString) {
+        const selectedDate = new Date(dateString);
+        const currentDate = new Date();
+        console.log(selectedDate.toLocaleTimeString(), currentDate.toLocaleTimeString())
+        let time1 = selectedDate.toLocaleTimeString();
+        let time2 = currentDate.toLocaleTimeString();
+
+        const [h1, m1, s1] = time1.split(':').map(Number);
+        const [h2, m2, s2] = time2.split(':').map(Number);
+
+        const date1 = new Date();
+        date1.setHours(h1, m1, s1, 0);
+
+        const date2 = new Date();
+        date2.setHours(h2, m2, s2, 0);
+
+        const differenceInMilliseconds = Math.abs(date1 - date2);
+        const differenceInSeconds = differenceInMilliseconds / 1000;
+        console.log(differenceInSeconds)
+        return differenceInSeconds;
+    }
+    function filterAvailableTimeSlots(allTimeSlots, selectedTimeSlots) {
+        // const dateToCheck = "2023-06-10T17:34:14.357Z";
+        // const isWithinRange = calculateRemainingTime(dateToCheck);
+        // console.log(isWithinRange);
+        console.log(allTimeSlots, selectedTimeSlots)
+        const notAvailableSelectedSlotsForUser = selectedTimeSlots.filter((slot) => slot.status === "Selected" && slot.userEmail !== sessionStorage.getItem('email'));
+        const notAvailableSlotsForUser = selectedTimeSlots.filter((slot) => slot.status === "Not Available");
+        const selectedExpireSlotsForUser = selectedTimeSlots.filter((slot) => slot.status === "Selected" && calculateRemainingTime(slot.encounterTime) > (duration * 60) && slot.userEmail === sessionStorage.getItem('email'));
+        const selectedSlotsForUser = selectedTimeSlots.filter((slot) => slot.status === "Selected" && calculateRemainingTime(slot.encounterTime) < (duration * 60) && slot.userEmail === sessionStorage.getItem('email'));
+        const selectedTime = selectedTimeSlots.map((slot) => slot.time);
+
+        console.log(selectedSlotsForUser, selectedTimeSlots, notAvailableSelectedSlotsForUser, notAvailableSlotsForUser, selectedExpireSlotsForUser)
+        const availableTimeSlots = allTimeSlots.filter(
+            (slot, index) => !selectedTime.includes(slot.time)[index]
+        );
+        const bookedTime = allTimeSlots.filter(
+            (slot) => selectedTime.includes(slot.time)
+        );
+        console.log({ availableTimeSlots: availableTimeSlots, selectedSlotsForUser: selectedSlotsForUser })
+        return selectedSlotsForUser;
+    }
     const [cart, setCart] = useState([]);
 
-    useEffect(() => {
-        // const savedCart = getDatabaseCart();
-        // const productKeys = Object.keys(savedCart);
-        // const previousCart = productKeys.map(existingKey => {
-        //     const product = JSON.parse(localStorage.getItem('item')).find(pd => pd._id === existingKey);
-        //     product.quantity = savedCart[existingKey];
-        //     return product;
-        // })
-        // setCart(previousCart);
-        console.log(item)
-        // let dataBody = {
-        //     date: `${currentDate}`,
-        //     restaurantId: item.restaurantId,
-        //     tableId: item._id
-        // }
-
-        // fetch("http://localhost:4200/findBooking", {
-        //     method: "POST",
-        //     headers: { "Content-Type": "application/json" },
-        //     body: JSON.stringify({ dataBody }),
-        //   })
-        //     .then((res) => res.json())
-        //     .then((data) => {
-        //       console.log(data, "success");
-        //     });
-        // /findBooking
-    }, [currentDate, item])
     console.log(currentDate)
     const handleAddProduct = (product) => {
         const toBeAddedKey = product._id;
@@ -205,6 +255,7 @@ const Item = () => {
     const dateChange = (e) => {
         // console.log(e);
         setCurrentDate(e.target.value);
+        getItemData(e.target.value)
     }
 
     // Example usage
@@ -213,7 +264,38 @@ const Item = () => {
 
     //   const timeSlots = generateTimeSlots(openingTime, closingTime);
     //   console.log(timeSlots);
-    const handleAddBooking = (slot) => {
+    const filterBookingData = (data) => {
+        const groupedData = {};
+
+        data.forEach((item) => {
+          if (groupedData[item.time]) {
+            const storedEncounterTime = new Date(groupedData[item.time].encounterTime);
+            const currentEncounterTime = new Date(item.encounterTime);
+        
+            if (currentEncounterTime > storedEncounterTime) {
+              groupedData[item.time] = item;
+            }
+          } else {
+            groupedData[item.time] = item;
+          }
+        });
+        
+        const filteredData = Object.values(groupedData);
+        return filteredData;
+
+    }
+    const handleAddBooking = (slot, index) => {
+        // console.log(slot, index)
+        let existingSlot = [...timeSlot]
+        if (existingSlot[index].status === 'Available') {
+            existingSlot[index].status = 'Selected'
+            existingSlot[index].encounterTime = new Date()
+        }
+        else {
+            existingSlot[index].status = 'Selected'
+        }
+        // console.log(existingSlot)
+        setTimeSlot(existingSlot)
         let data = {
             date: currentDate,
             bookingInfo: [{ time: slot.time, status: slot.status, userEmail: sessionStorage.getItem('email'), encounterTime: new Date(), encounterDate: currentDate }],
@@ -222,12 +304,16 @@ const Item = () => {
             tableId: id
         }
         // console.log(data);
-        if(bookingData.length>0){
+        if (bookingData.length > 0) {
+
+            console.log(filterBookingData([...bookingData[0].bookingInfo, { time: slot.time, status: slot.status, userEmail: sessionStorage.getItem('email'), encounterTime: new Date(), encounterDate: currentDate }]), )
+
+            // console.log(filteredData);
             let updateData = {
                 date: currentDate,
-                bookingInfo: [...bookingData[0].bookingInfo, { time: slot.time, status: slot.status, userEmail: sessionStorage.getItem('email'), encounterTime: new Date(), encounterDate: currentDate }],
+                bookingInfo: filterBookingData([...bookingData[0].bookingInfo, { time: slot.time, status: slot.status, userEmail: sessionStorage.getItem('email'), encounterTime: new Date(), encounterDate: currentDate }]),
                 restaurantId: item.restaurantId,
-    
+
                 tableId: id
             }
             console.log(updateData)
@@ -238,33 +324,33 @@ const Item = () => {
             })
                 .then((response) => response.json())
                 .then((data) => {
-                    window.alert("Booking added successfully");
+                    // window.alert("Booking added successfully");
                     //   window.location.reload();
                     let dataBody = {
                         date: `${currentDate}`,
                         restaurantId: item.restaurantId,
                         tableId: id
                     }
-            
+
                     fetch("http://localhost:4200/findBooking", {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({ dataBody }),
-                      })
+                    })
                         .then((res) => res.json())
                         .then((data) => {
                             // console.log(allSlot)
-                          console.log(data, "success");
-                          if(data.length>0){
-                            setBookingData(data)
-                          }
+                            console.log(data, "success");
+                            if (data.length > 0) {
+                                setBookingData(data)
+                            }
                         });
                 })
-    
+
                 .catch((error) => {
                     console.error(error);
                 });
-        }else{
+        } else {
             fetch("http://localhost:4200/addBooking", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -272,48 +358,41 @@ const Item = () => {
             })
                 .then((response) => response.json())
                 .then((data) => {
-                    window.alert("Booking added successfully");
+                    // window.alert("Booking added successfully");
                     //   window.location.reload();
                     let dataBody = {
                         date: `${currentDate}`,
                         restaurantId: item.restaurantId,
                         tableId: id
                     }
-            
+
                     fetch("http://localhost:4200/findBooking", {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({ dataBody }),
-                      })
+                    })
                         .then((res) => res.json())
                         .then((data) => {
                             // console.log(allSlot)
-                          console.log(data, "success");
-                          if(data.length>0){
-                            setBookingData(data)
-                          }
+                            console.log(data, "success");
+
+                            if (data.length > 0) {
+                                setBookingData(data)
+                            }
                         });
                 })
-    
+
                 .catch((error) => {
                     console.error(error);
                 });
         }
-   
+
     }
 
-    const handleSlot = (slot, index) => {
+    const handleAvailableSlot = (index) => {
         // console.log(slot, index)
         let existingSlot = [...timeSlot]
-        if (existingSlot[index].status === 'Available') {
-            existingSlot[index].status = 'Selected'
-            existingSlot[index].encounterTime = new Date()
-            existingSlot[index].duration = 2
-            handleAddBooking(slot)
-        }
-        else {
-            existingSlot[index].status = 'Selected'
-        }
+        existingSlot[index].status = 'Available'
         // console.log(existingSlot)
         setTimeSlot(existingSlot)
     }
@@ -368,17 +447,17 @@ const Item = () => {
                     </div>
                     <div className='text-center mt-4'>
                         <h3 style={{ color: '#E5194B' }}>Available Slot</h3>
-                        <div className="row">{timeSlot.map((time, index) => <div onClick={() => handleSlot(time, index)} style={{ cursor: 'pointer' }} className={`card m-3 col-2 p-1 ${time.status === 'Available' ? 'bg-success  text-white' : time.status === 'Selected' ? 'bg-warning text-dark' : 'bg-danger text-white'}`}><p>{time.time}</p> <p>{time.status === 'Available' ? time.status : (
+                        {loading === false ? <div className="row">{timeSlot.map((time, index) => <div onClick={() => handleAddBooking(time, index)} style={{ cursor: 'pointer' }} className={`card m-3 col-2 p-1 ${time.status === 'Available' ? 'bg-success  text-white' : time.status === 'Selected' ? 'bg-warning text-dark' : 'bg-danger text-white'}`}><p>{time.time}</p> <p>{time.status === 'Available' ? time.status : (
                             <span>
                                 You have selected this slot for{' '}
                                 {time.status === 'Selected' ? (
-                                    <CountdownTimer startCountdown={time.status === 'Selected'} time={time.encounterTime} duration={time.duration} />
+                                    <CountdownTimer duration={duration} handleAvailableSlot={handleAvailableSlot} index={index} startCountdown={time.status === 'Selected'} time={time.encounterTime} />
                                 ) : (
                                     <span>Loading...</span>
                                 )}{' '}
                                 minutes.
                             </span>
-                        )}</p></div>)}</div>
+                        )}</p></div>)}</div> : <div className="my-5 py-5"><img src="https://miro.medium.com/v2/resize:fit:1400/1*CsJ05WEGfunYMLGfsT2sXA.gif" alt="" /></div>}
                     </div>
                 </div>
             </div>
