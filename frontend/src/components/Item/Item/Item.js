@@ -103,7 +103,7 @@ const Item = () => {
                                 if (data.length > 0) {
                                     let userTimeSlots = filterAvailableTimeSlots(allSlot, data[0]?.bookingInfo);
                                     console.log(userTimeSlots)
-                                    let combineSlots = combineArrays(allSlot, userTimeSlots)
+                                    let combineSlots = combineArrays(combineArrays(allSlot, userTimeSlots.selectedSlotsForUser), userTimeSlots.notAvailableSlotsForUser)
                                     console.log(combineSlots)
                                     setTimeSlot(combineSlots)
                                     setLoading(false)
@@ -180,8 +180,8 @@ const Item = () => {
         const bookedTime = allTimeSlots.filter(
             (slot) => selectedTime.includes(slot.time)
         );
-        console.log({ availableTimeSlots: availableTimeSlots, selectedSlotsForUser: selectedSlotsForUser })
-        return selectedSlotsForUser;
+        console.log({ selectedSlotsForUser: selectedSlotsForUser, notAvailableSlotsForUser: notAvailableSlotsForUser })
+        return { selectedSlotsForUser: selectedSlotsForUser, notAvailableSlotsForUser: notAvailableSlotsForUser };
     }
     const [cart, setCart] = useState([]);
 
@@ -268,124 +268,127 @@ const Item = () => {
         const groupedData = {};
 
         data.forEach((item) => {
-          if (groupedData[item.time]) {
-            const storedEncounterTime = new Date(groupedData[item.time].encounterTime);
-            const currentEncounterTime = new Date(item.encounterTime);
-        
-            if (currentEncounterTime > storedEncounterTime) {
-              groupedData[item.time] = item;
+            if (groupedData[item.time]) {
+                const storedEncounterTime = new Date(groupedData[item.time].encounterTime);
+                const currentEncounterTime = new Date(item.encounterTime);
+
+                if (currentEncounterTime > storedEncounterTime) {
+                    groupedData[item.time] = item;
+                }
+            } else {
+                groupedData[item.time] = item;
             }
-          } else {
-            groupedData[item.time] = item;
-          }
         });
-        
+
         const filteredData = Object.values(groupedData);
         return filteredData;
 
     }
     const handleAddBooking = (slot, index) => {
-        // console.log(slot, index)
-        let existingSlot = [...timeSlot]
-        if (existingSlot[index].status === 'Available') {
-            existingSlot[index].status = 'Selected'
-            existingSlot[index].encounterTime = new Date()
-        }
-        else {
-            existingSlot[index].status = 'Selected'
-        }
-        // console.log(existingSlot)
-        setTimeSlot(existingSlot)
-        let data = {
-            date: currentDate,
-            bookingInfo: [{ time: slot.time, status: slot.status, userEmail: sessionStorage.getItem('email'), encounterTime: new Date(), encounterDate: currentDate }],
-            restaurantId: item.restaurantId,
-
-            tableId: id
-        }
-        // console.log(data);
-        if (bookingData.length > 0) {
-
-            console.log(filterBookingData([...bookingData[0].bookingInfo, { time: slot.time, status: slot.status, userEmail: sessionStorage.getItem('email'), encounterTime: new Date(), encounterDate: currentDate }]), )
-
-            // console.log(filteredData);
-            let updateData = {
+        console.log(slot.status)
+        if (slot.status === 'Available') {
+            let existingSlot = [...timeSlot]
+            if (existingSlot[index].status === 'Available') {
+                existingSlot[index].status = 'Selected'
+                existingSlot[index].encounterTime = new Date()
+            }
+            else {
+                existingSlot[index].status = 'Selected'
+            }
+            // console.log(existingSlot)
+            setTimeSlot(existingSlot)
+            let data = {
                 date: currentDate,
-                bookingInfo: filterBookingData([...bookingData[0].bookingInfo, { time: slot.time, status: slot.status, userEmail: sessionStorage.getItem('email'), encounterTime: new Date(), encounterDate: currentDate }]),
+                bookingInfo: [{ time: slot.time, status: slot.status, userEmail: sessionStorage.getItem('email'), encounterTime: new Date(), encounterDate: currentDate }],
                 restaurantId: item.restaurantId,
 
                 tableId: id
             }
-            console.log(updateData)
-            fetch(`http://localhost:4200/updateBooking/${bookingData[0]._id}`, {
-                method: "PATCH",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ updateData }),
-            })
-                .then((response) => response.json())
-                .then((data) => {
-                    // window.alert("Booking added successfully");
-                    //   window.location.reload();
-                    let dataBody = {
-                        date: `${currentDate}`,
-                        restaurantId: item.restaurantId,
-                        tableId: id
-                    }
+            // console.log(data);
+            if (bookingData.length > 0) {
 
-                    fetch("http://localhost:4200/findBooking", {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ dataBody }),
-                    })
-                        .then((res) => res.json())
-                        .then((data) => {
-                            // console.log(allSlot)
-                            console.log(data, "success");
-                            if (data.length > 0) {
-                                setBookingData(data)
-                            }
-                        });
+                console.log(filterBookingData([...bookingData[0].bookingInfo, { time: slot.time, status: slot.status, userEmail: sessionStorage.getItem('email'), encounterTime: new Date(), encounterDate: currentDate }]),)
+
+                // console.log(filteredData);
+                let updateData = {
+                    date: currentDate,
+                    bookingInfo: filterBookingData([...bookingData[0].bookingInfo, { time: slot.time, status: slot.status, userEmail: sessionStorage.getItem('email'), encounterTime: new Date(), encounterDate: currentDate }]),
+                    restaurantId: item.restaurantId,
+
+                    tableId: id
+                }
+                console.log(updateData)
+                fetch(`http://localhost:4200/updateBooking/${bookingData[0]._id}`, {
+                    method: "PATCH",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ updateData }),
                 })
+                    .then((response) => response.json())
+                    .then((data) => {
+                        // window.alert("Booking added successfully");
+                        //   window.location.reload();
+                        let dataBody = {
+                            date: `${currentDate}`,
+                            restaurantId: item.restaurantId,
+                            tableId: id
+                        }
 
-                .catch((error) => {
-                    console.error(error);
-                });
-        } else {
-            fetch("http://localhost:4200/addBooking", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ data }),
-            })
-                .then((response) => response.json())
-                .then((data) => {
-                    // window.alert("Booking added successfully");
-                    //   window.location.reload();
-                    let dataBody = {
-                        date: `${currentDate}`,
-                        restaurantId: item.restaurantId,
-                        tableId: id
-                    }
-
-                    fetch("http://localhost:4200/findBooking", {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ dataBody }),
+                        fetch("http://localhost:4200/findBooking", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({ dataBody }),
+                        })
+                            .then((res) => res.json())
+                            .then((data) => {
+                                // console.log(allSlot)
+                                console.log(data, "success");
+                                if (data.length > 0) {
+                                    setBookingData(data)
+                                }
+                            });
                     })
-                        .then((res) => res.json())
-                        .then((data) => {
-                            // console.log(allSlot)
-                            console.log(data, "success");
 
-                            if (data.length > 0) {
-                                setBookingData(data)
-                            }
-                        });
+                    .catch((error) => {
+                        console.error(error);
+                    });
+            } else {
+                fetch("http://localhost:4200/addBooking", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ data }),
                 })
+                    .then((response) => response.json())
+                    .then((data) => {
+                        // window.alert("Booking added successfully");
+                        //   window.location.reload();
+                        let dataBody = {
+                            date: `${currentDate}`,
+                            restaurantId: item.restaurantId,
+                            tableId: id
+                        }
 
-                .catch((error) => {
-                    console.error(error);
-                });
+                        fetch("http://localhost:4200/findBooking", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({ dataBody }),
+                        })
+                            .then((res) => res.json())
+                            .then((data) => {
+                                // console.log(allSlot)
+                                console.log(data, "success");
+
+                                if (data.length > 0) {
+                                    setBookingData(data)
+                                }
+                            });
+                    })
+
+                    .catch((error) => {
+                        console.error(error);
+                    });
+            }
         }
+
 
     }
 
@@ -447,7 +450,7 @@ const Item = () => {
                     </div>
                     <div className='text-center mt-4'>
                         <h3 style={{ color: '#E5194B' }}>Available Slot</h3>
-                        {loading === false ? <div className="row">{timeSlot.map((time, index) => <div onClick={() => handleAddBooking(time, index)} style={{ cursor: 'pointer' }} className={`card m-3 col-2 p-1 ${time.status === 'Available' ? 'bg-success  text-white' : time.status === 'Selected' ? 'bg-warning text-dark' : 'bg-danger text-white'}`}><p>{time.time}</p> <p>{time.status === 'Available' ? time.status : (
+                        {loading === false ? <div className="row">{timeSlot.map((time, index) => <div onClick={() => handleAddBooking(time, index)} style={{ cursor: 'pointer' }} className={`card m-3 col-2 p-1 ${time.status === 'Available' ? 'bg-success  text-white' : time.status === 'Selected' ? 'bg-warning text-dark' : 'bg-dark text-white'}`}><p>{time.time}</p> <p>{time.status === 'Available' ? time.status : time.status === 'Not Available' ? time.status : (
                             <span>
                                 You have selected this slot for{' '}
                                 {time.status === 'Selected' ? (
