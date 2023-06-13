@@ -12,7 +12,7 @@ import CountdownTimer from './CountdownTimer';
 
 const Item = () => {
     const { category, id } = useParams();
-    // const [selectedSlot, setSelectedSlot] = useState([]);
+    const [localStoreData, setLocalStoreData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [item, setItem] = useState({});
     const [restaurant, setRestaurant] = useState({});
@@ -25,7 +25,7 @@ const Item = () => {
     useEffect(() => {
 
         getItemData(new Date())
-
+        setLocalStoreData(JSON.parse(localStorage.getItem('bookingData')))
         window.scrollTo(0, 0);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [category, id])
@@ -162,12 +162,13 @@ const Item = () => {
         console.log(differenceInSeconds)
         return differenceInSeconds;
     }
+
     function filterAvailableTimeSlots(allTimeSlots, selectedTimeSlots) {
         // const dateToCheck = "2023-06-10T17:34:14.357Z";
         // const isWithinRange = calculateRemainingTime(dateToCheck);
         // console.log(isWithinRange);
         console.log(allTimeSlots, selectedTimeSlots)
-        const notAvailableSelectedSlotsForUser = selectedTimeSlots.filter((slot) => slot.status === "Selected" && slot.userEmail !== sessionStorage.getItem('email'));
+        const notAvailableSelectedSlotsForUser = selectedTimeSlots.filter((slot) => slot.status === "Selected" && slot.userEmail !== sessionStorage.getItem('email') && calculateRemainingTime(slot.encounterTime) < (duration * 60));
         const notAvailableSlotsForUser = selectedTimeSlots.filter((slot) => slot.status === "Not Available");
         const selectedExpireSlotsForUser = selectedTimeSlots.filter((slot) => slot.status === "Selected" && calculateRemainingTime(slot.encounterTime) > (duration * 60) && slot.userEmail === sessionStorage.getItem('email'));
         const selectedSlotsForUser = selectedTimeSlots.filter((slot) => slot.status === "Selected" && calculateRemainingTime(slot.encounterTime) < (duration * 60) && slot.userEmail === sessionStorage.getItem('email'));
@@ -180,8 +181,15 @@ const Item = () => {
         const bookedTime = allTimeSlots.filter(
             (slot) => selectedTime.includes(slot.time)
         );
-        console.log({ selectedSlotsForUser: selectedSlotsForUser, notAvailableSlotsForUser: notAvailableSlotsForUser })
-        return { selectedSlotsForUser: selectedSlotsForUser, notAvailableSlotsForUser: notAvailableSlotsForUser };
+
+        let mergeNotAvailable = [...notAvailableSelectedSlotsForUser, ...notAvailableSlotsForUser].map(data => {
+            return {
+                time: data.time, status: 'Not Available'
+            }
+        })
+
+        console.log({ notAvailableSelectedSlotsForUser: notAvailableSelectedSlotsForUser, notAvailableSlotsForUser: notAvailableSlotsForUser })
+        return { selectedSlotsForUser: selectedSlotsForUser, notAvailableSlotsForUser: mergeNotAvailable };
     }
     const [cart, setCart] = useState([]);
 
@@ -286,6 +294,57 @@ const Item = () => {
     }
     const handleAddBooking = (slot, index) => {
         console.log(slot.status)
+        let dataBody = {
+            date: `${currentDate}`,
+            restaurantId: item.restaurantId,
+            tableId: id
+        }
+
+        fetch("http://localhost:4200/findBooking", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ dataBody }),
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                // console.log(allSlot)
+                // console.log(data, "success");
+
+                if (data.length > 0) {
+                    // setBookingData(data)
+
+                    // if (data.length > 0) {
+
+                    // } 
+                    // setLoading(true)
+                    console.log(data)
+                    console.log(slot)
+                    let userTimeSlots = filterAvailableTimeSlots(timeSlot, data[0]?.bookingInfo);
+                    console.log(userTimeSlots)
+                    let combineSlots = combineArrays(combineArrays(timeSlot, userTimeSlots.selectedSlotsForUser), userTimeSlots.notAvailableSlotsForUser)
+                    console.log(combineSlots)
+                    let notAvailableSlot = userTimeSlots.notAvailableSlotsForUser;
+                    console.log(notAvailableSlot)
+                    let filterSlot = notAvailableSlot.filter(data => data.time === slot.time)
+                    if (filterSlot.length > 0) {
+                        window.alert('This slot is not available right now')
+                        getItemData(currentDate)
+                    } else {
+                        callBooking(slot, index)
+                    }
+                    // callBooking(slot, index)
+                }
+                else {
+                    console.log(data)
+                    callBooking(slot, index)
+                }
+            });
+
+
+
+    }
+
+    const callBooking = (slot, index) => {
         if (slot.status === 'Available') {
             let existingSlot = [...timeSlot]
             if (existingSlot[index].status === 'Available') {
@@ -324,28 +383,32 @@ const Item = () => {
                     body: JSON.stringify({ updateData }),
                 })
                     .then((response) => response.json())
-                    .then((data) => {
+                    .then((res) => {
                         // window.alert("Booking added successfully");
                         //   window.location.reload();
-                        let dataBody = {
-                            date: `${currentDate}`,
-                            restaurantId: item.restaurantId,
-                            tableId: id
+                        if (res) {
+
+                            let dataBody = {
+                                date: `${currentDate}`,
+                                restaurantId: item.restaurantId,
+                                tableId: id
+                            }
+
+                            fetch("http://localhost:4200/findBooking", {
+                                method: "POST",
+                                headers: { "Content-Type": "application/json" },
+                                body: JSON.stringify({ dataBody }),
+                            })
+                                .then((res) => res.json())
+                                .then((data) => {
+                                    // console.log(allSlot)
+                                    console.log(data, "success");
+                                    if (data.length > 0) {
+                                        setBookingData(data)
+                                    }
+                                });
                         }
 
-                        fetch("http://localhost:4200/findBooking", {
-                            method: "POST",
-                            headers: { "Content-Type": "application/json" },
-                            body: JSON.stringify({ dataBody }),
-                        })
-                            .then((res) => res.json())
-                            .then((data) => {
-                                // console.log(allSlot)
-                                console.log(data, "success");
-                                if (data.length > 0) {
-                                    setBookingData(data)
-                                }
-                            });
                     })
 
                     .catch((error) => {
@@ -358,9 +421,21 @@ const Item = () => {
                     body: JSON.stringify({ data }),
                 })
                     .then((response) => response.json())
-                    .then((data) => {
+                    .then((res) => {
                         // window.alert("Booking added successfully");
                         //   window.location.reload();
+                        let localData = {
+                            restaurantId: data.restaurantId,
+                            tableData: [
+                                {
+                                    table: item, bookingData: [{
+                                        date: data.date,
+                                        slot: data.bookingInfo
+                                    }]
+                                }
+                            ]
+                        }
+                        window.localStorage.setItem("bookingData", JSON.stringify(localData));
                         let dataBody = {
                             date: `${currentDate}`,
                             restaurantId: item.restaurantId,
@@ -388,16 +463,14 @@ const Item = () => {
                     });
             }
         }
-
-
     }
-
     const handleAvailableSlot = (index) => {
         // console.log(slot, index)
         let existingSlot = [...timeSlot]
         existingSlot[index].status = 'Available'
         // console.log(existingSlot)
         setTimeSlot(existingSlot)
+
     }
     return (
         <div>
