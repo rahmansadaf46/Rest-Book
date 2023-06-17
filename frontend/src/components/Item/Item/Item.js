@@ -13,6 +13,8 @@ import CountdownTimer from './CountdownTimer';
 const Item = () => {
     const { category, id } = useParams();
     const [localStoreData, setLocalStoreData] = useState([]);
+    const [offDays, setOffDays] = useState([]);
+    const [isOffDay, setIsOffDay] = useState(false);
     const [loading, setLoading] = useState(true);
     const [item, setItem] = useState({});
     const [restaurant, setRestaurant] = useState({});
@@ -25,6 +27,7 @@ const Item = () => {
     useEffect(() => {
 
         getItemData(new Date())
+
         setLocalStoreData(JSON.parse(localStorage.getItem('bookingData')))
         window.scrollTo(0, 0);
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -39,7 +42,19 @@ const Item = () => {
                 fetch(`http://localhost:4200/restaurantProfile/${response.restaurantId}`)
                     .then((res) => res.json())
                     .then((data) => {
-                        // console.log(data)
+                        console.log(data.offDay)
+                        setOffDays(data.offDay)
+                        const options = { weekday: "short" };
+                        const dateData = new Date(date);
+                        const weekday = dateData.toLocaleDateString(undefined, options);
+                        // const weekday = date.toLocaleDateString(undefined, options);
+                        let filterOffDay = data?.offDay?.filter(el => el === weekday)
+                        console.log(weekday, filterOffDay);
+                        if (filterOffDay.length > 0) {
+                            setIsOffDay(true)
+                        } else {
+                            setIsOffDay(false)
+                        }
                         setRestaurant(data);
                         function generateTimeSlots(openingTime, closingTime) {
                             const slots = [];
@@ -79,7 +94,7 @@ const Item = () => {
                                 status: 'Available'
                             }
                         })
-                        console.log()
+                        // console.log()
                         const now = new Date(date);
 
                         // Format the date in YYYY-MM-DD format
@@ -98,13 +113,13 @@ const Item = () => {
                         })
                             .then((res) => res.json())
                             .then((data) => {
-                                console.log(allSlot)
-                                console.log(data, "success");
+                                // console.log(allSlot)
+                                // console.log(data, "success");
                                 if (data.length > 0) {
                                     let userTimeSlots = filterAvailableTimeSlots(allSlot, data[0]?.bookingInfo);
-                                    console.log(userTimeSlots)
+                                    // console.log(userTimeSlots)
                                     let combineSlots = combineArrays(combineArrays(allSlot, userTimeSlots.selectedSlotsForUser), userTimeSlots.notAvailableSlotsForUser)
-                                    console.log(combineSlots)
+                                    // console.log(combineSlots)
                                     setTimeSlot(combineSlots)
                                     setLoading(false)
 
@@ -144,21 +159,21 @@ const Item = () => {
     function calculateRemainingTime(dateString) {
         const selectedDate = new Date(dateString);
         const currentDate = new Date();
-        console.log(selectedDate.toLocaleTimeString(), currentDate.toLocaleTimeString())
+        // console.log(selectedDate.toLocaleTimeString(), currentDate.toLocaleTimeString())
         let time1 = selectedDate.toLocaleTimeString();
         let time2 = currentDate.toLocaleTimeString();
         const convertToStandardFormat = (time) => {
             const [hours, minutes, seconds] = time.split(":").map((num) => parseInt(num, 10));
-          
+
             const formattedHours = hours.toString().padStart(2, "0");
             const formattedMinutes = minutes.toString().padStart(2, "0");
             const formattedSeconds = seconds.toString().padStart(2, "0");
-          
+
             return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
-          };
-          
-          time1 = convertToStandardFormat(time1);
-          time2 = convertToStandardFormat(time2);
+        };
+
+        time1 = convertToStandardFormat(time1);
+        time2 = convertToStandardFormat(time2);
         const timeFormat = /^([01]\d|2[0-3]):([0-5]\d):([0-5]\d)$/;
         if (!timeFormat.test(time1) || !timeFormat.test(time2)) {
             console.error("Invalid time format. Please use the HH:MM:SS format.");
@@ -172,7 +187,7 @@ const Item = () => {
             const date2 = new Date(now.getFullYear(), now.getMonth(), now.getDate(), h2, m2, s2);
 
             const differenceInMilliseconds = Math.abs(date1 - date2);
-            console.log("Difference in milliseconds:", differenceInMilliseconds);
+            // console.log("Difference in milliseconds:", differenceInMilliseconds);
             const differenceInSeconds = differenceInMilliseconds / 1000;
             return differenceInSeconds;
         }
@@ -196,14 +211,14 @@ const Item = () => {
         // const dateToCheck = "2023-06-10T17:34:14.357Z";
         // const isWithinRange = calculateRemainingTime(dateToCheck);
         // console.log(isWithinRange);
-        console.log(allTimeSlots, selectedTimeSlots)
+        // console.log(allTimeSlots, selectedTimeSlots)
         const notAvailableSelectedSlotsForUser = selectedTimeSlots.filter((slot) => slot.status === "Selected" && slot.userEmail !== sessionStorage.getItem('email') && calculateRemainingTime(slot.encounterTime) < (duration * 60));
         const notAvailableSlotsForUser = selectedTimeSlots.filter((slot) => slot.status === "Not Available");
         const selectedExpireSlotsForUser = selectedTimeSlots.filter((slot) => slot.status === "Selected" && calculateRemainingTime(slot.encounterTime) > (duration * 60) && slot.userEmail === sessionStorage.getItem('email'));
         const selectedSlotsForUser = selectedTimeSlots.filter((slot) => slot.status === "Selected" && calculateRemainingTime(slot.encounterTime) < (duration * 60) && slot.userEmail === sessionStorage.getItem('email'));
         const selectedTime = selectedTimeSlots.map((slot) => slot.time);
 
-        console.log(selectedSlotsForUser, selectedTimeSlots, notAvailableSelectedSlotsForUser, notAvailableSlotsForUser, selectedExpireSlotsForUser)
+        // console.log(selectedSlotsForUser, selectedTimeSlots, notAvailableSelectedSlotsForUser, notAvailableSlotsForUser, selectedExpireSlotsForUser)
         const availableTimeSlots = allTimeSlots.filter(
             (slot, index) => !selectedTime.includes(slot.time)[index]
         );
@@ -217,12 +232,12 @@ const Item = () => {
             }
         })
 
-        console.log({ notAvailableSelectedSlotsForUser: notAvailableSelectedSlotsForUser, notAvailableSlotsForUser: notAvailableSlotsForUser })
+        // console.log({ notAvailableSelectedSlotsForUser: notAvailableSelectedSlotsForUser, notAvailableSlotsForUser: notAvailableSlotsForUser })
         return { selectedSlotsForUser: selectedSlotsForUser, notAvailableSlotsForUser: mergeNotAvailable };
     }
     const [cart, setCart] = useState([]);
 
-    console.log(currentDate)
+    // console.log(currentDate)
     const handleAddProduct = (product) => {
         const toBeAddedKey = product._id;
         const sameProduct = cart.find(pd => pd._id === toBeAddedKey);
@@ -290,9 +305,22 @@ const Item = () => {
     }
 
     const dateChange = (e) => {
-        // console.log(e);
-        setCurrentDate(e.target.value);
-        getItemData(e.target.value)
+
+        const options = { weekday: "short" };
+        const date = new Date(e.target.value);
+        console.log(date);
+        const weekday = date.toLocaleDateString(undefined, options);
+        // const weekday = date.toLocaleDateString(undefined, options);
+        let filterOffDay = offDays.filter(el => el === weekday)
+        console.log(weekday, filterOffDay);
+        if (filterOffDay.length > 0) {
+            setIsOffDay(true)
+        } else {
+            setIsOffDay(false)
+            setCurrentDate(e.target.value);
+            getItemData(e.target.value)
+        }
+
     }
 
     // Example usage
@@ -322,7 +350,7 @@ const Item = () => {
 
     }
     const handleAddBooking = (slot, index) => {
-        console.log(slot.status)
+        // console.log(slot.status)
         let dataBody = {
             date: `${currentDate}`,
             restaurantId: item.restaurantId,
@@ -346,14 +374,14 @@ const Item = () => {
 
                     // } 
                     // setLoading(true)
-                    console.log(data)
-                    console.log(slot)
+                    // console.log(data)
+                    // console.log(slot)
                     let userTimeSlots = filterAvailableTimeSlots(timeSlot, data[0]?.bookingInfo);
-                    console.log(userTimeSlots)
+                    // console.log(userTimeSlots)
                     let combineSlots = combineArrays(combineArrays(timeSlot, userTimeSlots.selectedSlotsForUser), userTimeSlots.notAvailableSlotsForUser)
-                    console.log(combineSlots)
+                    // console.log(combineSlots)
                     let notAvailableSlot = userTimeSlots.notAvailableSlotsForUser;
-                    console.log(notAvailableSlot)
+                    // console.log(notAvailableSlot)
                     let filterSlot = notAvailableSlot.filter(data => data.time === slot.time)
                     if (filterSlot.length > 0) {
                         window.alert('This slot is not available right now')
@@ -364,7 +392,7 @@ const Item = () => {
                     // callBooking(slot, index)
                 }
                 else {
-                    console.log(data)
+                    // console.log(data)
                     callBooking(slot, index)
                 }
             });
@@ -395,7 +423,7 @@ const Item = () => {
             // console.log(data);
             if (bookingData.length > 0) {
 
-                console.log(filterBookingData([...bookingData[0].bookingInfo, { time: slot.time, status: slot.status, userEmail: sessionStorage.getItem('email'), encounterTime: new Date(), encounterDate: currentDate }]),)
+                // console.log(filterBookingData([...bookingData[0].bookingInfo, { time: slot.time, status: slot.status, userEmail: sessionStorage.getItem('email'), encounterTime: new Date(), encounterDate: currentDate }]),)
 
                 // console.log(filteredData);
                 let updateData = {
@@ -405,7 +433,7 @@ const Item = () => {
 
                     tableId: id
                 }
-                console.log(updateData)
+                // console.log(updateData)
                 fetch(`http://localhost:4200/updateBooking/${bookingData[0]._id}`, {
                     method: "PATCH",
                     headers: { "Content-Type": "application/json" },
@@ -431,7 +459,7 @@ const Item = () => {
                                 .then((res) => res.json())
                                 .then((data) => {
                                     // console.log(allSlot)
-                                    console.log(data, "success");
+                                    // console.log(data, "success");
                                     if (data.length > 0) {
                                         setBookingData(data)
                                     }
@@ -479,7 +507,7 @@ const Item = () => {
                             .then((res) => res.json())
                             .then((data) => {
                                 // console.log(allSlot)
-                                console.log(data, "success");
+                                // console.log(data, "success");
 
                                 if (data.length > 0) {
                                     setBookingData(data)
@@ -551,8 +579,8 @@ const Item = () => {
                         <div className='d-flex mx-2'><div style={{ borderRadius: '50%' }} className="p-2 mx-1 mb-3 mt-1 bg-warning"></div>&nbsp;<label>Selected</label></div>
                     </div>
                     <div className='text-center mt-4'>
-                        <h3 style={{ color: '#E5194B' }}>Available Slot</h3>
-                        {loading === false ? <div className="row">{timeSlot.map((time, index) => <div onClick={() => handleAddBooking(time, index)} style={{ cursor: 'pointer' }} className={`card m-3 col-2 p-1 ${time.status === 'Available' ? 'bg-success  text-white' : time.status === 'Selected' ? 'bg-warning text-dark' : 'bg-dark text-white'}`}><p>{time.time}</p> <p>{time.status === 'Available' ? time.status : time.status === 'Not Available' ? time.status : (
+
+                        {loading === false ? <>{isOffDay ? <h2 className='my-5 py-5 text-danger'>Restaurant is closed this day</h2> : <> <h3 style={{ color: '#E5194B' }}>Available Slot</h3><div className="row">{timeSlot.map((time, index) => <div onClick={() => handleAddBooking(time, index)} style={{ cursor: 'pointer' }} className={`card m-3 col-2 p-1 ${time.status === 'Available' ? 'bg-success  text-white' : time.status === 'Selected' ? 'bg-warning text-dark' : 'bg-dark text-white'}`}><p>{time.time}</p> <p>{time.status === 'Available' ? time.status : time.status === 'Not Available' ? time.status : (
                             <span>
                                 You have selected this slot for{' '}
                                 {time.status === 'Selected' ? (
@@ -562,7 +590,7 @@ const Item = () => {
                                 )}{' '}
                                 minutes.
                             </span>
-                        )}</p></div>)}</div> : <div className="my-5 py-5"><img src="https://miro.medium.com/v2/resize:fit:1400/1*CsJ05WEGfunYMLGfsT2sXA.gif" alt="" /></div>}
+                        )}</p></div>)}</div></>}</> : <div className="my-5 py-5"><img src="https://miro.medium.com/v2/resize:fit:1400/1*CsJ05WEGfunYMLGfsT2sXA.gif" alt="" /></div>}
                     </div>
                 </div>
             </div>
