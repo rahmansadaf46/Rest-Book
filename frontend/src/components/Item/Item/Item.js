@@ -21,7 +21,7 @@ const Item = () => {
     const [timeSlot, setTimeSlot] = useState([]);
     const [currentDate, setCurrentDate] = useState('');
     const [bookingData, setBookingData] = useState([]);
-    const duration = 2;
+    const duration = 10;
     useEffect(() => {
 
         getItemData(new Date())
@@ -147,20 +147,49 @@ const Item = () => {
         console.log(selectedDate.toLocaleTimeString(), currentDate.toLocaleTimeString())
         let time1 = selectedDate.toLocaleTimeString();
         let time2 = currentDate.toLocaleTimeString();
+        const convertToStandardFormat = (time) => {
+            const [hours, minutes, seconds] = time.split(":").map((num) => parseInt(num, 10));
+          
+            const formattedHours = hours.toString().padStart(2, "0");
+            const formattedMinutes = minutes.toString().padStart(2, "0");
+            const formattedSeconds = seconds.toString().padStart(2, "0");
+          
+            return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+          };
+          
+          time1 = convertToStandardFormat(time1);
+          time2 = convertToStandardFormat(time2);
+        const timeFormat = /^([01]\d|2[0-3]):([0-5]\d):([0-5]\d)$/;
+        if (!timeFormat.test(time1) || !timeFormat.test(time2)) {
+            console.error("Invalid time format. Please use the HH:MM:SS format.");
+        } else {
+            const [h1, m1, s1] = time1.split(':').map(Number);
+            const [h2, m2, s2] = time2.split(':').map(Number);
 
-        const [h1, m1, s1] = time1.split(':').map(Number);
-        const [h2, m2, s2] = time2.split(':').map(Number);
+            const now = new Date(); // Get the current date and time
 
-        const date1 = new Date();
-        date1.setHours(h1, m1, s1, 0);
+            const date1 = new Date(now.getFullYear(), now.getMonth(), now.getDate(), h1, m1, s1);
+            const date2 = new Date(now.getFullYear(), now.getMonth(), now.getDate(), h2, m2, s2);
 
-        const date2 = new Date();
-        date2.setHours(h2, m2, s2, 0);
+            const differenceInMilliseconds = Math.abs(date1 - date2);
+            console.log("Difference in milliseconds:", differenceInMilliseconds);
+            const differenceInSeconds = differenceInMilliseconds / 1000;
+            return differenceInSeconds;
+        }
 
-        const differenceInMilliseconds = Math.abs(date1 - date2);
-        const differenceInSeconds = differenceInMilliseconds / 1000;
-        console.log(differenceInSeconds)
-        return differenceInSeconds;
+        // const [h1, m1, s1] = time1.split(':').map(Number);
+        // const [h2, m2, s2] = time2.split(':').map(Number);
+
+        // const now = new Date(); // Get the current date and time
+
+        // const date1 = new Date(now.getFullYear(), now.getMonth(), now.getDate(), h1, m1, s1);
+        // const date2 = new Date(now.getFullYear(), now.getMonth(), now.getDate(), h2, m2, s2);
+
+        // const differenceInMilliseconds = Math.abs(date1 - date2);
+        // console.log(date1, date2)
+
+        // console.log(differenceInSeconds)
+
     }
 
     function filterAvailableTimeSlots(allTimeSlots, selectedTimeSlots) {
