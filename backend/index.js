@@ -31,6 +31,7 @@ client.connect(err => {
     const tableCollection = client.db("restBook").collection("allTable");
     const layoutCollection = client.db("restBook").collection("allLayout");
     const bookingCollection = client.db("restBook").collection("allBooking");
+    const reviewCollection = client.db("restBook").collection("allReview");
     //restaurant 
     app.post('/addRestaurant', (req, res) => {
         const file = req.files.file;
@@ -464,6 +465,28 @@ client.connect(err => {
             .toArray((err, documents) => {
 
                 let filterData = documents.filter(data => data.date === date && data.restaurantId === restaurantId && data.tableId === tableId)
+                res.send(filterData);
+            })
+    })
+
+    app.post('/addReview', (req, res) => {
+        const name = req.body.data.name;
+        const review = req.body.data.review;
+        const restaurantId = req.body.data.restaurantId;
+
+        // console.log(req.body)
+        reviewCollection.insertOne({ name, review, restaurantId })
+            .then(result => {
+                res.send(result.insertedCount > 0);
+            })
+    })
+    app.post('/findReview', (req, res) => {
+        const restaurantId = req.body.dataBody.restaurantId;
+
+        reviewCollection.find({})
+            .toArray((err, documents) => {
+
+                let filterData = documents.filter(data => data.restaurantId === restaurantId)
                 res.send(filterData);
             })
     })

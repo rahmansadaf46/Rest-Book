@@ -18,8 +18,12 @@ const Restaurant = () => {
   const [restaurant, setRestaurant] = useState({});
   const [services, setServices] = useState([]);
   // const [count, setCount] = useState(1);
+  const [review, setReview] = useState('');
+  const [reviewData, setReviewData] = useState([]);
   const itemData = localStorage.getItem("item");
   useEffect(() => {
+    getReview()
+
     // setAllitem(JSON.parse(itemData))
     fetch("http://localhost:4200/restaurantProfile/" + id)
       .then((res) => res.json())
@@ -39,6 +43,31 @@ const Restaurant = () => {
     // setItem(item);
     window.scrollTo(0, 0);
   }, [itemData, id]);
+
+
+  const getReview = () => {
+
+    let dataBody = {
+      restaurantId: id
+    }
+
+    fetch("http://localhost:4200/findReview", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ dataBody }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data)
+        // console.log(data, "success");
+        if (data.length > 0) {
+          setReviewData(data)
+        }
+        else {
+          setReviewData([])
+        }
+      });
+  }
   const [cart, setCart] = useState([]);
   let lat = "";
   let long = "";
@@ -100,6 +129,25 @@ const Restaurant = () => {
 
   // };
   console.log(restaurant.facebook);
+  const handleReview = () => {
+
+    let data = {
+      restaurantId: id,
+      review: review,
+      name: sessionStorage.getItem('name')
+    }
+    fetch("http://localhost:4200/addReview", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ data }),
+    })
+      .then((response) => response.json())
+      .then((res) => {
+        setReview('')
+        getReview()
+        window.alert('Review added successfully')
+      })
+  }
   return (
     <div>
       <Header cart={cart.length}></Header>
@@ -222,11 +270,12 @@ const Restaurant = () => {
           <hr />
           <div className="text-center">
             <h2 className="text-danger">Add a review</h2>
-            <textarea cols="50" rows="2"></textarea>
+            <textarea value={review} onChange={(e) => setReview(e.target.value)} cols="50" rows="2"></textarea>
             <br />
-            <button className="btn-danger">Add</button>
+            <button onClick={() => handleReview()} className="btn-danger">Add</button>
           </div>
-         < OpinionList/>
+          {reviewData.length > 0 &&  < OpinionList reviewData={reviewData} />}
+         
         </div>
       </div>
       <MessengerCustomerChat pageId={restaurant.facebook} appId="370328294888437" />

@@ -4,7 +4,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import 'react-multi-carousel/lib/styles.css';
 import { Container } from 'react-bootstrap';
 import image from './profileImage.png'
-const OpinionList = () => {
+const OpinionList = ({reviewData}) => {
+    console.log(reviewData)
     const [opinions, setOpinions] = useState([{data:{name:'Sadaf'}}])
 
     useEffect(() => {
@@ -38,15 +39,15 @@ const OpinionList = () => {
         <section className='slider-container mb-5'>
             <Container>
                 <div style={{ marginBottom: '10px' }}>
-                    <h4 style={{ color: 'white', fontSize: '34px', fontWeight: '600' }} className='text-center'>
-                        Publics <span className="text-danger">Feedback</span>
+                    <h4 style={{ color: 'white', fontSize: '34px', fontWeight: '600' }} className='text-center text-dark'>
+                        Publics <span className="text-danger">Review</span>
                     </h4>
                 </div>
 
                 <Carousel responsive={responsive} infinite={true} autoPlay={true} autoPlaySpeed={5000}
                     keyBoardControl={true} dotListClass="custom-dot-list-style" showDots={true}>
                     {
-                        opinions.map(opinion => {
+                        reviewData.map(opinion => {
                             return (
                                 <div>
                                     <div className="d-flex justify-content-center">
@@ -54,8 +55,8 @@ const OpinionList = () => {
                                     </div>
                                     <div className="mx-3 text-center" style={{ border: '1px solid black', background: 'white', height: '200px', borderRadius: '15px' }}>
 
-                                        <p style={{ marginTop: '30px' }} className=" text-danger"><b>{opinion.data.name}</b></p>
-                                        <p className="mt-4  text-info"><b>{opinion.data.opinion}</b></p>
+                                        <p style={{ marginTop: '30px' }} className=" text-danger"><b>{opinion.name}</b></p>
+                                        <p className="mt-4  text-info"><b>{opinion.review}</b></p>
 
                                         {/* <img className='carousel-image' src='https://www.google.com/url?sa=i&url=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fcarousel&psig=AOvVaw1r280-b5ItRv-IZYZI_oEC&ust=1637175820011000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCPiUlK7JnfQCFQAAAAAdAAAAABAD' alt="" /> */}
                                     </div>
