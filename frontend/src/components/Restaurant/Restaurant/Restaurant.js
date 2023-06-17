@@ -11,6 +11,7 @@ import MessengerCustomerChat from "react-messenger-customer-chat";
 import { getDatabaseCart } from "../../../utilities/databaseManager";
 import MapComponent from "../../MapComponent/MapComponent.js";
 import Menu from "../Menu/Menu";
+import OpinionList from "./OpinionList";
 
 const Restaurant = () => {
   const { id } = useParams();
@@ -135,7 +136,7 @@ const Restaurant = () => {
             </div>
             <div className="col-md-6 text-left">
               <img
-                style={{ width: "450px", borderRadius: "50%", border: "5px solid #E5194B"}}
+                style={{ width: "450px", borderRadius: "50%", border: "5px solid #E5194B" }}
                 src={`http://localhost:4200/restaurant/${restaurant.image}`}
                 alt=""
               />
@@ -201,9 +202,9 @@ const Restaurant = () => {
           <hr />
           <h2 className="text-center text-danger mt-5">Restaurant Location</h2>
           <div className="d-flex justify-content-center ">
-            {console.log(
+            {/* {console.log(
               `https://maps.google.com/maps?q=${lat},${long}=es&z=14&amp;output=embed`
-            )}
+            )} */}
             {/* <iframe
               width="300"
               height="170"
@@ -218,6 +219,14 @@ const Restaurant = () => {
               toLong={long}
             />
           </div>
+          <hr />
+          <div className="text-center">
+            <h2 className="text-danger">Add a review</h2>
+            <textarea cols="50" rows="2"></textarea>
+            <br />
+            <button className="btn-danger">Add</button>
+          </div>
+         < OpinionList/>
         </div>
       </div>
       <MessengerCustomerChat pageId={restaurant.facebook} appId="370328294888437" />

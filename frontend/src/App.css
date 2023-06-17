@@ -105,3 +105,15 @@ body{
     font-size: 25px!important;
   }
 }
+.slider-container{
+  background:#ff8282;
+  padding-top:50px;
+  padding-bottom:100px;
+  margin-top:50px;
+  margin-bottom:-95px;
+  border-radius: 30px;
+}
+.carousel-image{
+  width:350px;
+  height:220px;
+}

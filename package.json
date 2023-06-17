@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/rahmansadaf46/Rest-Book#readme",
   "dependencies": {
-    "concurrently": "^8.0.1"
+    "concurrently": "^8.0.1",
+    "react-multi-carousel": "^2.8.4"
   }
 }

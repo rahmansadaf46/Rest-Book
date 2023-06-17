@@ -29,7 +29,8 @@ const MapComponent = ({
   return (
     <div>
       <iframe
-        src={`https://www.google.com/maps/embed?pb=!1m26!1m12!1m3!1d116924.14857416009!2d90.22332291085685!3d23.680261767915187!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m11!3e0!4m4!2s${toLat}%2C${toLong}!3m2!1d${toLat}!2d90.15462199999999!4m4!2s${myLocation.latitude}%2C${myLocation.longitude}!3m2!1d23.732194999999997!2d${myLocation.longitude}!5e0!3m2!1sen!2sbd!4v1663322684801!5m2!1sen!2sbd`}
+        // src={`https://www.google.com/maps/embed?pb=!1m26!1m12!1m3!1d116924.14857416009!2d90.22332291085685!3d23.680261767915187!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m11!3e0!4m4!2s${toLat}%2C${toLong}!3m2!1d${toLat}!2d90.15462199999999!4m4!2s${myLocation.latitude}%2C${myLocation.longitude}!3m2!1d23.732194999999997!2d${myLocation.longitude}!5e0!3m2!1sen!2sbd!4v1663322684801!5m2!1sen!2sbd`}
+        src={`https://www.google.com/maps/embed?pb=!1m26!1m12!1m3!1d116924.14857416009!2d90.22332291085685!3d23.680261767915187!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m11!3e0!4m4!2s${myLocation.latitude}%2C${myLocation.longitude}!3m2!1d${myLocation.latitude}!2d90.15462199999999!4m4!2s${toLat}%2C${toLong}!3m2!1d23.732194999999997!2d${toLong}!5e0!3m2!1sen!2sbd!4v1663322684801!5m2!1sen!2sbd`}
         width="600"
         height="450"
         // style="border:0;"
