@@ -5,7 +5,7 @@ import Footer from '../../Shared/Footer/Footer';
 import Header from '../../Shared/Header/Header';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import './Item.css'
-import { addToDatabaseCart, getDatabaseCart } from '../../../utilities/databaseManager';
+import { addToDatabaseCart, getDatabaseCart, updateToDatabaseCart } from '../../../utilities/databaseManager';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import CountdownTimer from './CountdownTimer';
 
@@ -19,7 +19,7 @@ const Item = () => {
     const [item, setItem] = useState({});
     const [restaurant, setRestaurant] = useState({});
     const [count, setCount] = useState(1);
-    const itemData = localStorage.getItem('item')
+    // const itemData = localStorage.getItem('item')
     const [timeSlot, setTimeSlot] = useState([]);
     const [currentDate, setCurrentDate] = useState('');
     const [bookingData, setBookingData] = useState([]);
@@ -32,6 +32,17 @@ const Item = () => {
         window.scrollTo(0, 0);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [category, id])
+    useEffect(() => {
+        const savedCart = getDatabaseCart();
+        console.log(savedCart);
+        // const productKeys = Object.keys(savedCart);
+        // const previousCart = productKeys.map(existingKey => {
+        //     const product = JSON.parse(localStorage.getItem('item')).find(pd => pd._id === existingKey);
+        //     product.quantity = savedCart[existingKey];
+        //     return product;
+        // })
+        setCart(savedCart);
+    }, [])
     const getItemData = (date) => {
         setLoading(true)
         fetch(`http://localhost:4200/${category}/${id}`)
@@ -214,17 +225,17 @@ const Item = () => {
         // console.log(allTimeSlots, selectedTimeSlots)
         const notAvailableSelectedSlotsForUser = selectedTimeSlots.filter((slot) => slot.status === "Selected" && slot.userEmail !== sessionStorage.getItem('email') && calculateRemainingTime(slot.encounterTime) < (duration * 60));
         const notAvailableSlotsForUser = selectedTimeSlots.filter((slot) => slot.status === "Not Available");
-        const selectedExpireSlotsForUser = selectedTimeSlots.filter((slot) => slot.status === "Selected" && calculateRemainingTime(slot.encounterTime) > (duration * 60) && slot.userEmail === sessionStorage.getItem('email'));
+        // const selectedExpireSlotsForUser = selectedTimeSlots.filter((slot) => slot.status === "Selected" && calculateRemainingTime(slot.encounterTime) > (duration * 60) && slot.userEmail === sessionStorage.getItem('email'));
         const selectedSlotsForUser = selectedTimeSlots.filter((slot) => slot.status === "Selected" && calculateRemainingTime(slot.encounterTime) < (duration * 60) && slot.userEmail === sessionStorage.getItem('email'));
-        const selectedTime = selectedTimeSlots.map((slot) => slot.time);
+        // const selectedTime = selectedTimeSlots.map((slot) => slot.time);
 
         // console.log(selectedSlotsForUser, selectedTimeSlots, notAvailableSelectedSlotsForUser, notAvailableSlotsForUser, selectedExpireSlotsForUser)
-        const availableTimeSlots = allTimeSlots.filter(
-            (slot, index) => !selectedTime.includes(slot.time)[index]
-        );
-        const bookedTime = allTimeSlots.filter(
-            (slot) => selectedTime.includes(slot.time)
-        );
+        // const availableTimeSlots = allTimeSlots.filter(
+        //     (slot, index) => !selectedTime.includes(slot.time)[index]
+        // );
+        // const bookedTime = allTimeSlots.filter(
+        //     (slot) => selectedTime.includes(slot.time)
+        // );
 
         let mergeNotAvailable = [...notAvailableSelectedSlotsForUser, ...notAvailableSlotsForUser].map(data => {
             return {
@@ -239,24 +250,35 @@ const Item = () => {
 
     // console.log(currentDate)
     const handleAddProduct = (product) => {
+        let tableData = []
         const toBeAddedKey = product._id;
-        const sameProduct = cart.find(pd => pd._id === toBeAddedKey);
+        const sameProduct = cart?.foodData?.find(pd => pd._id === toBeAddedKey);
+        console.log(sameProduct, cart)
         let newCount;
-        let newCart;
+        // let newCart;
         if (sameProduct) {
-            newCount = sameProduct.quantity + count;
+            newCount = sameProduct.count + count;
             sameProduct.quantity = newCount;
             // debugger;
-            const others = cart.filter(pd => pd._id !== toBeAddedKey);
-            newCart = [...others, sameProduct]
-            addToDatabaseCart(sameProduct._id, newCount);
+            // const others =  cart?.foodData?.find(pd => pd._id === toBeAddedKey);
+            // console.log(others)
+            // newCart = [others, sameProduct]
+            updateToDatabaseCart(sameProduct._id, newCount, item, restaurant, tableData);
         }
         else {
             product.quantity = count;
-            newCart = [...cart, product];
-            addToDatabaseCart(product._id, product.quantity);
+            // newCart = [cart, product];
+            addToDatabaseCart(product._id, product.quantity, item, restaurant, tableData);
         }
-        setCart(newCart);
+        const savedCart = getDatabaseCart();
+        console.log(savedCart);
+        // const productKeys = Object.keys(savedCart);
+        // const previousCart = productKeys.map(existingKey => {
+        //     const product = JSON.parse(localStorage.getItem('item')).find(pd => pd._id === existingKey);
+        //     product.quantity = savedCart[existingKey];
+        //     return product;
+        // })
+        setCart(savedCart);
         // window.location.reload();
 
     }
@@ -400,7 +422,32 @@ const Item = () => {
 
 
     }
-
+    const handleFoodLocalStorage = (data) => {
+        let localData = {
+            restaurantData: restaurant,
+            foodData:[],
+            tableData: [
+                {
+                    table: item,  date: data.date,
+                    slot: data.bookingInfo
+                }
+            ]
+        }
+        window.localStorage.setItem("bookingData", JSON.stringify(localData));
+    }
+    const handleTableLocalStorage = (data) => {
+        let localData = {
+            restaurantData: restaurant,
+            foodData:[],
+            tableData: [
+                {
+                    table: item,  date: data.date,
+                    slot: data.bookingInfo
+                }
+            ]
+        }
+        window.localStorage.setItem("bookingData", JSON.stringify(localData));
+    }
     const callBooking = (slot, index) => {
         if (slot.status === 'Available') {
             let existingSlot = [...timeSlot]
@@ -441,6 +488,7 @@ const Item = () => {
                 })
                     .then((response) => response.json())
                     .then((res) => {
+                        handleTableLocalStorage(updateData)
                         // window.alert("Booking added successfully");
                         //   window.location.reload();
                         if (res) {
@@ -479,20 +527,7 @@ const Item = () => {
                 })
                     .then((response) => response.json())
                     .then((res) => {
-                        // window.alert("Booking added successfully");
-                        //   window.location.reload();
-                        let localData = {
-                            restaurantId: data.restaurantId,
-                            tableData: [
-                                {
-                                    table: item, bookingData: [{
-                                        date: data.date,
-                                        slot: data.bookingInfo
-                                    }]
-                                }
-                            ]
-                        }
-                        window.localStorage.setItem("bookingData", JSON.stringify(localData));
+                        handleTableLocalStorage(data)
                         let dataBody = {
                             date: `${currentDate}`,
                             restaurantId: item.restaurantId,

@@ -18,19 +18,58 @@ const getDataKey = () => {
 // push to local storage: a temporary place for database
 const getDatabaseCart = () => {
     const dataKey = getDataKey();
-    const data = localStorage.getItem(dataKey) || "{}";
+    const data = localStorage.getItem('bookData') || "{}";
     return JSON.parse(data);
 }
 
-const addToDatabaseCart = (key, count) => {
+const addToDatabaseCart = (key, count, item, restaurant, tableData) => {
     const currentCart = getDatabaseCart();
-    currentCart[key] = count;
-    localStorage.setItem(getDataKey(), JSON.stringify(currentCart));
+    if (currentCart?.foodData?.length > 0) {
+        item.count = count;
+        currentCart.foodData.push(item)
+        let restaurantData = restaurant;
+        localStorage.setItem('bookData', JSON.stringify({ foodData: currentCart.foodData, restaurantData: restaurantData, tableData: tableData }));
+    } else {
+        let itemData = [];
+        item.count = count;
+        itemData.push(item)
+        let restaurantData = restaurant;
+        localStorage.setItem('bookData', JSON.stringify({ foodData: itemData, restaurantData: restaurantData, tableData: tableData }));
+    }
+
+}
+const updateToDatabaseCart = (key, count, item, restaurant) => {
+    const currentCart = getDatabaseCart();
+    console.log(count, item, restaurant)
+    console.log(currentCart)
+    if (currentCart.restaurantData._id !== restaurant._id) {
+        window.alert('Are you sure')
+    } else {
+        // Find the item in the foodData array based on the _id
+        let itemToUpdate = currentCart.foodData.find(item => item._id === key);
+
+        if (itemToUpdate) {
+            // Update the count property with the newCount value
+            itemToUpdate.count = count;
+        } else {
+            console.log("Item not found in foodData array.");
+        }
+
+        console.log(itemToUpdate, count, currentCart);
+    }
+    // currentCart[key] = count;
+    // let itemData = []; 
+    // let itemDataProductCount = [];
+    // itemDataProductCount.push(currentCart)
+    // item.count = count;
+    // itemData.push(item)
+    // let restaurantData = restaurant;
+    localStorage.setItem('bookData', JSON.stringify(currentCart));
 }
 const minusToDatabaseCart = (key, count) => {
     const currentCart = getDatabaseCart();
     currentCart[key] = count--;
-    localStorage.setItem(getDataKey(), JSON.stringify(currentCart));
+    localStorage.setItem(getDataKey(), JSON.stringify([currentCart]));
 }
 const removeFromDatabaseCart = key => {
     const currentCart = getDatabaseCart();
@@ -43,7 +82,7 @@ const processOrder = (cart) => {
 }
 
 
-export { addToDatabaseCart, getDatabaseCart, removeFromDatabaseCart, processOrder, minusToDatabaseCart };
+export { updateToDatabaseCart, addToDatabaseCart, getDatabaseCart, removeFromDatabaseCart, processOrder, minusToDatabaseCart };
 
 
 // polyfill to support older browser
