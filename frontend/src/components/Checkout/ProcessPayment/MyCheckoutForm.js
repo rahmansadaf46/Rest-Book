@@ -1,7 +1,7 @@
 import React from 'react';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 
-const MyCheckoutForm = ({ handlePayment }) => {
+const MyCheckoutForm = ({ handlePayment, restaurantData, amount }) => {
     const stripe = useStripe();
     const elements = useElements();
     // const [paymentError, setPaymentError] = useState(null);
@@ -41,15 +41,18 @@ const MyCheckoutForm = ({ handlePayment }) => {
             // console.log('[PaymentMethod]', paymentMethod);
         }
     };
-
+console.log(restaurantData?.paymentAmount)
     return (
         <div>
             <form onSubmit={handleSubmit}>
+              
                 <CardElement />
                 <br />
-                <button className="btn btn-danger" type="submit" disabled={!stripe}>
+                
+                {parseInt(amount) >= parseInt(restaurantData?.paymentAmount || 0) && <button className="btn btn-danger" type="submit" disabled={!stripe}>
                     Pay
-      </button>
+      </button>}
+               
             </form>
             <br />
             {/* {

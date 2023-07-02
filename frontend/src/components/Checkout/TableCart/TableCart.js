@@ -20,7 +20,6 @@ const TableCart = (props) => {
 
     //     }
     // };
-    console.log(item)
     return (
         <div key={item.id} style={{ background: '#E8E8E8', border: '1px solid white', borderRadius: '30px', marginTop: '10px' }}>
             <div className="row p-2">
@@ -29,7 +28,7 @@ const TableCart = (props) => {
                 </div>
                 <div className="col-md-6">
                     <p style={{ fontSize: '13px', position:'relative', right:'15px' }}><b>{item.title}</b></p>
-                    <div className='row'>
+                    <div style={{marginTop:'-15px'}} className='row'>
                     {item.slot.map(slot => <div className='mr-1' style={{fontSize:'10px',background:'white'}}>{slot.time}</div>)} 
                     </div>
              

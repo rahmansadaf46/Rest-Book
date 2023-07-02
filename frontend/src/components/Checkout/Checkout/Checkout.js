@@ -16,7 +16,8 @@ import emailjs from '@emailjs/browser';
 import { Link } from "react-router-dom/cjs/react-router-dom";
 import TableCart from "../TableCart/TableCart";
 const Checkout = () => {
-  const [paymentProcess, setPaymentProcess] = useState('Cash On Delivery')
+  const [amount, setAmount] = useState('')
+  const [paymentProcess, setPaymentProcess] = useState('Payment on Location')
   const [cart, setCart] = useState([]);
   const [count] = useState(1);
   const itemData = localStorage.getItem("item");
@@ -75,14 +76,21 @@ const Checkout = () => {
     //   product.quantity = savedCart[existingKey];
     //   return product;
     // });
-
+    setPaymentProcess()
     setCart(savedCart);
+    if (cart?.restaurantData?.afterCheckIn) {
+      setPaymentProcess('Payment on Location')
+    } else {
+      setPaymentProcess('Online Payment')
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   let subTotal = 0;
   for (let i = 0; i < cart?.foodData?.length; i++) {
     const product = cart.foodData[i];
-    console.log(product,cart)
+    console.log(product, cart)
     subTotal = subTotal + product.price * product.quantity;
   }
   const formatNumber = (num) => {
@@ -109,7 +117,7 @@ const Checkout = () => {
     if (e.target.name === "contactNo") {
       setContact(e.target.value.length > 0);
     }
-    if (name && email && contact) {
+    if (contact) {
       setSuccess(true);
       // console.log('successfully')
     }
@@ -148,9 +156,9 @@ const Checkout = () => {
         console.log(result.text);
         if (result.text === 'OK') {
           if (success === true) {
-            if (paymentProcess === 'Cash On Delivery') {
+            if (paymentProcess === 'Payment on Location') {
               finalData.paymentData = null;
-              finalData.paymentCategory = 'Cash On Delivery';
+              finalData.paymentCategory = 'Payment on Location';
 
               fetch("http://localhost:4200/addOrder", {
                 method: "POST",
@@ -192,6 +200,7 @@ const Checkout = () => {
     const finalData = checkoutData;
     finalData.paymentData = paymentId;
     finalData.paymentCategory = 'Online Payment';
+    finalData.amount = amount
     fetch("http://localhost:4200/addOrder", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -220,7 +229,12 @@ const Checkout = () => {
     //         }
     //     })
   };
-  console.log(cart)
+
+  const handleRemove = () => {
+    console.log(cart.tableData)
+    // window.localStorage.clear();
+    // setCart([])
+  }
   return (
     <div>
       <Header cart={cart.length}></Header>
@@ -319,7 +333,9 @@ const Checkout = () => {
                 {/* <p>27 Rd No 8</p> */}
                 {Object.keys(cart).length > 0 ? (
                   <div>
-                    <div style={{border:'2px solid red', padding:'5px', borderRadius:'30px', background:'#FFCCCB'}}>
+                    <div style={{ border: '2px solid red', padding: '5px', borderRadius: '30px', background: '#FFCCCB' }}>
+                      <div className="d-flex justify-content-end"><span onClick={() => handleRemove()} class="btn btn-danger mr-3" >Clear</span>
+                      </div>
                       {/* {cart.map((item) => (
                         <CartItem
                           showAddToCart={true}
@@ -334,7 +350,7 @@ const Checkout = () => {
                         <h2 className='ml-4 mt-4 res-name '>{cart.restaurantData.title}</h2>
                       </Link>
 
-                        {cart.foodData.map((item) => (
+                      {cart.foodData.map((item) => (
                         <CartItem
                           showAddToCart={true}
                           handleRemoveProduct={handleRemoveProduct}
@@ -355,7 +371,7 @@ const Checkout = () => {
                     </div>
                     <div>
                       <div className="row mt-4">
-                        <div className="col-md-6">
+                        <div className="col-md-10">
                           <p>
                             <b>Subtotal * {cart.length} item</b>
                           </p>
@@ -364,11 +380,15 @@ const Checkout = () => {
                           </p>
                           <p>
                           </p>
-                          <h4>
+                          <h5>
                             <b>Total</b>
-                          </h4>
+                          </h5>
+                          {cart.restaurantData.beforeCheckIn && <h5 className="text-success">
+                            <b>Minimum Payable Amount</b>
+                          </h5>}
+
                         </div>
-                        <div className="col-md-6 text-right">
+                        <div className="col-md-2 text-right">
                           <p>
                             <b>{formatNumber(subTotal)}/-</b>
                           </p>
@@ -377,9 +397,13 @@ const Checkout = () => {
                           </p>
                           <p>
                           </p>
-                          <h4>
+                          <h5>
                             <b>{formatNumber(total)}/-</b>
-                          </h4>
+                          </h5>
+                          {cart.restaurantData.beforeCheckIn && <h5 className="text-danger">
+                            <b>{cart.restaurantData.paymentAmount}/-</b>
+                          </h5>}
+
                         </div>
                       </div>
                       <div className="text-center text-danger">
@@ -395,12 +419,13 @@ const Checkout = () => {
                           <option disabled={true} value="Not set">
                             Select Payment
                           </option>
-                          <option value="Cash On Delivery">
-                            Cash On Delivery
-                          </option>
-                          <option value="Online Payment">
+                          {cart.restaurantData.afterCheckIn && <option value="Payment on Location">
+                            Payment on Location
+                          </option>}
+                          {cart.restaurantData.beforeCheckIn && <option value="Online Payment">
                             Online Payment
-                          </option>
+                          </option>}
+
                         </select>
                       </div>
                       <form ref={form} >
@@ -454,8 +479,18 @@ const Checkout = () => {
           <div className="text-center text-danger">
             <h3>Payment Here</h3>
           </div>
+          <br/>
+          <label>Minimum Amount: <b>{cart.restaurantData?.paymentAmount}</b>/- </label>
+          <br/>
+          <label>Enter Amount</label>
+          <input type="number" style={{
+                            padding: "10px",
+                          }}
+                          placeholder=""
+                          onChange={(e)=>setAmount(e.target.value)}
+                          className="ml-3 font-weight-bold mb-4" />
           <br />
-          <ProcessPayment handlePayment={handlePaymentSuccess} />
+          <ProcessPayment amount={amount} restaurantData={cart.restaurantData} handlePayment={handlePaymentSuccess} />
         </div>
       </div>
       <Footer></Footer>
