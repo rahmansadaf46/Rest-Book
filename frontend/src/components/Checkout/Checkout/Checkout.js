@@ -13,6 +13,7 @@ import Header from "../../Shared/Header/Header";
 import CartItem from "../CartItem/CartItem";
 import ProcessPayment from "../ProcessPayment/ProcessPayment";
 import emailjs from '@emailjs/browser';
+import { Link } from "react-router-dom/cjs/react-router-dom";
 const Checkout = () => {
   const [paymentProcess, setPaymentProcess] = useState('Cash On Delivery')
   const [cart, setCart] = useState([]);
@@ -64,7 +65,7 @@ const Checkout = () => {
   };
 
   useEffect(() => {
-    // const savedCart = getDatabaseCart();
+    const savedCart = getDatabaseCart();
     // const productKeys = Object.keys(savedCart);
     // const previousCart = productKeys.map((existingKey) => {
     //   const product = JSON.parse(itemData)?.find(
@@ -74,8 +75,8 @@ const Checkout = () => {
     //   return product;
     // });
 
-    // setCart(previousCart);
-  }, [itemData]);
+    setCart(savedCart);
+  }, []);
 
   let subTotal = 0;
   for (let i = 0; i < cart.length; i++) {
@@ -88,7 +89,7 @@ const Checkout = () => {
     return Number(precision);
   };
 
-  let total = 5.0 + 2.0 + subTotal;
+  let total = 5.0 + subTotal;
 
   const [success, setSuccess] = useState(false);
   const [flat, setFlat] = useState(false);
@@ -152,47 +153,47 @@ const Checkout = () => {
 
     // setCart([]);
     emailjs.sendForm('service_tqd5rsa', 'template_nn0qqkj', form.current, 'B9abM11tNChoP6ubN')
-    .then((result) => {
-      console.log(result.text);
-      if(result.text === 'OK'){
-        if (success === true) {
-          if (paymentProcess === 'Cash On Delivery') {
-            finalData.paymentData = null;
-            finalData.paymentCategory = 'Cash On Delivery';
-    
-            fetch("http://localhost:4200/addOrder", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ finalData }),
-            })
-              .then((res) => res.json())
-              .then((success) => {
-                console.log(success, "success");
-    
-                window.alert('Item Purchase Successfully')
-                window.location.assign("/shipment");
-              });
-            // console.log(form.current)
-            emailjs.sendForm('service_tqd5rsa', 'template_nn0qqkj', form.current, 'B9abM11tNChoP6ubN')
-              .then((result) => {
-                console.log(result.text);
-              }, (error) => {
-                console.log(error.text);
-              });
-            processOrder();
+      .then((result) => {
+        console.log(result.text);
+        if (result.text === 'OK') {
+          if (success === true) {
+            if (paymentProcess === 'Cash On Delivery') {
+              finalData.paymentData = null;
+              finalData.paymentCategory = 'Cash On Delivery';
+
+              fetch("http://localhost:4200/addOrder", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ finalData }),
+              })
+                .then((res) => res.json())
+                .then((success) => {
+                  console.log(success, "success");
+
+                  window.alert('Item Purchase Successfully')
+                  window.location.assign("/shipment");
+                });
+              // console.log(form.current)
+              emailjs.sendForm('service_tqd5rsa', 'template_nn0qqkj', form.current, 'B9abM11tNChoP6ubN')
+                .then((result) => {
+                  console.log(result.text);
+                }, (error) => {
+                  console.log(error.text);
+                });
+              processOrder();
+            }
+            else {
+              setCheckoutData(finalData);
+            }
+
+          } else {
+            window.alert("please enter your address");
           }
-          else {
-            setCheckoutData(finalData);
-          }
-    
-        } else {
-          window.alert("please enter your address");
         }
-      }
-    }, (error) => {
-      console.log(error.text);
-    });
-   
+      }, (error) => {
+        console.log(error.text);
+      });
+
   };
 
   const handlePaymentSuccess = (paymentId) => {
@@ -211,7 +212,7 @@ const Checkout = () => {
         if (success) {
         }
       });
-   
+
     processOrder();
     // fetch("https://intense-waters-18558.herokuapp.com/addOrder", {
     //     method: "POST",
@@ -226,6 +227,7 @@ const Checkout = () => {
     //         }
     //     })
   };
+  console.log(cart)
   return (
     <div>
       <Header cart={cart.length}></Header>
@@ -234,7 +236,7 @@ const Checkout = () => {
           <div className="container mt-5 pt-5">
             <div className="row">
               <div className="col-md-6">
-                <h4>Edit Delivery Details</h4>
+                <h4>Add Contact Details</h4>
 
                 <hr
                   style={{
@@ -246,7 +248,7 @@ const Checkout = () => {
 
                 <input
                   onChange={handleChange}
-                  name="flatNo"
+                  name="name"
                   style={{
                     height: "50px",
                     borderRadius: "30px",
@@ -256,13 +258,13 @@ const Checkout = () => {
                   className="pl-4"
                   type=""
                   required
-                  placeholder="Flat no."
+                  placeholder="Name"
                 />
                 <br />
                 <br />
                 <input
                   onChange={handleChange}
-                  name="houseNo"
+                  name="email"
                   style={{
                     height: "50px",
                     borderRadius: "30px",
@@ -272,25 +274,10 @@ const Checkout = () => {
                   className="pl-4"
                   type=""
                   required
-                  placeholder="House no."
+                  placeholder="Email"
                 />
                 <br />
-                <br />
-                <input
-                  onChange={handleChange}
-                  name="area"
-                  style={{
-                    height: "50px",
-                    borderRadius: "30px",
-                    border: "1px solid gray",
-                    width: "75%",
-                  }}
-                  className="pl-4"
-                  type=""
-                  required
-                  placeholder="Area"
-                />
-                <br />
+
                 <br />
                 <input
                   onChange={handleChange}
@@ -323,16 +310,29 @@ const Checkout = () => {
                 <br />
               </div>
               <div style={{ marginLeft: "190px" }} className="col-md-4 ">
-                <p>
+                {/* <p>
                   Form <b>Rampura</b>
                 </p>
-                <p>Arriving in 20-30 min</p>
+                <p>Arriving in 20-30 min</p> */}
                 {/* <p>27 Rd No 8</p> */}
-
-                {cart.length > 0 ? (
+                {Object.keys(cart).length > 0 ? (
                   <div>
-                    <div>
-                      {cart.map((item) => (
+                    <div style={{border:'1px solid red', padding:'5px', borderRadius:'30px', background:'#FFCCCB'}}>
+                      {/* {cart.map((item) => (
+                        <CartItem
+                          showAddToCart={true}
+                          handleRemoveProduct={handleRemoveProduct}
+                          handleAddProduct={handleAddProduct}
+                          key={item._id}
+                          item={item}
+                        ></CartItem>
+                      ))} */}
+                      <Link to={`/restaurant/${cart.restaurantData._id}`} className='d-flex res-title mb-5 pb-5'>
+                        <img className='res-img' style={{}} src={`http://localhost:4200/restaurant/${cart.restaurantData.image}`} alt="" />
+                        <h2 className='ml-4 mt-4 res-name '>{cart.restaurantData.title}</h2>
+                      </Link>
+
+                        {cart.foodData.map((item) => (
                         <CartItem
                           showAddToCart={true}
                           handleRemoveProduct={handleRemoveProduct}
@@ -352,7 +352,6 @@ const Checkout = () => {
                             <b>Tax</b>
                           </p>
                           <p>
-                            <b>Delivery fee</b>
                           </p>
                           <h4>
                             <b>Total</b>
@@ -366,7 +365,6 @@ const Checkout = () => {
                             <b>5.00/-</b>
                           </p>
                           <p>
-                            <b>2.00/-</b>
                           </p>
                           <h4>
                             <b>{formatNumber(total)}/-</b>
