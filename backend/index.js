@@ -297,7 +297,6 @@ client.connect(err => {
         const file = req.files.file;
         const image = req.files.file.name;
         const title = req.body.title;
-        const price = req.body.price;
         const layout = req.body.layout;
         const description = req.body.description;
         const restaurantId = req.body.restaurantId;
@@ -307,20 +306,19 @@ client.connect(err => {
             }
         })
 
-        tableCollection.insertOne({ title, price, layout, description, restaurantId, image })
+        tableCollection.insertOne({ title, layout, description, restaurantId, image })
             .then(result => {
                 res.send(result.insertedCount > 0);
             })
     })
     app.patch('/updateTable/:id', (req, res) => {
         const title = req.body.data.title;
-        const price = req.body.data.price;
         const layout = req.body.data.layout;
         const description = req.body.data.description;
         tableCollection.updateOne({ _id: ObjectId(req.params.id) },
             {
                 $set: {
-                    title: title, price: price, layout: layout, description: description,
+                    title: title, layout: layout, description: description,
                 }
             })
             .then(result => {

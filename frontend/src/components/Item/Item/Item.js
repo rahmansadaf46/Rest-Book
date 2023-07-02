@@ -595,18 +595,18 @@ const Item = () => {
     return (
         <div>
             <Header cart={cart.length}></Header>
-            <div className="container mt-5 py-5">
+            <div  className="container mt-5 py-5">
                 <Link to={`/restaurant/${item.restaurantId}`} className='d-flex res-title'>
                     <img className='res-img' style={{}} src={`http://localhost:4200/restaurant/${restaurant.image}`} alt="" />
                     <h2 className='ml-4 mt-4 res-name '>{restaurant.title}</h2>
                 </Link>
 
                 <div className="row  pt-2 mt-5">
-                    <div className="col-md-5">
+                    <div  className={`col-md-5 ${category === 'table' && 'mt-5 pt-2'} `}>
                         <p style={{ fontSize: '50px' }} className="mt-4 ">{item.title}</p>
                         <p style={{ fontSize: '15px', lineHeight: '2.1', color: 'gray' }}>{item.description}</p>
                         <div className="row">
-                            <p style={{ fontSize: '40px', margin: '0px 30px 0px 20px' }}>{item.price}/-</p>
+                          {category === 'food' && <p style={{ fontSize: '40px', margin: '0px 30px 0px 20px' }}>{item.price}/-</p>}   
                             {category === 'food' && <span>
                                 <div className="input-group item-area">
                                     <input onClick={() => decrementCount()} type="button" defaultValue="-" className="button-minus" data-field="quantity" />

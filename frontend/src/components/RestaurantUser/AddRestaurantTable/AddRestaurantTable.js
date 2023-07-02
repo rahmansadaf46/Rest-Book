@@ -68,7 +68,6 @@ const AddRestaurantTable = () => {
     formData.append("description", data.description);
     formData.append("layout", selectedLayout);
     formData.append("restaurantId", restaurantData._id);
-    formData.append("price", data.price);
     fetch("http://localhost:4200/addTable", {
       method: "POST",
       body: formData,
@@ -152,7 +151,7 @@ const AddRestaurantTable = () => {
                     <span className="text-danger">This field is required</span>
                   )}
                 </div>
-                <div className="form-group text-danger text-center">
+                {/* <div className="form-group text-danger text-center">
                   <label for="">
                     <b>Enter Table Booking Price</b>
                   </label>
@@ -170,7 +169,7 @@ const AddRestaurantTable = () => {
                   {errors.name && (
                     <span className="text-danger">This field is required</span>
                   )}
-                </div>
+                </div> */}
                 <div className="form-group text-danger text-center mx-5 px-5">
                   <label for="">
                     <b>Enter Layout</b>

@@ -1,21 +1,19 @@
 [{
   "_id": {
-    "$oid": "6453f94799d5c03ca428e7f7"
-  },
-  "title": "North Table",
-  "price": "2000",
-  "layout": "North",
-  "description": "Best table for family",
-  "restaurantId": "643af0b57621d80a4ac2bf0e",
-  "image": "table-dining-sets.webp"
-},{
-  "_id": {
     "$oid": "645406ca99d5c03ca428e7f9"
   },
   "title": "East Table - 2",
-  "price": "1000",
   "layout": "East",
   "description": "Best table for couple",
   "restaurantId": "643af0b57621d80a4ac2bf0e",
   "image": "istockphoto-1160805942-170667a.jpg"
+},{
+  "_id": {
+    "$oid": "64a1b12df19a4cbcfedac3fe"
+  },
+  "title": "North Table",
+  "layout": "North",
+  "description": "Best table for family....",
+  "restaurantId": "643af0b57621d80a4ac2bf0e",
+  "image": "table-dining-sets.webp"
 }]

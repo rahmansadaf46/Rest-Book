@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import './MenuItem.css';
 
 const MenuItem = ({ item , activeMenu}) => {
+    console.log(activeMenu)
     return (
         <div className="col-md-4 d-flex justify-content-center item mb-3">
             <Link to={activeMenu==='Table'?`/item/table/${item._id}`:`/item/food/${item._id}`} className="card-item">
@@ -24,7 +25,7 @@ const MenuItem = ({ item , activeMenu}) => {
 
                         </Card.Text>
                         <div className="text-center">
-                            <h4 style={{ color: 'black' }}>{item.price}/-</h4>
+                           {activeMenu==='Table'? <></>:<h4 style={{ color: 'black' }}>{item.price}/-</h4>} 
                         </div>
                     </Card.Body>
                 </Card>

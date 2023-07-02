@@ -14,6 +14,7 @@ import CartItem from "../CartItem/CartItem";
 import ProcessPayment from "../ProcessPayment/ProcessPayment";
 import emailjs from '@emailjs/browser';
 import { Link } from "react-router-dom/cjs/react-router-dom";
+import TableCart from "../TableCart/TableCart";
 const Checkout = () => {
   const [paymentProcess, setPaymentProcess] = useState('Cash On Delivery')
   const [cart, setCart] = useState([]);
@@ -97,20 +98,14 @@ const Checkout = () => {
   const [email, setEmail] = useState(false);
   const [contact, setContact] = useState(false);
   const [address, setAddress] = useState({
-    name: "",
-    email: "",
+    name: window.sessionStorage.getItem('name'),
+    email: window.sessionStorage.getItem('email'),
     contactNo: "",
   });
   const [checkoutData, setCheckoutData] = useState(null);
   const handleChange = (e) => {
     // console.log(e.target.name, e.target.value)
 
-    if (e.target.name === "name") {
-      setName(e.target.value.length > 0);
-    }
-    if (e.target.name === "email") {
-      setEmail(e.target.value.length > 0);
-    }
     if (e.target.name === "contactNo") {
       setContact(e.target.value.length > 0);
     }
@@ -184,7 +179,7 @@ const Checkout = () => {
             }
 
           } else {
-            window.alert("please enter your address");
+            window.alert("Please enter your contact no. ");
           }
         }
       }, (error) => {
@@ -250,9 +245,13 @@ const Checkout = () => {
                   style={{
                     height: "50px",
                     borderRadius: "30px",
+                    backgroundColor: "#FFCCCB",
                     border: "1px solid gray",
                     width: "75%",
                   }}
+                  disabled
+                  value={address.name}
+                  readOnly
                   className="pl-4"
                   type=""
                   required
@@ -262,13 +261,17 @@ const Checkout = () => {
                 <br />
                 <input
                   onChange={handleChange}
+                  disabled
                   name="email"
                   style={{
                     height: "50px",
                     borderRadius: "30px",
                     border: "1px solid gray",
+                    backgroundColor: "#FFCCCB",
                     width: "75%",
                   }}
+                  value={address.email}
+                  readOnly
                   className="pl-4"
                   type=""
                   required
@@ -284,6 +287,7 @@ const Checkout = () => {
                     height: "50px",
                     borderRadius: "30px",
                     border: "1px solid gray",
+                    backgroundColor: "#FFFFE0",
                     width: "75%",
                   }}
                   className="pl-4"
@@ -338,6 +342,15 @@ const Checkout = () => {
                           key={item._id}
                           item={item}
                         ></CartItem>
+                      ))}
+                      {cart.tableData.map((item) => (
+                        <TableCart
+                          showAddToCart={true}
+                          handleRemoveProduct={handleRemoveProduct}
+                          handleAddProduct={handleAddProduct}
+                          key={item._id}
+                          item={item}
+                        ></TableCart>
                       ))}
                     </div>
                     <div>

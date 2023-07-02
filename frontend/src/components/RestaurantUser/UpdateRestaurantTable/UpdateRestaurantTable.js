@@ -104,11 +104,11 @@ const UpdateRestaurantTable = () => {
                                 <textarea defaultValue={tableData.description} style={{ borderRadius: '15px', border: '2px solid #E5194B' }} type="text" ref={register({ required: true })} name="description" placeholder="Table Description" className="form-control" />
                                 {errors.name && <span className="text-danger">This field is required</span>}
                             </div>
-                            <div className="form-group text-danger text-center">
+                            {/* <div className="form-group text-danger text-center">
                                 <label for=""><b>Enter Booking Price</b></label>
                                 <input defaultValue={tableData.price} style={{ borderRadius: '15px', border: '2px solid #E5194B' }} type="text" ref={register({ required: true })} name="price" placeholder="Booking Pice" className="form-control" />
                                 {errors.name && <span className="text-danger">This field is required</span>}
-                            </div>
+                            </div> */}
                             <div className="form-group text-danger text-center mx-5 px-5">
                                 <label for="">
                                     <b>Enter Layout</b>

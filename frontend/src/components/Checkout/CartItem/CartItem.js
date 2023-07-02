@@ -27,14 +27,14 @@ const CartItem = (props) => {
                 <div className="col-md-3">
                     <img width="85px" style={{borderRadius:'50%'}} src={`http://localhost:4200/food/${item.image}`} alt="" />
                 </div>
-                <div className="col-md-6 mt-3">
+                <div className="col-md-6 mt-3 ml-2">
                     <p style={{ fontSize: '13px' }}><b>{item.title}</b></p>
                     <p style={{ marginTop: '-15px', color: '#E5194B', marginBottom: '-1px' }}>Quantity:- <b>{props.item.count}</b></p>
                     {/* <small style={{ marginTop: '-88px', fontSize: '10px', lineHeight: '80%' }}>Delivery Free</small> */}
                 </div>
                 {
                     props.showAddToCart === true &&
-                    <div style={{ width: '10px' }} className="col-md-3">
+                    <div style={{ width: '10px' }} className="col-md-2">
                         <div className="input-group item-area">
                             {/* <input onClick={() => decrementCount()} type="button" defaultValue="-" className="button-minus" data-field="quantity" /> */}
                             <input readOnly style={{ fontSize: '15px' }} type="number" value={item.price} step={1} max defaultValue={props.item.count} name="quantity" className="quantity-field" />

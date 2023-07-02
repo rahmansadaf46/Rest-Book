@@ -8,4 +8,14 @@
   "shortDescription": "Kacchi with alu",
   "image": "kacchi.png",
   "restaurantId": "643af0b57621d80a4ac2bf0e"
+},{
+  "_id": {
+    "$oid": "64a1b4b7f19a4cbcfedac400"
+  },
+  "title": "Morog Polao",
+  "price": "375",
+  "description": "Morog polao with extra jhol",
+  "shortDescription": "Very delicious",
+  "image": "morog polao.png",
+  "restaurantId": "643af0b57621d80a4ac2bf0e"
 }]

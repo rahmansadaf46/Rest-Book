@@ -131,13 +131,13 @@ const RestaurantTableList = () => {
                         Layout:{" "}
                         <span className="text-dark">{item.layout}</span>
                       </p>
-                      <hr />
+                      {/* <hr />
                       <h4 className="text-center mt-3">
                         <span style={{ color: "#E5194B" }}>Booking Price:</span>{" "}
                         <span className=" font-weight-bold">
                           {item.price}/-
                         </span>
-                      </h4>
+                      </h4> */}
                       <div className="row text-center mt-3 p-3">
                         <div className="col-6">
                           <Link
