@@ -79,8 +79,9 @@ const Checkout = () => {
   }, []);
 
   let subTotal = 0;
-  for (let i = 0; i < cart.length; i++) {
-    const product = cart[i];
+  for (let i = 0; i < cart?.foodData?.length; i++) {
+    const product = cart.foodData[i];
+    console.log(product,cart)
     subTotal = subTotal + product.price * product.quantity;
   }
   const formatNumber = (num) => {
@@ -92,33 +93,28 @@ const Checkout = () => {
   let total = 5.0 + subTotal;
 
   const [success, setSuccess] = useState(false);
-  const [flat, setFlat] = useState(false);
-  const [house, setHouse] = useState(false);
-  const [area, setArea] = useState(false);
+  const [name, setName] = useState(false);
+  const [email, setEmail] = useState(false);
   const [contact, setContact] = useState(false);
   const [address, setAddress] = useState({
-    flatNo: "",
-    houseNo: "",
-    area: "",
+    name: "",
+    email: "",
     contactNo: "",
   });
   const [checkoutData, setCheckoutData] = useState(null);
   const handleChange = (e) => {
     // console.log(e.target.name, e.target.value)
 
-    if (e.target.name === "flatNo") {
-      setFlat(e.target.value.length > 0);
+    if (e.target.name === "name") {
+      setName(e.target.value.length > 0);
     }
-    if (e.target.name === "houseNo") {
-      setHouse(e.target.value.length > 0);
-    }
-    if (e.target.name === "area") {
-      setArea(e.target.value.length > 0);
+    if (e.target.name === "email") {
+      setEmail(e.target.value.length > 0);
     }
     if (e.target.name === "contactNo") {
       setContact(e.target.value.length > 0);
     }
-    if (flat && house && contact && area) {
+    if (name && email && contact) {
       setSuccess(true);
       // console.log('successfully')
     }
@@ -171,6 +167,7 @@ const Checkout = () => {
                   console.log(success, "success");
 
                   window.alert('Item Purchase Successfully')
+                  localStorage.clear();
                   window.location.assign("/shipment");
                 });
               // console.log(form.current)
@@ -208,6 +205,7 @@ const Checkout = () => {
       .then((res) => res.json())
       .then((success) => {
         console.log(success, "success");
+        localStorage.clear();
         window.location.assign("/shipment");
         if (success) {
         }
