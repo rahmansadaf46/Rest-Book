@@ -317,7 +317,7 @@ const Checkout = () => {
                 {/* <p>27 Rd No 8</p> */}
                 {Object.keys(cart).length > 0 ? (
                   <div>
-                    <div style={{border:'1px solid red', padding:'5px', borderRadius:'30px', background:'#FFCCCB'}}>
+                    <div style={{border:'2px solid red', padding:'5px', borderRadius:'30px', background:'#FFCCCB'}}>
                       {/* {cart.map((item) => (
                         <CartItem
                           showAddToCart={true}
