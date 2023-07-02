@@ -78,11 +78,11 @@ body{
 
 .res-title{
   color: black;
-  
+  position: relative;
 }
 .res-name{
   position: relative;
-  left: 240px;
+  left: 70px;
   font-size: 20px!important;
   position: absolute;
 }

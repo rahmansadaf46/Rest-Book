@@ -5,7 +5,7 @@ import Footer from '../../Shared/Footer/Footer';
 import Header from '../../Shared/Header/Header';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import './Item.css'
-import { addToDatabaseCart, getDatabaseCart, updateToDatabaseCart } from '../../../utilities/databaseManager';
+import { addToDatabaseCart, addToTableDatabaseCart, getDatabaseCart, updateToDatabaseCart, updateToTableDatabaseCart } from '../../../utilities/databaseManager';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import CountdownTimer from './CountdownTimer';
 
@@ -250,38 +250,31 @@ const Item = () => {
 
     // console.log(currentDate)
     const handleAddProduct = (product) => {
-        let tableData = []
-        const toBeAddedKey = product._id;
-        const sameProduct = cart?.foodData?.find(pd => pd._id === toBeAddedKey);
-        console.log(sameProduct, cart)
-        let newCount;
-        // let newCart;
-        if (sameProduct) {
-            newCount = sameProduct.count + count;
-            sameProduct.quantity = newCount;
-            // debugger;
-            // const others =  cart?.foodData?.find(pd => pd._id === toBeAddedKey);
-            // console.log(others)
-            // newCart = [others, sameProduct]
-            updateToDatabaseCart(sameProduct._id, newCount, item, restaurant, tableData);
+        console.log(cart)
+        if (Object.keys(cart).length === 0) {
+            window.alert('Please add table first')
+        } else {
+            let cartDate = cart.date;
+            let tableData = cart.tableData;
+            const toBeAddedKey = product._id;
+            const sameProduct = cart?.foodData?.find(pd => pd._id === toBeAddedKey);
+            let newCount;
+            if (sameProduct) {
+                newCount = sameProduct.count + count;
+                sameProduct.quantity = newCount;
+                updateToDatabaseCart(sameProduct._id, newCount, item, restaurant, tableData, cartDate);
+            }
+            else {
+                product.quantity = count;
+                addToDatabaseCart(product._id, product.quantity, item, restaurant, tableData, cartDate);
+            }
+            const savedCart = getDatabaseCart();
+            setCart(savedCart);
         }
-        else {
-            product.quantity = count;
-            // newCart = [cart, product];
-            addToDatabaseCart(product._id, product.quantity, item, restaurant, tableData);
-        }
-        const savedCart = getDatabaseCart();
-        console.log(savedCart);
-        // const productKeys = Object.keys(savedCart);
-        // const previousCart = productKeys.map(existingKey => {
-        //     const product = JSON.parse(localStorage.getItem('item')).find(pd => pd._id === existingKey);
-        //     product.quantity = savedCart[existingKey];
-        //     return product;
-        // })
-        setCart(savedCart);
-        // window.location.reload();
 
     }
+
+
 
     const incrementCount = () => {
         setCount(count + 1);
@@ -337,6 +330,7 @@ const Item = () => {
         console.log(weekday, filterOffDay);
         if (filterOffDay.length > 0) {
             setIsOffDay(true)
+            setCurrentDate(e.target.value);
         } else {
             setIsOffDay(false)
             setCurrentDate(e.target.value);
@@ -386,67 +380,114 @@ const Item = () => {
         })
             .then((res) => res.json())
             .then((data) => {
-                // console.log(allSlot)
-                // console.log(data, "success");
 
                 if (data.length > 0) {
-                    // setBookingData(data)
-
-                    // if (data.length > 0) {
-
-                    // } 
-                    // setLoading(true)
-                    // console.log(data)
-                    // console.log(slot)
                     let userTimeSlots = filterAvailableTimeSlots(timeSlot, data[0]?.bookingInfo);
-                    // console.log(userTimeSlots)
-                    let combineSlots = combineArrays(combineArrays(timeSlot, userTimeSlots.selectedSlotsForUser), userTimeSlots.notAvailableSlotsForUser)
-                    // console.log(combineSlots)
+
                     let notAvailableSlot = userTimeSlots.notAvailableSlotsForUser;
-                    // console.log(notAvailableSlot)
                     let filterSlot = notAvailableSlot.filter(data => data.time === slot.time)
                     if (filterSlot.length > 0) {
                         window.alert('This slot is not available right now')
                         getItemData(currentDate)
                     } else {
-                        callBooking(slot, index)
+                        if (Object.keys(cart).length === 0) {
+                            callBooking(slot, index)
+                        } else {
+                            
+                            if(cart.date === currentDate) {
+                                callBooking(slot, index)
+                            }
+                            else{
+                                window.alert('You can not add more than one date')
+                                console.log(cart.date,currentDate)
+                            }
+                        }
+
+
                     }
-                    // callBooking(slot, index)
                 }
                 else {
-                    // console.log(data)
-                    callBooking(slot, index)
+                    if (Object.keys(cart).length === 0) {
+                        callBooking(slot, index)
+                    } else {
+                        if(cart.date === currentDate) {
+                            callBooking(slot, index)
+                        }
+                        else{
+                            window.alert('You can not add more than one date')
+                            console.log(cart.date,currentDate)
+                        }
+                    }
                 }
             });
 
 
 
     }
-    const handleFoodLocalStorage = (data) => {
-        let localData = {
-            restaurantData: restaurant,
-            foodData:[],
-            tableData: [
-                {
-                    table: item,  date: data.date,
-                    slot: data.bookingInfo
-                }
-            ]
-        }
-        window.localStorage.setItem("bookingData", JSON.stringify(localData));
-    }
+
     const handleTableLocalStorage = (data) => {
-        let localData = {
-            restaurantData: restaurant,
-            foodData:[],
-            tableData: [
-                {
-                    table: item,  date: data.date,
-                    slot: data.bookingInfo
+        if (Object.keys(cart).length === 0) {
+            let slot = data.bookingInfo;
+            item.slot = slot;
+            let localData = {
+                restaurantData: restaurant,
+                foodData: cart?.foodData || [],
+                date: data.date,
+                tableData: [
+                    {
+                        ...item,
+                    }
+                ]
+            }
+            window.localStorage.setItem("bookData", JSON.stringify(localData));
+            const savedCart = getDatabaseCart();
+            setCart(savedCart);
+        } else {
+            console.log(cart.date, data.date)
+            if (data.date !== cart.date) {
+                window.alert('You have selected another date')
+            } else {
+                let findTable = cart.tableData.filter(pd => pd._id === item._id)
+                console.log(findTable)
+                if (findTable.length > 0) {
+                    let findAnotherTable = cart.tableData.filter(pd => pd._id !== item._id)
+                    let slot = data.bookingInfo;
+                    item.slot = slot;
+                    let localData = {
+
+                        restaurantData: restaurant,
+                        foodData: cart?.foodData || [],
+                        date: data.date,
+                        tableData: [...findAnotherTable,
+                        {
+                            ...item,
+                        }
+                        ]
+                    }
+                    console.log(localData);
+                    window.localStorage.setItem("bookData", JSON.stringify(localData));
+                } else {
+                    let slot = data.bookingInfo;
+                    item.slot = slot;
+                    let localData = {
+
+                        restaurantData: restaurant,
+                        foodData: cart?.foodData || [],
+                        date: data.date,
+                        tableData: [...cart.tableData,
+                        {
+                            ...item,
+                        }
+                        ]
+                    }
+                    console.log(localData);
+                    window.localStorage.setItem("bookData", JSON.stringify(localData));
                 }
-            ]
+            }
+
+
         }
-        window.localStorage.setItem("bookingData", JSON.stringify(localData));
+
     }
     const callBooking = (slot, index) => {
         if (slot.status === 'Available') {
@@ -458,7 +499,6 @@ const Item = () => {
             else {
                 existingSlot[index].status = 'Selected'
             }
-            // console.log(existingSlot)
             setTimeSlot(existingSlot)
             let data = {
                 date: currentDate,
@@ -467,12 +507,7 @@ const Item = () => {
 
                 tableId: id
             }
-            // console.log(data);
             if (bookingData.length > 0) {
-
-                // console.log(filterBookingData([...bookingData[0].bookingInfo, { time: slot.time, status: slot.status, userEmail: sessionStorage.getItem('email'), encounterTime: new Date(), encounterDate: currentDate }]),)
-
-                // console.log(filteredData);
                 let updateData = {
                     date: currentDate,
                     bookingInfo: filterBookingData([...bookingData[0].bookingInfo, { time: slot.time, status: slot.status, userEmail: sessionStorage.getItem('email'), encounterTime: new Date(), encounterDate: currentDate }]),
@@ -480,7 +515,6 @@ const Item = () => {
 
                     tableId: id
                 }
-                // console.log(updateData)
                 fetch(`http://localhost:4200/updateBooking/${bookingData[0]._id}`, {
                     method: "PATCH",
                     headers: { "Content-Type": "application/json" },
@@ -489,16 +523,12 @@ const Item = () => {
                     .then((response) => response.json())
                     .then((res) => {
                         handleTableLocalStorage(updateData)
-                        // window.alert("Booking added successfully");
-                        //   window.location.reload();
                         if (res) {
-
                             let dataBody = {
                                 date: `${currentDate}`,
                                 restaurantId: item.restaurantId,
                                 tableId: id
                             }
-
                             fetch("http://localhost:4200/findBooking", {
                                 method: "POST",
                                 headers: { "Content-Type": "application/json" },
@@ -506,8 +536,6 @@ const Item = () => {
                             })
                                 .then((res) => res.json())
                                 .then((data) => {
-                                    // console.log(allSlot)
-                                    // console.log(data, "success");
                                     if (data.length > 0) {
                                         setBookingData(data)
                                     }
