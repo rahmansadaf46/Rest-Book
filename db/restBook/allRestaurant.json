@@ -22,4 +22,29 @@
   "offDay": [
     "Sat"
   ]
+},
+{
+  "_id": {
+    "$oid": "64a29004dcb5a1d7074b8a57"
+  },
+  "title": "Kacchi vai",
+  "status": "Active",
+  "user": "darklordsadaf@gmail.com",
+  "area": [
+    "dhanmondi"
+  ],
+  "image": "package_42.png",
+  "address": "Mirpur 10",
+  "mobile": "01304022145",
+  "description": "Traditional Kacchi",
+  "facebook": "2342423423424",
+  "coords": "23.75136851757505,90.37159579457735",
+  "openingTime": "10:00",
+  "closingTime": "22:00",
+  "afterCheckIn": true,
+  "beforeCheckIn": true,
+  "paymentAmount": "796",
+  "offDay": [
+    "Fri"
+  ]
 }]
