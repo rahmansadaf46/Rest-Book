@@ -254,22 +254,28 @@ const Item = () => {
         if (Object.keys(cart).length === 0) {
             window.alert('Please add table first')
         } else {
-            let cartDate = cart.date;
-            let tableData = cart.tableData;
-            const toBeAddedKey = product._id;
-            const sameProduct = cart?.foodData?.find(pd => pd._id === toBeAddedKey);
-            let newCount;
-            if (sameProduct) {
-                newCount = sameProduct.count + count;
-                sameProduct.quantity = newCount;
-                updateToDatabaseCart(sameProduct._id, newCount, item, restaurant, tableData, cartDate);
+            if (cart?.restaurantData?._id !== restaurant?._id) {
+                window.alert('You have already booked another restaurant food. Please clear your previous data first.')
             }
             else {
-                product.quantity = count;
-                addToDatabaseCart(product._id, product.quantity, item, restaurant, tableData, cartDate);
+                let cartDate = cart.date;
+                let tableData = cart.tableData;
+                const toBeAddedKey = product._id;
+                const sameProduct = cart?.foodData?.find(pd => pd._id === toBeAddedKey);
+                let newCount;
+                if (sameProduct) {
+                    newCount = sameProduct.count + count;
+                    sameProduct.quantity = newCount;
+                    updateToDatabaseCart(sameProduct._id, newCount, item, restaurant, tableData, cartDate);
+                }
+                else {
+                    product.quantity = count;
+                    addToDatabaseCart(product._id, product.quantity, item, restaurant, tableData, cartDate);
+                }
+                const savedCart = getDatabaseCart();
+                setCart(savedCart);
             }
-            const savedCart = getDatabaseCart();
-            setCart(savedCart);
+
         }
 
     }
@@ -365,8 +371,9 @@ const Item = () => {
         return filteredData;
 
     }
-    const handleAddBooking = (slot, index) => {
-        // console.log(slot.status)
+
+    const handleBooking = (slot, index) => {
+        console.log(slot.status)
         let dataBody = {
             date: `${currentDate}`,
             restaurantId: item.restaurantId,
@@ -393,13 +400,13 @@ const Item = () => {
                         if (Object.keys(cart).length === 0) {
                             callBooking(slot, index)
                         } else {
-                            
-                            if(cart.date === currentDate) {
+
+                            if (cart.date === currentDate) {
                                 callBooking(slot, index)
                             }
-                            else{
+                            else {
                                 window.alert('You can not add more than one date')
-                                console.log(cart.date,currentDate)
+                                console.log(cart.date, currentDate)
                             }
                         }
 
@@ -410,16 +417,80 @@ const Item = () => {
                     if (Object.keys(cart).length === 0) {
                         callBooking(slot, index)
                     } else {
-                        if(cart.date === currentDate) {
+                        if (cart.date === currentDate) {
                             callBooking(slot, index)
                         }
-                        else{
+                        else {
                             window.alert('You can not add more than one date')
-                            console.log(cart.date,currentDate)
+                            console.log(cart.date, currentDate)
                         }
                     }
                 }
             });
+    }
+    function filterBySimilarTime(array1, array2) {
+        // Extracting time values from array2 into a new array
+        const array2Times = array2.map(item => item.time);
+
+        // Filtering array1 based on similar time values
+        const filteredArray = array1.filter(item => !array2Times.includes(item.time));
+
+        return filteredArray;
+    }
+    const handleAddBooking = (slot, index) => {
+        console.log(cart?.restaurantData?._id !== restaurant?._id)
+        if (Object.keys(cart).length === 0) {
+            handleBooking(slot, index)
+        } else {
+            if (cart?.restaurantData?._id !== restaurant?._id) {
+                if (window.confirm("You have already booked another restaurant. Want to remove previous booking?")) {
+                    window.localStorage.clear();
+                    cart.tableData.forEach(table => {
+                        let dataBody = {
+                            date: `${cart.date}`,
+                            restaurantId: table.restaurantId,
+                            tableId: table._id
+                        }
+                        fetch("http://localhost:4200/findBooking", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({ dataBody }),
+                        })
+                            .then((res) => res.json())
+                            .then((data) => {
+                                let result = filterBySimilarTime(data[0].bookingInfo, table.slot);
+                                let updateData = {
+                                    date: `${cart.date}`,
+                                    bookingInfo: result,
+                                    restaurantId: table.restaurantId,
+
+                                    tableId: table._id
+                                }
+                                fetch(`http://localhost:4200/updateBooking/${data[0]._id}`, {
+                                    method: "PATCH",
+                                    headers: { "Content-Type": "application/json" },
+                                    body: JSON.stringify({ updateData }),
+                                })
+                                    .then((response) => response.json())
+                                    .then((res) => {
+                                        if (res) {
+                                            // window.location.reload()
+                                            // const savedCart = getDatabaseCart();
+                                            // setCart(savedCart);
+                                        }
+                                    })
+                            })
+                    })
+                    handleBooking(slot, index)
+                    window.location.reload()
+                    // 
+                }
+            } else {
+                handleBooking(slot, index)
+            }
+        }
+
+
 
 
 
@@ -595,18 +666,18 @@ const Item = () => {
     return (
         <div>
             <Header cart={cart.length}></Header>
-            <div  className="container mt-5 py-5">
+            <div className="container mt-5 py-5">
                 <Link to={`/restaurant/${item.restaurantId}`} className='d-flex res-title'>
                     <img className='res-img' style={{}} src={`http://localhost:4200/restaurant/${restaurant.image}`} alt="" />
                     <h2 className='ml-4 mt-4 res-name '>{restaurant.title}</h2>
                 </Link>
 
                 <div className="row  pt-2 mt-5">
-                    <div  className={`col-md-5 ${category === 'table' && 'mt-5 pt-2'} `}>
+                    <div className={`col-md-5 ${category === 'table' && 'mt-5 pt-2'} `}>
                         <p style={{ fontSize: '50px' }} className="mt-4 ">{item.title}</p>
                         <p style={{ fontSize: '15px', lineHeight: '2.1', color: 'gray' }}>{item.description}</p>
                         <div className="row">
-                          {category === 'food' && <p style={{ fontSize: '40px', margin: '0px 30px 0px 20px' }}>{item.price}/-</p>}   
+                            {category === 'food' && <p style={{ fontSize: '40px', margin: '0px 30px 0px 20px' }}>{item.price}/-</p>}
                             {category === 'food' && <span>
                                 <div className="input-group item-area">
                                     <input onClick={() => decrementCount()} type="button" defaultValue="-" className="button-minus" data-field="quantity" />
