@@ -76,11 +76,12 @@ const Checkout = () => {
     //   product.quantity = savedCart[existingKey];
     //   return product;
     // });
-    setPaymentProcess()
     setCart(savedCart);
-    if (cart?.restaurantData?.afterCheckIn) {
+    if (cart?.restaurantData?.afterCheckIn && cart?.restaurantData?.beforeCheckIn) {
       setPaymentProcess('Payment on Location')
-    } else {
+    } else if (cart?.restaurantData?.afterCheckIn && !cart?.restaurantData?.beforeCheckIn) {
+      setPaymentProcess('Payment on Location')
+    } else if (!cart?.restaurantData?.afterCheckIn && cart?.restaurantData?.beforeCheckIn) {
       setPaymentProcess('Online Payment')
     }
 
@@ -151,7 +152,7 @@ const Checkout = () => {
 
 
     // setCart([]);
-    emailjs.sendForm('service_tqd5rsa', 'template_nn0qqkj', form.current, 'B9abM11tNChoP6ubN')
+    emailjs.sendForm('service_6bdk1hq', 'template_c9twe6i', form.current, 'YTPdWWp9Os7kSo6b6')
       .then((result) => {
         console.log(result.text);
         if (result.text === 'OK') {
@@ -169,12 +170,47 @@ const Checkout = () => {
                 .then((success) => {
                   console.log(success, "success");
 
-                  window.alert('Item Purchase Successfully')
+                  window.alert('Your booking is confirmed')
+                  cart.tableData.forEach(table => {
+                    let dataBody = {
+                      date: `${cart.date}`,
+                      restaurantId: table.restaurantId,
+                      tableId: table._id
+                    }
+                    fetch("http://localhost:4200/findBooking", {
+                      method: "POST",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify({ dataBody }),
+                    })
+                      .then((res) => res.json())
+                      .then((data) => {
+                        let result = [...filterBySimilarTime(data[0].bookingInfo, table.slot), ...filterByNotAvailable(data[0].bookingInfo, table.slot)];
+                        console.log(result)
+                        let updateData = {
+                          date: `${cart.date}`,
+                          bookingInfo: result,
+                          restaurantId: table.restaurantId,
+
+                          tableId: table._id
+                        }
+                        fetch(`http://localhost:4200/updateBooking/${data[0]._id}`, {
+                          method: "PATCH",
+                          headers: { "Content-Type": "application/json" },
+                          body: JSON.stringify({ updateData }),
+                        })
+                          .then((response) => response.json())
+                          .then((res) => {
+                            if (res) {
+
+                            }
+                          })
+                      })
+                  })
                   localStorage.clear();
-                  window.location.assign("/shipment");
+                  window.location.assign("/");
                 });
               // console.log(form.current)
-              emailjs.sendForm('service_tqd5rsa', 'template_nn0qqkj', form.current, 'B9abM11tNChoP6ubN')
+              emailjs.sendForm('service_6bdk1hq', 'template_c9twe6i', form.current, 'YTPdWWp9Os7kSo6b6')
                 .then((result) => {
                   console.log(result.text);
                 }, (error) => {
@@ -195,7 +231,27 @@ const Checkout = () => {
       });
 
   };
+  function filterBySimilarTime(array1, array2) {
+    // Extracting time values from array2 into a new array
+    const array2Times = array2.map(item => item.time);
 
+    // Filtering array1 based on similar time values
+    const filteredArray = array1.filter(item => !array2Times.includes(item.time));
+
+    return filteredArray;
+  }
+  function filterByNotAvailable(array1, array2) {
+    // Extracting time values from array2 into a new array
+    const array2Times = array2.map(item => item.time);
+
+    // Filtering array1 based on similar time values
+    const filteredArray = array1.filter(item => array2Times.includes(item.time));
+
+    filteredArray.forEach(obj => {
+      obj.status = "Not Available";
+    });
+    return filteredArray;
+  }
   const handlePaymentSuccess = (paymentId) => {
     const finalData = checkoutData;
     finalData.paymentData = paymentId;
@@ -209,10 +265,44 @@ const Checkout = () => {
       .then((res) => res.json())
       .then((success) => {
         console.log(success, "success");
+        cart.tableData.forEach(table => {
+          let dataBody = {
+            date: `${cart.date}`,
+            restaurantId: table.restaurantId,
+            tableId: table._id
+          }
+          fetch("http://localhost:4200/findBooking", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ dataBody }),
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              let result = [...filterBySimilarTime(data[0].bookingInfo, table.slot), ...filterByNotAvailable(data[0].bookingInfo, table.slot)];
+              let updateData = {
+                date: `${cart.date}`,
+                bookingInfo: result,
+                restaurantId: table.restaurantId,
+
+                tableId: table._id
+              }
+              fetch(`http://localhost:4200/updateBooking/${data[0]._id}`, {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ updateData }),
+              })
+                .then((response) => response.json())
+                .then((res) => {
+                  if (res) {
+
+                  }
+                })
+            })
+        })
         localStorage.clear();
-        window.location.assign("/shipment");
-        if (success) {
-        }
+        window.location.assign("/");
+        // if (success) {
+        // }
       });
 
     processOrder();
@@ -229,18 +319,10 @@ const Checkout = () => {
     //         }
     //     })
   };
-  function filterBySimilarTime(array1, array2) {
-    // Extracting time values from array2 into a new array
-    const array2Times = array2.map(item => item.time);
 
-    // Filtering array1 based on similar time values
-    const filteredArray = array1.filter(item => !array2Times.includes(item.time));
-
-    return filteredArray;
-  }
   const handleRemove = () => {
     console.log(cart.tableData)
-    cart.tableData.forEach(table=>{
+    cart.tableData.forEach(table => {
       let dataBody = {
         date: `${cart.date}`,
         restaurantId: table.restaurantId,
@@ -258,7 +340,7 @@ const Checkout = () => {
             date: `${cart.date}`,
             bookingInfo: result,
             restaurantId: table.restaurantId,
-  
+
             tableId: table._id
           }
           fetch(`http://localhost:4200/updateBooking/${data[0]._id}`, {
@@ -275,7 +357,7 @@ const Checkout = () => {
             })
         })
     })
-  
+
 
   }
   return (
@@ -339,6 +421,7 @@ const Checkout = () => {
                 <br />
                 <input
                   onChange={handleChange}
+                  onInputChange={handleChange}
                   name="contactNo"
                   style={{
                     height: "50px",
@@ -348,7 +431,7 @@ const Checkout = () => {
                     width: "75%",
                   }}
                   className="pl-4"
-                  type=""
+                  type="number"
                   required
                   placeholder="Contact no."
                 />
@@ -476,7 +559,7 @@ const Checkout = () => {
 
                         <input style={{ display: 'none' }} value={sessionStorage.getItem("email")} type="email" name="user_email" />
 
-                        <textarea value="You have successfully purchase an Item" style={{ display: 'none' }} name="message" />
+                        <textarea value="Your booking is confirmed" style={{ display: 'none' }} name="message" />
                         <input
                           onClick={handlePlaceOrder}
                           type="submit"
