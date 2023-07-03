@@ -5,13 +5,13 @@ import Footer from '../../Shared/Footer/Footer';
 import About from '../About/About';
 // import Menu from '../Menu/Menu';
 import Search from '../Search/Search';
-import { getDatabaseCart } from '../../../utilities/databaseManager';
+// import { getDatabaseCart } from '../../../utilities/databaseManager';
 import RestaurantList from '../RestaurantList/RestaurantList';
 import Location from '../Location/Location';
 // import fakeData from '../../../fakeData';
 
 const Home = () => {
-    const [cart, setCart] = useState([]);
+    const [cart] = useState([]);
     const [area, setArea] = useState('');
     const [location, setLocation] = useState(false);
     const itemData = localStorage.getItem('item')

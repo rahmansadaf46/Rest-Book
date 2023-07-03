@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 // import fakeData from '../../../fakeData';
 // import { getDatabaseCart } from '../../../utilities/databaseManager';
 
 
 const CartItem = (props) => {
     const item = props.item;
-    const [count, setCount] = useState(item.quantity);
+    // const [count, setCount] = useState(item.quantity);
 
 
     // const incrementCount = () => {

@@ -5,14 +5,14 @@ import Footer from '../../Shared/Footer/Footer';
 import Header from '../../Shared/Header/Header';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import './Item.css'
-import { addToDatabaseCart, addToTableDatabaseCart, getDatabaseCart, updateToDatabaseCart, updateToTableDatabaseCart } from '../../../utilities/databaseManager';
+import { addToDatabaseCart,  getDatabaseCart, updateToDatabaseCart } from '../../../utilities/databaseManager';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import CountdownTimer from './CountdownTimer';
 
 
 const Item = () => {
     const { category, id } = useParams();
-    const [localStoreData, setLocalStoreData] = useState([]);
+    // const [localStoreData, setLocalStoreData] = useState([]);
     const [offDays, setOffDays] = useState([]);
     const [isOffDay, setIsOffDay] = useState(false);
     const [loading, setLoading] = useState(true);
@@ -28,7 +28,7 @@ const Item = () => {
 
         getItemData(new Date())
 
-        setLocalStoreData(JSON.parse(localStorage.getItem('bookingData')))
+        // setLocalStoreData(JSON.parse(localStorage.getItem('bookingData')))
         window.scrollTo(0, 0);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [category, id])

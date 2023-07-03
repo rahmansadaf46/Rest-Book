@@ -1,21 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Footer from "../../Shared/Footer/Footer";
 import Header from "../../Shared/Header/Header";
 // import map from '../../../fakeData/images/ordercomplete-map.jpg';
-import scooter from "../../../fakeData/images/Image/scooter.png";
-import helmet from "../../../fakeData/images/Image/helmet.png";
+// import scooter from "../../../fakeData/images/Image/scooter.png";
+// import helmet from "../../../fakeData/images/Image/helmet.png";
 import "./Shipment.css";
 // import Iframe from "react-iframe";
-import MapComponent from "../../MapComponent/MapComponent";
-const Shipment = ({ mylocation }) => {
-  const [address, setAddress] = useState([]);
-  useEffect(() => {
-    // setService(JSON.parse(localStorage.getItem('serviceInfo')))
-    setAddress(JSON.parse(sessionStorage.getItem("userProductAddress")));
-    console.log(JSON.parse(sessionStorage.getItem("userProductAddress")));
-  }, []);
-  const toLat = 23.762236;
-  const toLong = 90.419922;
+// import MapComponent from "../../MapComponent/MapComponent";
+const Shipment = () => {
+  // const [address, setAddress] = useState([]);
+  // useEffect(() => {
+  //   // setService(JSON.parse(localStorage.getItem('serviceInfo')))
+  //   setAddress(JSON.parse(sessionStorage.getItem("userProductAddress")));
+  //   console.log(JSON.parse(sessionStorage.getItem("userProductAddress")));
+  // }, []);
   return (
     <div>
       <Header></Header>

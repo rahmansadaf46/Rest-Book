@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 // import fakeData from '../../../fakeData';
 // import { getDatabaseCart } from '../../../utilities/databaseManager';
 

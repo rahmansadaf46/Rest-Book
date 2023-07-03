@@ -20,7 +20,7 @@ const Checkout = () => {
   const [paymentProcess, setPaymentProcess] = useState('Payment on Location')
   const [cart, setCart] = useState([]);
   const [count] = useState(1);
-  const itemData = localStorage.getItem("item");
+  // const itemData = localStorage.getItem("item");
   const form = useRef();
   const handleAddProduct = (product) => {
     const toBeAddedKey = product._id;
@@ -103,8 +103,8 @@ const Checkout = () => {
   let total = 5.0 + subTotal;
 
   const [success, setSuccess] = useState(false);
-  const [name, setName] = useState(false);
-  const [email, setEmail] = useState(false);
+  // const [name, setName] = useState(false);
+  // const [email, setEmail] = useState(false);
   const [contact, setContact] = useState(false);
   const [address, setAddress] = useState({
     name: window.sessionStorage.getItem('name'),
@@ -161,6 +161,7 @@ const Checkout = () => {
               finalData.paymentData = null;
               finalData.paymentCategory = 'Payment on Location';
               finalData.bookingDetails = cart;
+              finalData.restaurantId = cart.restaurantData._id;
               fetch("http://localhost:4200/addOrder", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -257,7 +258,8 @@ const Checkout = () => {
     finalData.paymentData = paymentId;
     finalData.paymentCategory = 'Online Payment';
     finalData.paidAmount = amount;
-    finalData.bookingDetails = cart;
+    finalData.bookingDetails = cart; 
+    finalData.restaurantId = cart.restaurantData._id;
     fetch("http://localhost:4200/addOrder", {
       method: "POST",
       headers: { "Content-Type": "application/json" },

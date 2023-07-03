@@ -376,17 +376,17 @@ client.connect(err => {
     // })
 
     app.post('/restaurantOrder', (req, res) => {
-        const email = req.body.email;
+        const id = req.body.id;
         orderCollection.find({})
             .toArray((err, documents) => {
-                res.send(documents.filter(data => data.finalData.restaurantEmail === email));
+                res.send(documents.filter(data => data.finalData.restaurantId === id));
             })
     })
     app.patch('/updateOrder/:id', (req, res) => {
         orderCollection.updateOne({ _id: ObjectId(req.params.id) },
             {
                 $set: {
-                    finalData: req.body
+                    finalData: req.body.finalData
                 },
             })
             .then(result => {

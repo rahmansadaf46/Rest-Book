@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import Carousel from 'react-multi-carousel';
 import "bootstrap/dist/css/bootstrap.min.css";
 import 'react-multi-carousel/lib/styles.css';
@@ -6,7 +6,7 @@ import { Container } from 'react-bootstrap';
 import image from './profileImage.png'
 const OpinionList = ({reviewData}) => {
     console.log(reviewData)
-    const [opinions, setOpinions] = useState([{data:{name:'Sadaf'}}])
+    // const [opinions, setOpinions] = useState([{data:{name:'Sadaf'}}])
 
     useEffect(() => {
         // fetch('http://localhost:4200/opinions')

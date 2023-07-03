@@ -8,7 +8,7 @@ import Header from "../../Shared/Header/Header";
 // import Iframe from "react-iframe";
 import MessengerCustomerChat from "react-messenger-customer-chat";
 
-import { getDatabaseCart } from "../../../utilities/databaseManager";
+// import { getDatabaseCart } from "../../../utilities/databaseManager";
 import MapComponent from "../../MapComponent/MapComponent.js";
 import Menu from "../Menu/Menu";
 import OpinionList from "./OpinionList";
@@ -42,6 +42,7 @@ const Restaurant = () => {
     // const item = JSON.parse(itemData).find(pd => pd._id === id);
     // setItem(item);
     window.scrollTo(0, 0);
+     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [itemData, id]);
 
 
@@ -68,7 +69,7 @@ const Restaurant = () => {
         }
       });
   }
-  const [cart, setCart] = useState([]);
+  const [cart] = useState([]);
   let lat = "";
   let long = "";
 

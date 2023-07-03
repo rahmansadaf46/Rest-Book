@@ -11,7 +11,7 @@ const BookingDone = () => {
         fetch('http://localhost:4200/restaurantOrder', {
             method: 'POST',
             headers: { 'content-type': 'application/json' },
-            body: JSON.stringify({ email: sessionStorage.getItem('email') })
+            body: JSON.stringify({ id: JSON.parse(sessionStorage.getItem('restaurantUser'))[0]._id })
         })
             .then(res => res.json())
             .then(data => {
@@ -43,7 +43,7 @@ const BookingDone = () => {
                             <h2><u>Booking <span className="text-dark">Done</span></u></h2>
                         </div>
                         <div>{
-                            product.map(fd => <>{fd?.finalData.category === "Service" && <><div style={{ width: '700px', height: '100%', border: '1px solid lightYellow', borderRadius: '30px', backgroundColor: 'lightYellow', marginBottom: '25px', padding: '30px' }}>
+                            product.map(fd => <>{ <><div style={{ width: '700px', height: '100%', border: '1px solid lightYellow', borderRadius: '30px', backgroundColor: 'lightYellow', marginBottom: '25px', padding: '30px' }}>
 
                                 <div className="font-weight-bold">Order No: <span style={{ color: 'purple' }}>{fd._id.split("").slice(15, 50)}</span></div>
                                 <br />
