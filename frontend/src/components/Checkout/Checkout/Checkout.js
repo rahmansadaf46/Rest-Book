@@ -160,7 +160,7 @@ const Checkout = () => {
             if (paymentProcess === 'Payment on Location') {
               finalData.paymentData = null;
               finalData.paymentCategory = 'Payment on Location';
-
+              finalData.bookingDetails = cart;
               fetch("http://localhost:4200/addOrder", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -207,7 +207,7 @@ const Checkout = () => {
                       })
                   })
                   localStorage.clear();
-                  window.location.assign("/");
+                  window.location.assign("/shipment");
                 });
               // console.log(form.current)
               emailjs.sendForm('service_6bdk1hq', 'template_c9twe6i', form.current, 'YTPdWWp9Os7kSo6b6')
@@ -256,7 +256,8 @@ const Checkout = () => {
     const finalData = checkoutData;
     finalData.paymentData = paymentId;
     finalData.paymentCategory = 'Online Payment';
-    finalData.amount = amount
+    finalData.paidAmount = amount;
+    finalData.bookingDetails = cart;
     fetch("http://localhost:4200/addOrder", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -300,7 +301,7 @@ const Checkout = () => {
             })
         })
         localStorage.clear();
-        window.location.assign("/");
+        window.location.assign("/shipment");
         // if (success) {
         // }
       });
@@ -379,7 +380,6 @@ const Checkout = () => {
                 />
 
                 <input
-                  onChange={handleChange}
                   name="name"
                   style={{
                     height: "50px",
@@ -399,7 +399,6 @@ const Checkout = () => {
                 <br />
                 <br />
                 <input
-                  onChange={handleChange}
                   disabled
                   name="email"
                   style={{
@@ -421,7 +420,6 @@ const Checkout = () => {
                 <br />
                 <input
                   onChange={handleChange}
-                  onInputChange={handleChange}
                   name="contactNo"
                   style={{
                     height: "50px",

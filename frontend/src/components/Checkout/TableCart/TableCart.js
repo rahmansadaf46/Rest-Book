@@ -21,7 +21,7 @@ const TableCart = (props) => {
     //     }
     // };
     return (
-        <div key={item.id} style={{ background: '#E8E8E8', border: '1px solid white', borderRadius: '30px', marginTop: '10px' }}>
+        <div key={item.id} style={{ background: '#E8E8E8',  border: '1px solid white', borderRadius: '30px', marginTop: '10px' }}>
             <div className="row p-2">
                 <div className="col-md-4">
                     <img width="85px"  style={{borderRadius:'20%'}} src={`http://localhost:4200/table/${item.image}`} alt="" />
@@ -29,7 +29,7 @@ const TableCart = (props) => {
                 <div className="col-md-6">
                     <p style={{ fontSize: '13px', position:'relative', right:'15px' }}><b>{item.title}</b></p>
                     <div style={{marginTop:'-15px'}} className='row'>
-                    {item.slot.map(slot => <div className='mr-1' style={{fontSize:'10px',background:'white'}}>{slot.time}</div>)} 
+                    {item.slot.map(slot => <div  className='mr-1' style={{fontSize:'10px',background:'white',display: `${slot.status === 'Not Available' && 'none'}`}}>{slot.time}</div>)} 
                     </div>
              
                     {/* <p style={{ marginTop: '-15px', color: '#E5194B', marginBottom: '-1px' }}>Quantity:- <b>{props.item.count}</b></p> */}

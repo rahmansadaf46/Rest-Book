@@ -22,17 +22,12 @@ const Shipment = ({ mylocation }) => {
       <div className="mt-5 py-5">
         <div className="container">
           <div className="row">
-            <div className="col-md-7 mr-5">
+            <div className="col-md-12 mr-5">
               <div className="d-flex justify-content-center ">
-                <MapComponent
-                  toLat={toLat}
-                  toLong={toLong}
-                  fromLat={mylocation.latitude}
-                  fromLong={mylocation.longtitude}
-                />
+                <img src="https://cdn.dribbble.com/users/13543/screenshots/1523277/media/9a6cc33299c9e6c208392dc49252ae76.gif" alt="" />
               </div>
             </div>
-            <div className="col-md-4">
+            {/* <div className="col-md-4">
               <div
                 style={{
                   background: "#E8E8E8",
@@ -83,10 +78,6 @@ const Shipment = ({ mylocation }) => {
                 </div>
 
                 <div style={{ padding: "10px 30px 10px 20px" }}>
-                  {/* <p style={{ fontSize: "30px", marginBottom: "-8px" }}>
-                    09:30
-                  </p>
-                  <small>Estimated delivery time</small> */}
                 </div>
 
                 <div
@@ -121,7 +112,7 @@ const Shipment = ({ mylocation }) => {
                   </span>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
