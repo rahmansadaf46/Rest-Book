@@ -229,11 +229,54 @@ const Checkout = () => {
     //         }
     //     })
   };
+  function filterBySimilarTime(array1, array2) {
+    // Extracting time values from array2 into a new array
+    const array2Times = array2.map(item => item.time);
 
+    // Filtering array1 based on similar time values
+    const filteredArray = array1.filter(item => !array2Times.includes(item.time));
+
+    return filteredArray;
+  }
   const handleRemove = () => {
     console.log(cart.tableData)
-    // window.localStorage.clear();
-    // setCart([])
+    cart.tableData.forEach(table=>{
+      let dataBody = {
+        date: `${cart.date}`,
+        restaurantId: table.restaurantId,
+        tableId: table._id
+      }
+      fetch("http://localhost:4200/findBooking", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ dataBody }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          let result = filterBySimilarTime(data[0].bookingInfo, table.slot);
+          let updateData = {
+            date: `${cart.date}`,
+            bookingInfo: result,
+            restaurantId: table.restaurantId,
+  
+            tableId: table._id
+          }
+          fetch(`http://localhost:4200/updateBooking/${data[0]._id}`, {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ updateData }),
+          })
+            .then((response) => response.json())
+            .then((res) => {
+              if (res) {
+                window.localStorage.clear();
+                setCart([])
+              }
+            })
+        })
+    })
+  
+
   }
   return (
     <div>
@@ -479,16 +522,16 @@ const Checkout = () => {
           <div className="text-center text-danger">
             <h3>Payment Here</h3>
           </div>
-          <br/>
+          <br />
           <label>Minimum Amount: <b>{cart.restaurantData?.paymentAmount}</b>/- </label>
-          <br/>
+          <br />
           <label>Enter Amount</label>
           <input type="number" style={{
-                            padding: "10px",
-                          }}
-                          placeholder=""
-                          onChange={(e)=>setAmount(e.target.value)}
-                          className="ml-3 font-weight-bold mb-4" />
+            padding: "10px",
+          }}
+            placeholder=""
+            onChange={(e) => setAmount(e.target.value)}
+            className="ml-3 font-weight-bold mb-4" />
           <br />
           <ProcessPayment amount={amount} restaurantData={cart.restaurantData} handlePayment={handlePaymentSuccess} />
         </div>
