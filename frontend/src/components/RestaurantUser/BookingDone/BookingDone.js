@@ -53,22 +53,29 @@ const BookingDone = () => {
                                         Payment:{" "}
                                     </span>
                                     <span className="font-weight-bold text-dark">
-                                    {fd?.finalData.paymentCategory === 'Online Payment' ? <>{fd?.finalData.paymentCategory}</>:<>Cash On Service</>}
+                                   <>{fd?.finalData.paymentCategory}</>
                                     </span>{" "}
                                 </p>
-                                {
-                                    fd?.finalData.paymentCategory !== 'Cash On Delivery' && <p style={{ fontSize: "18px" }}>
+                                {fd?.finalData.paymentCategory !== 'Payment on Location' && <p style={{ fontSize: "18px" }}>
                                         <span className="font-weight-bold text-danger">
                                             Payment ID:{" "}
                                         </span>
                                         <span className="font-weight-bold text-dark">
                                             {fd.finalData.paymentData}
                                         </span>{" "}
+                                        <br/>
+                                        <br/>
+                                        <span className="font-weight-bold text-danger">
+                                            Paid Amount:{" "}
+                                        </span>
+                                        <span className="font-weight-bold text-dark">
+                                            {fd.finalData.paidAmount}/-
+                                        </span>{" "}
                                     </p>
                                 }
                                 <br />
                                 <div style={{ border: '2px solid #E5194B', padding: '15px' }}>
-                                    <p className="font-weight-bold ">Address: <span className="text-danger"> {fd.finalData.address.area}</span></p>
+                                    <p className="font-weight-bold ">Namw: <span className="text-danger"> {fd.finalData.address.name}</span></p>
                                     <p className="font-weight-bold">Contact: <span className="text-danger">{fd.finalData.address.contactNo}</span></p>
                                     <p className="font-weight-bold text-dark">Email: <span className="text-danger">{fd.finalData.email}</span></p>
                                 </div>
