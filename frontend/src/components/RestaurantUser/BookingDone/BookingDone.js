@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import RestaurantHeader from '../RestaurantHeader/RestaurantHeader';
 import RestaurantSidebar from '../RestaurantSidebar/RestaurantSidebar';
+import CartItem from '../../Checkout/CartItem/CartItem';
+import TableCart from '../../Checkout/TableCart/TableCart';
 // import './BookingRequest.css'
 const BookingDone = () => {
     const [product, setProduct] = useState([]);
@@ -47,6 +49,27 @@ const BookingDone = () => {
 
                                 <div className="font-weight-bold">Order No: <span style={{ color: 'purple' }}>{fd._id.split("").slice(15, 50)}</span></div>
                                 <br />
+                                <div className="mt-3 " style={{ border: '2px solid red',width:'350px', padding: '5px', borderRadius: '10px', background: '#FFCCCB' }}>
+
+                                    {fd.finalData?.bookingDetails?.foodData.map((item) => (
+                                        <CartItem
+                                            showAddToCart={true}
+                                            // handleRemoveProduct={handleRemoveProduct}
+                                            // handleAddProduct={handleAddProduct}
+                                            key={item._id}
+                                            item={item}
+                                        ></CartItem>
+                                    ))}
+                                    {fd.finalData?.bookingDetails?.tableData.map((item) => (
+                                        <TableCart
+                                            showAddToCart={true}
+                                            // handleRemoveProduct={handleRemoveProduct}
+                                            // handleAddProduct={handleAddProduct}
+                                            key={item._id}
+                                            item={item}
+                                        ></TableCart>
+                                    ))}
+                                </div>
                                 <p style={{ fontSize: '18px' }}><span className="font-weight-bold text-danger">{fd?.finalData?.service?.title}</span> </p> <br />
                                 <p style={{ fontSize: "18px" }}>
                                     <span className="font-weight-bold text-danger">

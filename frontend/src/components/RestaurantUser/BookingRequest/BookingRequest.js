@@ -4,6 +4,8 @@ import RestaurantSidebar from '../RestaurantSidebar/RestaurantSidebar';
 import './BookingRequest.css'
 // import emailjs from '@emailjs/browser';
 import { useRef } from 'react';
+import CartItem from '../../Checkout/CartItem/CartItem';
+import TableCart from '../../Checkout/TableCart/TableCart';
 const BookingRequest = () => {
     const [product, setProduct] = useState([]);
     const form = useRef();
@@ -59,10 +61,10 @@ const BookingRequest = () => {
         // emailjs.sendForm('service_tqd5rsa', 'template_nn0qqkj', form.current, 'B9abM11tNChoP6ubN')
         // .then((result) => {
         //     if (result.text === 'OK'){
-             
+
         //     }
         // })
-      
+
 
     }
 
@@ -82,18 +84,38 @@ const BookingRequest = () => {
                             <h2><u>Booking <span className="text-dark">Request</span></u></h2>
                         </div>
                         <div>{
-                            product.map(fd => <>{ <><div style={{ width: '700px', height: '100%', border: '1px solid lightYellow', borderRadius: '30px', backgroundColor: 'lightYellow', marginBottom: '25px', padding: '30px' }}>
+                            product.map(fd => <>{<><div style={{ width: '700px', height: '100%', border: '1px solid lightYellow', borderRadius: '30px', backgroundColor: 'lightYellow', marginBottom: '25px', padding: '30px' }}>
 
                                 <div className="font-weight-bold">Order No: <span style={{ color: 'purple' }}>{fd._id.split("").slice(15, 50)}</span></div>
                                 <br />
+                                <div className="mt-3 " style={{ border: '2px solid red',width:'350px', padding: '5px', borderRadius: '10px', background: '#FFCCCB' }}>
 
+                                    {fd.finalData?.bookingDetails?.foodData.map((item) => (
+                                        <CartItem
+                                            showAddToCart={true}
+                                            // handleRemoveProduct={handleRemoveProduct}
+                                            // handleAddProduct={handleAddProduct}
+                                            key={item._id}
+                                            item={item}
+                                        ></CartItem>
+                                    ))}
+                                    {fd.finalData?.bookingDetails?.tableData.map((item) => (
+                                        <TableCart
+                                            showAddToCart={true}
+                                            // handleRemoveProduct={handleRemoveProduct}
+                                            // handleAddProduct={handleAddProduct}
+                                            key={item._id}
+                                            item={item}
+                                        ></TableCart>
+                                    ))}
+                                </div>
                                 <p style={{ fontSize: '18px' }}><span className="font-weight-bold text-danger">{fd?.finalData?.service?.title}</span> </p> <br />
                                 <p style={{ fontSize: "18px" }}>
                                     <span className="font-weight-bold text-danger">
                                         Payment:{" "}
                                     </span>
                                     <span className="font-weight-bold text-dark">
-                                    {fd?.finalData.paymentCategory === 'Online Payment' ? <>{fd?.finalData.paymentCategory}</>:<>Payment on Location</>}
+                                        {fd?.finalData.paymentCategory === 'Online Payment' ? <>{fd?.finalData.paymentCategory}</> : <>Payment on Location</>}
                                     </span>{" "}
                                 </p>
                                 {
@@ -104,8 +126,8 @@ const BookingRequest = () => {
                                         <span className="font-weight-bold text-dark">
                                             {fd.finalData.paymentData}
                                         </span>{" "}
-                                        <br/>
-                                        <br/>
+                                        <br />
+                                        <br />
                                         <span className="font-weight-bold text-danger">
                                             Paid Amount:{" "}
                                         </span>

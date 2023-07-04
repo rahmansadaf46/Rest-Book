@@ -9,6 +9,8 @@ import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 // import MenuItem from '@mui/material/MenuItem';
 import { UserContext } from "../../../App";
+import TableCart from "../../Checkout/TableCart/TableCart";
+import CartItem from "../../Checkout/CartItem/CartItem";
 
 const Header = ({ cart }) => {
   const user = sessionStorage.getItem("email");
@@ -55,7 +57,7 @@ const Header = ({ cart }) => {
     localStorage.clear();
     window.location.assign("/");
   };
-
+  console.log(item)
   return (
     <div>
       <Navbar fixed="top" className=" bg-white" expand="lg">
@@ -79,7 +81,7 @@ const Header = ({ cart }) => {
           <Nav className="mr-auto"></Nav>
           <Form inline>
             {loggedInUser.email === "admin@gmail.com" ||
-            sessionStorage.getItem("email") === "admin@gmail.com" ? (
+              sessionStorage.getItem("email") === "admin@gmail.com" ? (
               <div className="mr-2">
                 {" "}
                 {/* <Link to="/admin/restaurantList" className="cart ">
@@ -88,7 +90,7 @@ const Header = ({ cart }) => {
                 <Link
                   to="/admin/restaurantList"
                   className="btn btn-danger login mr-3"
-                  style={{ borderRadius: "30px"}}
+                  style={{ borderRadius: "30px" }}
                 >
                   <b>Admin Panel</b>
                 </Link>
@@ -201,20 +203,44 @@ const Header = ({ cart }) => {
                           {fd._id.split("").slice(15, 50)}
                         </span>
                         <br />
-                        <span className="text-dark">Category:</span>{" "}
+                        {/* <span className="text-dark">Category:</span>{" "}
                         <span className="text-success">
                           {fd?.finalData.category}
-                        </span>
+                        </span> */}
+                        <div className="mt-3" style={{ border: '2px solid red', padding: '5px', borderRadius: '10px', background: '#FFCCCB' }}>
+                          <div className='d-flex'>
+                            <img className='' style={{ width: '50px', borderRadius: '50px' }} src={`http://localhost:4200/restaurant/${fd.finalData?.bookingDetails?.restaurantData.image}`} alt="" />
+                            <h5 className='ml-2  mt-3'>{fd.finalData?.bookingDetails?.restaurantData.title}</h5>
+                          </div>
+                          {fd.finalData?.bookingDetails?.foodData.map((item) => (
+                            <CartItem
+                              showAddToCart={true}
+                              // handleRemoveProduct={handleRemoveProduct}
+                              // handleAddProduct={handleAddProduct}
+                              key={item._id}
+                              item={item}
+                            ></CartItem>
+                          ))}
+                          {fd.finalData?.bookingDetails?.tableData.map((item) => (
+                            <TableCart
+                              showAddToCart={true}
+                              // handleRemoveProduct={handleRemoveProduct}
+                              // handleAddProduct={handleAddProduct}
+                              key={item._id}
+                              item={item}
+                            ></TableCart>
+                          ))}
+                        </div>
                         <br />
                         <br />
                         <span className="text-dark">Payment:</span>{" "}
                         <span className="text-warning">
-                        {fd?.finalData.category === 'Service' ? <>{fd?.finalData.paymentCategory === 'Online Payment' ? <>{fd?.finalData.paymentCategory}</>:<>Cash On Service</>}</>
-                          
-                        : <>  {fd?.finalData.paymentCategory}</>
+                          {fd?.finalData.category === 'Service' ? <>{fd?.finalData.paymentCategory === 'Online Payment' ? <>{fd?.finalData.paymentCategory}</> : <>Cash On Service</>}</>
 
-                        }
-                        
+                            : <>  {fd?.finalData.paymentCategory}</>
+
+                          }
+
                         </span>
                       </div>
                       {fd?.finalData.category === "Product" ? (
