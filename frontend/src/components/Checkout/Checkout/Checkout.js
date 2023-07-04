@@ -234,12 +234,16 @@ const Checkout = () => {
   };
   function filterBySimilarTime(array1, array2) {
     // Extracting time values from array2 into a new array
-    const array2Times = array2.map(item => item.time);
+    
+    let filterArray1 = array1.filter(item => item.status !== 'Not Available')
+    let filterNotAvailableArray1 = array1.filter(item => item.status === 'Not Available')
+    let filterArray2 = array2.filter(item => item.status !== 'Not Available')
+    const array2Times = filterArray2.map(item => item.time);
 
     // Filtering array1 based on similar time values
-    const filteredArray = array1.filter(item => !array2Times.includes(item.time));
+    const filteredArray = filterArray1.filter(item => !array2Times.includes(item.time));
 
-    return filteredArray;
+    return [...filteredArray, ...filterNotAvailableArray1];
   }
   function filterByNotAvailable(array1, array2) {
     // Extracting time values from array2 into a new array
